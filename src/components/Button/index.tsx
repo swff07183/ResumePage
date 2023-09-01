@@ -1,0 +1,49 @@
+import React, { ButtonHTMLAttributes } from 'react';
+import { styled } from 'styled-components';
+
+interface ButtonProps {
+  type: 'fill' | 'border' | 'transparent';
+  content: string;
+  onClick?: React.MouseEventHandler<HTMLElement>;
+}
+
+const Button = (props: ButtonProps) => {
+  const { type, content, ...rest } = props;
+  return (
+    <StyledButton type={type} {...rest}>
+      {content}
+    </StyledButton>
+  );
+};
+
+interface StyledButtonProps {
+  type: string;
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
+  width: 80px;
+  height: 48px;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  &:hover {
+    cursor: pointer;
+  }
+  ${({ type }) =>
+    type === 'fill'
+      ? `
+        color: #ffffff;
+        background-color: #2d65f2;
+        border: none;
+      `
+      : type === 'border'
+      ? `
+        color: #2d65f2;
+        background-color: transparent;
+        border: 1px solid #2d65f2;
+      `
+      : ``}
+`;
+
+export default Button;
