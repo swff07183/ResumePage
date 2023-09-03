@@ -1,7 +1,7 @@
 import React from 'react';
 import { ResumeForm } from '../../components/ResumeForm';
 import SelectInput from '../../components/Input/SelectInput';
-import { educationOptions } from '../../common/Options';
+import { EDUCATION_OPTIONS } from '../../common/Options';
 import EduPrimaryForm from './EduPrimaryForm';
 import EduMiddleForm from './EduMiddleForm';
 import EduHighForm from './EduHighForm';
@@ -19,7 +19,7 @@ const EducationForm = () => {
         {finalEdu === '' && (
           <React.Fragment>
             <SelectInput
-              options={educationOptions}
+              options={EDUCATION_OPTIONS}
               onChange={handleSelectFinalEdu}
               value={finalEdu}
             />

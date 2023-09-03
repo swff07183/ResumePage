@@ -3,7 +3,7 @@ export interface optionType {
   content: string;
 }
 
-export const educationOptions = [
+export const EDUCATION_OPTIONS = [
   {
     content: '최종학력 *',
   },
@@ -25,7 +25,7 @@ export const educationOptions = [
   },
 ];
 
-export const graduationOptions: optionType[] = [
+export const GRADUATION_OPTIONS: optionType[] = [
   {
     content: '졸업여부 *',
   },
@@ -39,7 +39,7 @@ export const graduationOptions: optionType[] = [
   },
 ];
 
-export const regionOptions: optionType[] = [
+export const REGION_OPTIONS: optionType[] = [
   {
     content: '지역 선택',
   },
@@ -61,7 +61,7 @@ export const regionOptions: optionType[] = [
   },
 ];
 
-export const highMajorOptions: optionType[] = [
+export const HIGH_MAJOR_OPTIONS: optionType[] = [
   { content: '전공계열' },
   { content: '문과계열', value: '1' },
   { content: '이과계열', value: '2' },

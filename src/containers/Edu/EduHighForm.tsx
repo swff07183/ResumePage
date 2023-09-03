@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SelectInput from '../../components/Input/SelectInput';
 import {
-  educationOptions,
-  graduationOptions,
-  highMajorOptions,
+  EDUCATION_OPTIONS,
+  GRADUATION_OPTIONS,
+  HIGH_MAJOR_OPTIONS,
 } from '../../common/Options';
 import FormButtons from '../FormButtons';
 import CheckboxInput from '../../components/Input/CheckboxInput';
@@ -43,7 +43,7 @@ const EduHighForm = () => {
         <div className="form-row">
           {!isQualificationExam && (
             <SelectInput
-              options={educationOptions}
+              options={EDUCATION_OPTIONS}
               onChange={handleSelectFinalEdu}
               value={finalEdu}
             />
@@ -51,7 +51,7 @@ const EduHighForm = () => {
           {isQualificationExam && (
             <React.Fragment>
               <SelectInput
-                options={educationOptions}
+                options={EDUCATION_OPTIONS}
                 onChange={handleSelectFinalEdu}
                 value={finalEdu}
               />
@@ -83,7 +83,7 @@ const EduHighForm = () => {
             <Input name="school" placeholder="학교명" onChange={onChange} />
             <SelectInput
               className="input_s"
-              options={graduationOptions}
+              options={GRADUATION_OPTIONS}
               onChange={handleSelectGraduation}
             />
             <Input
@@ -102,7 +102,7 @@ const EduHighForm = () => {
             />
             <SelectInput
               className="input_s"
-              options={highMajorOptions}
+              options={HIGH_MAJOR_OPTIONS}
               onChange={handleSelectMajor}
             />
           </div>

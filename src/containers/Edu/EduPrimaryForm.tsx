@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import SelectInput from '../../components/Input/SelectInput';
 import {
-  educationOptions,
-  graduationOptions,
-  regionOptions,
+  EDUCATION_OPTIONS,
+  GRADUATION_OPTIONS,
+  REGION_OPTIONS,
 } from '../../common/Options';
 import FormButtons from '../FormButtons';
 import CheckboxInput from '../../components/Input/CheckboxInput';
@@ -42,7 +42,7 @@ const EduPrimaryForm = () => {
         <div className="form-row">
           {!isQualificationExam && (
             <SelectInput
-              options={educationOptions}
+              options={EDUCATION_OPTIONS}
               onChange={handleSelectFinalEdu}
               value={finalEdu}
             />
@@ -51,13 +51,13 @@ const EduPrimaryForm = () => {
             <React.Fragment>
               <SelectInput
                 className="input_s"
-                options={educationOptions}
+                options={EDUCATION_OPTIONS}
                 onChange={handleSelectFinalEdu}
                 value={finalEdu}
               />
               <SelectInput
                 className="input_s"
-                options={regionOptions}
+                options={REGION_OPTIONS}
                 onChange={handleSelectRegion}
               />
               <Input
@@ -81,7 +81,7 @@ const EduPrimaryForm = () => {
           <Input name="school" placeholder="학교명" onChange={onChange} />
           <SelectInput
             className="input_s"
-            options={graduationOptions}
+            options={GRADUATION_OPTIONS}
             onChange={handleSelectGraduation}
           />
           <Input
@@ -100,7 +100,7 @@ const EduPrimaryForm = () => {
           />
           <SelectInput
             className="input_s"
-            options={regionOptions}
+            options={REGION_OPTIONS}
             onChange={handleSelectRegion}
           />
         </div>

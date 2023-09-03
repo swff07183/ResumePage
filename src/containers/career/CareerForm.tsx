@@ -6,6 +6,7 @@ import SelectInput from '../../components/Input/SelectInput';
 import CheckboxInput from '../../components/Input/CheckboxInput';
 import TextArea from '../../components/TextArea';
 import { useCareerForm } from '../../recoil/career/hooks';
+import DateInput from '../../components/Input/DateInput';
 
 const careerTextAreaPlaceHolder = `담당업무를 입력해주세요.
 - 진행한 업무를 다 적기 보다는 경력사항 별로 중요한 내용만 엄선해서 작성하는 것이 중요합니다!
@@ -23,7 +24,7 @@ const CareerForm = () => {
           <div className="form-row">
             <Input placeholder="회사명*" />
             <SelectInput className="input_s" />
-            <Input className="input_s" placeholder="입사년월" />
+            <DateInput className="input_s" placeholder="입사년월" />
             <Input className="input_s" placeholder="퇴사년월" />
           </div>
           <div className="form-row">
