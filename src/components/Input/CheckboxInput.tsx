@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 interface CheckboxInputProps {
   content: string;
-  isChecked: boolean;
-  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  isChecked?: boolean;
+  setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const CheckboxInput = (props: CheckboxInputProps) => {
@@ -18,7 +18,7 @@ const CheckboxInput = (props: CheckboxInputProps) => {
       <input
         type="checkbox"
         id={`checkbox-${uid}`}
-        onChange={() => setIsChecked((prev) => !prev)}
+        onChange={() => setIsChecked?.((prev) => !prev)}
       />
       <label className={isChecked ? 'checked' : ''} htmlFor={`checkbox-${uid}`}>
         {content}

@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import EducationForm from '../Edu/EducationForm';
-import EducationList from '../Edu/EducationList';
-import { useRecoilState } from 'recoil';
-import { eduFormState } from '../../store';
+import EducationForm from '../edu/EducationForm';
+import EducationList from '../edu/EducationList';
+import CareerList from '../career/CareerList';
+import CareerForm from '../career/CareerForm';
+import { useEduForm } from '../../recoil/edu/hooks';
+import { useCareerForm } from '../../recoil/career/hooks';
 
 const Resume = () => {
-  const [isEduFormOpen, setIsEduFormOpen] = useRecoilState(eduFormState);
+  const { isEduFormOpen, openEduForm } = useEduForm();
+  const { isCareerFormOpen, openCareerForm } = useCareerForm();
 
   return (
     <Wrapper>
@@ -17,10 +20,7 @@ const Resume = () => {
           <span>필수</span>
         </div>
         {!isEduFormOpen && (
-          <button
-            className="resume-create-button"
-            onClick={() => setIsEduFormOpen(true)}
-          >
+          <button className="resume-create-button" onClick={openEduForm}>
             + 추가
           </button>
         )}
@@ -29,6 +29,20 @@ const Resume = () => {
         {isEduFormOpen ? <EducationForm /> : <EducationList />}
       </div>
       {/*  */}
+      {/* 경력 */}
+      <div className="resume-title-div">
+        <div className="resume-title">
+          <h2>경력</h2>
+        </div>
+        {!isCareerFormOpen && (
+          <button className="resume-create-button" onClick={openCareerForm}>
+            + 추가
+          </button>
+        )}
+      </div>
+      <div className="resume-content-div">
+        {isCareerFormOpen ? <CareerForm /> : <CareerList />}
+      </div>
     </Wrapper>
   );
 };

@@ -9,7 +9,7 @@ const Input = (props: InputProps) => {
   const { className = 'input_m', ...rest } = props;
   return (
     <Wrapper className={className}>
-      <input placeholder="input" {...rest} />
+      <input {...rest} />
     </Wrapper>
   );
 };

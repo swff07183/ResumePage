@@ -6,15 +6,12 @@ import {
   graduationOptions,
   regionOptions,
 } from '../../common/Options';
-import { eduFormState, finalEduState } from '../../store';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import FormButtons from '../FormButtons';
 import CheckboxInput from '../../components/Input/CheckboxInput';
 import Input from '../../components/Input';
+import { useEduForm, useFinalEdu } from '../../recoil/edu/hooks';
 
-interface EduUniversityForm {}
-
-const EduUniversityForm = (props: EduUniversityForm) => {
+const EduUniversityForm = () => {
   const [universityInfo, setUniversityInfo] = useState({
     school: '',
     graduate: '',
@@ -24,14 +21,10 @@ const EduUniversityForm = (props: EduUniversityForm) => {
     passDate: '',
   });
   const [isTransfer, setIsTransfer] = useState<boolean>(false);
-  const [isQualificationExam, setIsQualificationExam] =
-    useState<boolean>(false);
-  const [finalEdu, setFinalEdu] = useRecoilState(finalEduState);
-  const setIsEduFormOpen = useSetRecoilState(eduFormState);
 
-  const handleSelectFinalEdu = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFinalEdu(e.target.value);
-  };
+  const { closeEduForm } = useEduForm();
+  const { finalEdu, handleSelectFinalEdu } = useFinalEdu();
+
   const handleSelectGraduation = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setUniversityInfo({ ...universityInfo, graduate: e.target.value });
   };
@@ -63,10 +56,7 @@ const EduUniversityForm = (props: EduUniversityForm) => {
             setIsChecked={setIsTransfer}
           />
         </div>
-        <div
-          className="form-row"
-          style={{ display: isQualificationExam ? 'none' : 'flex' }}
-        >
+        <div className="form-row">
           <Input />
           <SelectInput
             className="input_s"
@@ -94,7 +84,7 @@ const EduUniversityForm = (props: EduUniversityForm) => {
           />
         </div>
         <FormButtons
-          onCancel={() => setIsEduFormOpen(false)}
+          onCancel={closeEduForm}
           onSubmit={() => console.log(universityInfo)}
         />
       </div>

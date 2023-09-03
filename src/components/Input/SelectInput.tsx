@@ -4,13 +4,19 @@ import { optionType } from '../../common/Options';
 
 interface SelectInputProps {
   className?: string;
-  options: optionType[];
+  options?: optionType[];
   value?: string;
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
 const SelectInput = (props: SelectInputProps) => {
-  const { className = 'input_m', options, value, onChange, ...rest } = props;
+  const {
+    className = 'input_m',
+    options = [],
+    value,
+    onChange,
+    ...rest
+  } = props;
 
   return (
     <Wrapper className={className}>

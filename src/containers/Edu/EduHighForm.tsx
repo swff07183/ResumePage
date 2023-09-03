@@ -6,15 +6,12 @@ import {
   graduationOptions,
   highMajorOptions,
 } from '../../common/Options';
-import { eduFormState, finalEduState } from '../../store';
-import { useRecoilState, useSetRecoilState } from 'recoil';
 import FormButtons from '../FormButtons';
 import CheckboxInput from '../../components/Input/CheckboxInput';
 import Input from '../../components/Input';
+import { useEduForm, useFinalEdu } from '../../recoil/edu/hooks';
 
-interface EduHighFormProps {}
-
-const EduHighForm = (props: EduHighFormProps) => {
+const EduHighForm = () => {
   const [highInfo, setHighInfo] = useState({
     school: '',
     graduate: '',
@@ -26,12 +23,10 @@ const EduHighForm = (props: EduHighFormProps) => {
   const [isTransfer, setIsTransfer] = useState<boolean>(false);
   const [isQualificationExam, setIsQualificationExam] =
     useState<boolean>(false);
-  const [finalEdu, setFinalEdu] = useRecoilState(finalEduState);
-  const setIsEduFormOpen = useSetRecoilState(eduFormState);
 
-  const handleSelectFinalEdu = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setFinalEdu(e.target.value);
-  };
+  const { closeEduForm } = useEduForm();
+  const { finalEdu, handleSelectFinalEdu } = useFinalEdu();
+
   const handleSelectGraduation = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setHighInfo({ ...highInfo, graduate: e.target.value });
   };
@@ -116,7 +111,7 @@ const EduHighForm = (props: EduHighFormProps) => {
           </div>
         </div>
         <FormButtons
-          onCancel={() => setIsEduFormOpen(false)}
+          onCancel={closeEduForm}
           onSubmit={() => console.log(highInfo)}
         />
       </div>
