@@ -24,6 +24,7 @@ const MONTH_LIST = [
 
 const DateInput = (props: DateInputProps) => {
   const { className = 'input_m', ...rest } = props;
+  const [inputValue, setInputValue] = useState('');
   const [year, setYear] = useState(2023);
   const [month, setMonth] = useState(8);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
@@ -46,9 +47,50 @@ const DateInput = (props: DateInputProps) => {
     return () => document.removeEventListener('click', clickCheck);
   }, []);
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (isNaN(Number(e.target.value))) return;
+    let newYear = 0;
+    let newMonth = 0;
+
+    let newValue = '';
+
+    if (e.target.value.length === 4) {
+      newYear = Number(e.target.value.substring(0, 4));
+      newYear = newYear < 1900 ? 1900 : newYear;
+      setYear(newYear);
+      newValue += newYear;
+    } else {
+      newValue += e.target.value.substring(0, 4);
+    }
+
+    if (e.target.value.length === 6) {
+      newMonth = Number(e.target.value.substring(4, 6));
+      newMonth = newMonth < 1 ? 1 : newMonth > 12 ? 12 : newMonth;
+      setMonth(newMonth);
+      newValue += newMonth.toString().padStart(2, '0');
+    } else {
+      setMonth(0);
+      newValue += e.target.value.substring(4, 6);
+    }
+
+    setInputValue(newValue);
+  };
+
+  const handleMonthBtnClick = (mon: string) => {
+    setMonth(Number(mon));
+    setShowCalendar(false);
+    setInputValue(`${year}${mon}`);
+  };
+
   return (
     <Wrapper className={className} ref={ref}>
-      <input {...rest} />
+      <input
+        {...rest}
+        // value={`${year}${month.toString().padStart(2, '0')}`}
+        value={inputValue}
+        onChange={handleInputChange}
+        maxLength={6}
+      />
       {showCalendar && (
         <div className="calendar">
           <div className="calendar-title">
@@ -74,10 +116,7 @@ const DateInput = (props: DateInputProps) => {
                   month === Number(mon) ? 'active' : 'non-active'
                 }`}
                 value={mon}
-                onClick={() => {
-                  setMonth(Number(mon));
-                  setShowCalendar(false);
-                }}
+                onClick={() => handleMonthBtnClick(mon)}
               >{`${Number(mon)}월`}</button>
             ))}
           </div>
@@ -148,6 +187,7 @@ const Wrapper = styled.div<WrapperProps>`
     background-color: transparent;
     border: none;
     border-radius: 4px;
+    font-size: 14px;
   }
   & .active {
     background-color: #2d65f2;
