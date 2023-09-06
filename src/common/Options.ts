@@ -81,3 +81,23 @@ export const HIGH_MAJOR_OPTIONS: optionType[] = [
   { content: '특성화/마이스터고', value: '5' },
   { content: '특수목적고', value: '6' },
 ];
+
+export const UNIVERSITY_TYPE_OPTIONS: optionType[] = [
+  { content: '대학구분*' },
+  { content: '대학교(2,3년)', value: '1' },
+  { content: '대학교(4년)', value: '2' },
+  { content: '대학원(석사)', value: '3' },
+  { content: '대학원(박사)', value: '4' },
+];
+
+export const UNIVERSITY_TIME_OPTIONS: optionType[] = [
+  { content: '주/야간 선택' },
+  { content: '주간', value: '주간' },
+  { content: '야간', value: '야간' },
+];
+
+export const CAREER_STATUS_OPTIONS: optionType[] = [
+  { content: '재직여부' },
+  { content: '재직중', value: '1' },
+  { content: '퇴사', value: '2' },
+];

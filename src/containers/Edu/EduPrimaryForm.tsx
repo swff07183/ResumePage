@@ -40,7 +40,6 @@ const EduPrimaryForm = () => {
     setPrimaryInfo({ ...primaryInfo, region: e.target.value });
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.name, e.target.value);
     setPrimaryInfo({ ...primaryInfo, [e.target.name]: e.target.value });
     setIsError({ ...isError, [e.target.name]: false });
   };
@@ -101,6 +100,7 @@ const EduPrimaryForm = () => {
                   setIsError({ ...isError, passDate: false });
                 }}
                 invalid={isError.passDate}
+                initialValue={primaryInfo.passDate}
               />
             </React.Fragment>
           )}
@@ -134,7 +134,7 @@ const EduPrimaryForm = () => {
             setDate={(date: string) => {
               setPrimaryInfo({ ...primaryInfo, enterDate: date });
             }}
-            invalid={isError.passDate}
+            initialValue={primaryInfo.enterDate}
           />
           <DateInput
             className="input_s"
@@ -144,6 +144,7 @@ const EduPrimaryForm = () => {
             setDate={(date: string) =>
               setPrimaryInfo({ ...primaryInfo, graduateDate: date })
             }
+            initialValue={primaryInfo.graduateDate}
           />
           <SelectInput
             className="input_s"

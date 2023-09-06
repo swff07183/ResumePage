@@ -6,23 +6,31 @@ import {
   GRADUATION_OPTIONS,
   HIGH_MAJOR_OPTIONS,
   REGION_OPTIONS,
+  UNIVERSITY_TIME_OPTIONS,
+  UNIVERSITY_TYPE_OPTIONS,
 } from '../../common/Options';
 import FormButtons from '../FormButtons';
 import CheckboxInput from '../../components/Input/CheckboxInput';
 import Input from '../../components/Input';
 import { useEduForm, useFinalEdu } from '../../recoil/edu/hooks';
 import AddButton from '../../components/Button/AddButton';
+import DateInput from '../../components/Input/DateInput';
 
 const EduUniversityForm = () => {
   const [universityInfo, setUniversityInfo] = useState({
     school: '',
+    major: '',
     graduate: '',
     enterDate: '',
     graduateDate: '',
+    universityType: '',
+    universityTime: '',
     passDate: '',
   });
   const [isError, setIsError] = useState({
     school: false,
+    graduate: false,
+    universityType: false,
   });
   const [isTransfer, setIsTransfer] = useState<boolean>(false);
 
@@ -52,8 +60,15 @@ const EduUniversityForm = () => {
   const handleSelectGraduation = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setUniversityInfo({ ...universityInfo, graduate: e.target.value });
   };
-  const handleSelectRegion = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setRegionInfo({ ...regionInfo, region: e.target.value });
+  const handleSelectUniversityType = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setUniversityInfo({ ...universityInfo, universityType: e.target.value });
+  };
+  const handleSelectUniversityTime = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setUniversityInfo({ ...universityInfo, universityTime: e.target.value });
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUniversityInfo({ ...universityInfo, [e.target.name]: e.target.value });
@@ -90,11 +105,20 @@ const EduUniversityForm = () => {
       gradeInfo,
       regionInfo,
     };
-    setIsError({
-      school: universityInfo.school === '',
-    });
     console.log(submitInfo);
-    // closeEduForm();
+
+    setIsError({
+      universityType: universityInfo.universityType === '',
+      school: universityInfo.school === '',
+      graduate: universityInfo.graduate === '',
+    });
+
+    if (
+      universityInfo.universityType &&
+      universityInfo.school !== '' &&
+      universityInfo.graduate !== ''
+    )
+      closeEduForm();
   };
 
   return (
@@ -108,8 +132,9 @@ const EduUniversityForm = () => {
           />
           <SelectInput
             className="input_s"
-            options={REGION_OPTIONS}
-            onChange={handleSelectRegion}
+            options={UNIVERSITY_TYPE_OPTIONS}
+            onChange={handleSelectUniversityType}
+            invalid={isError.universityType}
           />
           <Input
             name="school"
@@ -124,30 +149,43 @@ const EduUniversityForm = () => {
           />
         </div>
         <div className="form-row">
-          <Input />
+          <Input
+            name="major"
+            placeholder="전공"
+            type="text"
+            onChange={onChange}
+          />
           <SelectInput
             className="input_s"
+            invalid={isError.graduate}
             options={GRADUATION_OPTIONS}
             onChange={handleSelectGraduation}
+            value={universityInfo.graduate}
           />
-          <Input
+          <SelectInput
+            className="input_s"
+            options={UNIVERSITY_TIME_OPTIONS}
+            onChange={handleSelectUniversityTime}
+          />
+          <DateInput
             className="input_s"
             name="enterDate"
             placeholder="입학년월"
             type="text"
-            onChange={onChange}
+            setDate={(date: string) => {
+              setUniversityInfo({ ...universityInfo, enterDate: date });
+            }}
+            initialValue={universityInfo.enterDate}
           />
-          <Input
+          <DateInput
             className="input_s"
             name="graduateDate"
             placeholder="졸업년월"
             type="text"
-            onChange={onChange}
-          />
-          <SelectInput
-            className="input_s"
-            options={REGION_OPTIONS}
-            onChange={handleSelectRegion}
+            setDate={(date: string) => {
+              setUniversityInfo({ ...universityInfo, graduateDate: date });
+            }}
+            initialValue={universityInfo.graduateDate}
           />
         </div>
         {(extraMajorInfo.active || gradeInfo.active) && (

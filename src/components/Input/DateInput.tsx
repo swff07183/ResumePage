@@ -29,6 +29,7 @@ interface DateInputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
   placeholder?: string;
   disabled?: boolean;
+  initialValue?: string;
   setDate?: any;
   invalid?: boolean;
 }
@@ -39,10 +40,11 @@ const DateInput = (props: DateInputProps) => {
     placeholder,
     disabled,
     invalid,
+    initialValue = '',
     setDate,
     ...rest
   } = props;
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState(initialValue);
   const [year, setYear] = useState(2023);
   const [month, setMonth] = useState(8);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
@@ -95,15 +97,15 @@ const DateInput = (props: DateInputProps) => {
       newValue += e.target.value.substring(4, 6);
     }
     setInputValue(newValue);
-    if (newValue.length === 6) setDate(newValue);
-    else setDate('');
+    if (newValue.length === 6) setDate?.(newValue);
+    else setDate?.('');
   };
 
   const handleMonthBtnClick = (mon: string) => {
     setMonth(Number(mon));
     setShowCalendar(false);
     setInputValue(`${year}${mon}`);
-    setDate(`${year}${mon}`);
+    setDate?.(`${year}${mon}`);
   };
 
   return (
