@@ -3,22 +3,24 @@ import styled from 'styled-components';
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   title?: string;
+  name?: string;
 }
 
 const TextArea = (props: TextAreaProps) => {
-  const { title, ...rest } = props;
+  const { title, name, onChange, ...rest } = props;
 
   const [text, setText] = useState<string>('');
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
+    onChange?.(e);
   };
 
-  const getLength = (text: string, isIncludeSpace: boolean = true) => {
+  const getLength = (isIncludeSpace: boolean = true) => {
     return isIncludeSpace ? text.length : text.replaceAll(' ', '').length;
   };
 
-  const getBytes = (text: string, isIncludeSpace: boolean = true) => {
+  const getBytes = (isIncludeSpace: boolean = true) => {
     let bytes = 0;
     for (let i = 0; i < text.length; i++) {
       if (!isIncludeSpace && text.charAt(i) === ' ') continue;
@@ -30,16 +32,16 @@ const TextArea = (props: TextAreaProps) => {
   return (
     <Wrapper>
       <h5>{title}</h5>
-      <textarea {...rest} onChange={handleTextChange} />
+      <textarea name={name} {...rest} onChange={handleTextChange} />
       <div className="text-len">
         <span>
           <span className="text-bold">총 글자 수</span>
-          {` ${getLength(text)} 자 / ${getBytes(text)} bytes`}
+          {` ${getLength()} 자 / ${getBytes()} bytes`}
         </span>
         <span>|</span>
         <span>
           <span className="text-bold">공백제외</span>
-          {` ${getLength(text, false)} 자 / ${getBytes(text, false)} bytes`}
+          {` ${getLength(false)} 자 / ${getBytes(false)} bytes`}
         </span>
       </div>
     </Wrapper>
