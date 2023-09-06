@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 import { styled } from 'styled-components';
 
 interface ButtonProps {
@@ -23,7 +23,7 @@ interface StyledButtonProps {
 const StyledButton = styled.button<StyledButtonProps>`
   width: 80px;
   height: 48px;
-  font-weight: 700;
+  font-weight: bold;
   font-size: 14px;
   border-radius: 4px;
   box-sizing: border-box;

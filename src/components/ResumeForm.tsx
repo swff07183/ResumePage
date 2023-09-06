@@ -11,5 +11,13 @@ export const ResumeForm = styled.div`
   box-shadow: 0 4px 16px 0 rgba(17, 42, 128, 0.08);
   & .form-div {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  & .form-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
 `;

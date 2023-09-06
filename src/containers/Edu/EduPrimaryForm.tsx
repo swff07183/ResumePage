@@ -10,6 +10,7 @@ import FormButtons from '../FormButtons';
 import CheckboxInput from '../../components/Input/CheckboxInput';
 import Input from '../../components/Input';
 import { useEduForm, useFinalEdu } from '../../recoil/edu/hooks';
+import DateInput from '../../components/Input/DateInput';
 
 const EduPrimaryForm = () => {
   const [primaryInfo, setPrimaryInfo] = useState({
@@ -20,6 +21,11 @@ const EduPrimaryForm = () => {
     region: '',
     passDate: '',
   });
+  const [isError, setIsError] = useState({
+    school: false,
+    graduate: false,
+    passDate: false,
+  });
   const [isQualificationExam, setIsQualificationExam] =
     useState<boolean>(false);
 
@@ -28,17 +34,42 @@ const EduPrimaryForm = () => {
 
   const handleSelectGraduation = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPrimaryInfo({ ...primaryInfo, graduate: e.target.value });
+    setIsError({ ...isError, graduate: false });
   };
   const handleSelectRegion = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setPrimaryInfo({ ...primaryInfo, region: e.target.value });
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.name, e.target.value);
     setPrimaryInfo({ ...primaryInfo, [e.target.name]: e.target.value });
+    setIsError({ ...isError, [e.target.name]: false });
+  };
+
+  const handleSubmit = () => {
+    console.log({ ...primaryInfo, isQualificationExam });
+    if (!isQualificationExam)
+      setIsError({
+        ...isError,
+        school: primaryInfo.school === '',
+        graduate: primaryInfo.graduate === '',
+      });
+    else
+      setIsError({
+        ...isError,
+        passDate: primaryInfo.passDate === '',
+      });
+    if (
+      (!isQualificationExam &&
+        primaryInfo.school !== '' &&
+        primaryInfo.graduate !== '') ||
+      (isQualificationExam && primaryInfo.passDate !== '')
+    )
+      closeEduForm();
   };
 
   return (
     <Wrapper hidden={finalEdu !== 'primary'}>
-      <div className="form-col">
+      <div className="form-div">
         <div className="form-row">
           {!isQualificationExam && (
             <SelectInput
@@ -59,12 +90,17 @@ const EduPrimaryForm = () => {
                 className="input_s"
                 options={REGION_OPTIONS}
                 onChange={handleSelectRegion}
+                value={primaryInfo.region}
               />
-              <Input
+              <DateInput
                 className="input_s"
                 name="passDate"
                 placeholder="합격년월*"
-                onChange={onChange}
+                setDate={(date: string) => {
+                  setPrimaryInfo({ ...primaryInfo, passDate: date });
+                  setIsError({ ...isError, passDate: false });
+                }}
+                invalid={isError.passDate}
               />
             </React.Fragment>
           )}
@@ -78,36 +114,45 @@ const EduPrimaryForm = () => {
           className="form-row"
           style={{ display: isQualificationExam ? 'none' : 'flex' }}
         >
-          <Input name="school" placeholder="학교명" onChange={onChange} />
+          <Input
+            name="school"
+            placeholder="학교명"
+            invalid={isError.school}
+            onChange={onChange}
+          />
           <SelectInput
             className="input_s"
+            invalid={isError.graduate}
             options={GRADUATION_OPTIONS}
             onChange={handleSelectGraduation}
           />
-          <Input
+          <DateInput
             className="input_s"
             name="enterDate"
             placeholder="입학년월"
             type="text"
-            onChange={onChange}
+            setDate={(date: string) => {
+              setPrimaryInfo({ ...primaryInfo, enterDate: date });
+            }}
+            invalid={isError.passDate}
           />
-          <Input
+          <DateInput
             className="input_s"
             name="graduateDate"
             placeholder="졸업년월"
             type="text"
-            onChange={onChange}
+            setDate={(date: string) =>
+              setPrimaryInfo({ ...primaryInfo, graduateDate: date })
+            }
           />
           <SelectInput
             className="input_s"
             options={REGION_OPTIONS}
             onChange={handleSelectRegion}
+            value={primaryInfo.region}
           />
         </div>
-        <FormButtons
-          onCancel={closeEduForm}
-          onSubmit={() => console.log(primaryInfo)}
-        />
+        <FormButtons onCancel={closeEduForm} onSubmit={handleSubmit} />
       </div>
     </Wrapper>
   );

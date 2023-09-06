@@ -1,24 +1,20 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { styled } from 'styled-components';
 import IndexPage from './pages/IndexPage';
 import { RecoilRoot } from 'recoil';
+import Layout from './layout/Layout';
 
 function App() {
   return (
-    <Wrapper>
-      <RecoilRoot>
-        <Routes>
+    <RecoilRoot>
+      <Routes>
+        <Route path="" element={<Layout />}>
           <Route path="/" element={<IndexPage />} />
           <Route path="/test" element={<div>test</div>} />
-        </Routes>
-      </RecoilRoot>
-    </Wrapper>
+        </Route>
+      </Routes>
+    </RecoilRoot>
   );
 }
-
-const Wrapper = styled.div`
-  height: 100vh;
-`;
 
 export default App;

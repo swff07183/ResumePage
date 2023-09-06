@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { optionType } from '../../common/Options';
 
@@ -6,6 +6,8 @@ interface SelectInputProps {
   className?: string;
   options?: optionType[];
   value?: string;
+  style?: object;
+  invalid?: boolean;
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
@@ -14,13 +16,18 @@ const SelectInput = (props: SelectInputProps) => {
     className = 'input_m',
     options = [],
     value,
+    style,
+    invalid,
     onChange,
-    ...rest
   } = props;
 
   return (
-    <Wrapper className={className}>
-      <select value={value} onChange={onChange}>
+    <Wrapper className={className} style={style}>
+      <select
+        className={invalid ? 'invalid' : ''}
+        value={value}
+        onChange={onChange}
+      >
         {options.map((option) => (
           <option value={option.value || ''} key={`option-${option.value}`}>
             {option.content}

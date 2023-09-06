@@ -35,10 +35,14 @@ const EduMiddleForm = () => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMiddleInfo({ ...middleInfo, [e.target.name]: e.target.value });
   };
+  const handleSubmit = () => {
+    console.log({ ...middleInfo, isQualificationExam });
+    closeEduForm();
+  };
 
   return (
     <Wrapper hidden={finalEdu !== 'middle'}>
-      <div className="form-col">
+      <div className="form-div">
         <div className="form-row">
           {!isQualificationExam && (
             <SelectInput
@@ -109,10 +113,7 @@ const EduMiddleForm = () => {
             onChange={handleSelectRegion}
           />
         </div>
-        <FormButtons
-          onCancel={closeEduForm}
-          onSubmit={() => console.log(middleInfo)}
-        />
+        <FormButtons onCancel={closeEduForm} onSubmit={handleSubmit} />
       </div>
     </Wrapper>
   );

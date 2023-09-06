@@ -3,6 +3,17 @@ export interface optionType {
   content: string;
 }
 
+export const USER_TYPE = [
+  {
+    content: '신입',
+    value: '1',
+  },
+  {
+    content: '경력',
+    value: '2',
+  },
+];
+
 export const EDUCATION_OPTIONS = [
   {
     content: '최종학력 *',

@@ -6,13 +6,19 @@ import CareerList from '../career/CareerList';
 import CareerForm from '../career/CareerForm';
 import { useEduForm } from '../../recoil/edu/hooks';
 import { useCareerForm } from '../../recoil/career/hooks';
+import UserInfo from '../user/UserInfo';
+import { useUserForm } from '../../recoil/user/hooks';
+import UserForm from '../user/UserForm';
 
 const Resume = () => {
   const { isEduFormOpen, openEduForm } = useEduForm();
   const { isCareerFormOpen, openCareerForm } = useCareerForm();
+  const { isUserFormOpen } = useUserForm();
 
   return (
     <Wrapper>
+      {/* 사용자 정보 */}
+      {isUserFormOpen ? <UserForm /> : <UserInfo />}
       {/* 학력 */}
       <div className="resume-title-div">
         <div className="resume-title">
@@ -60,7 +66,7 @@ const Wrapper = styled.div`
     align-items: center;
     & > span {
       color: red;
-      font-weight: 700;
+      font-weight: bold;
       font-size: 12px;
       margin-left: 10px;
     }

@@ -1,11 +1,14 @@
-import React, { InputHTMLAttributes, useEffect, useRef, useState } from 'react';
+import React, {
+  InputHTMLAttributes,
+  useEffect,
+  useId,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Right } from '../../assets/svg/arrow-right.svg';
 import { ReactComponent as Left } from '../../assets/svg/arrow-left.svg';
-
-interface DateInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  className?: string;
-}
+import { ReactComponent as Calendar } from '../../assets/svg/calendar_logo.svg';
 
 const MONTH_LIST = [
   '01',
@@ -22,30 +25,49 @@ const MONTH_LIST = [
   '12',
 ];
 
+interface DateInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  className?: string;
+  placeholder?: string;
+  disabled?: boolean;
+  setDate?: any;
+  invalid?: boolean;
+}
+
 const DateInput = (props: DateInputProps) => {
-  const { className = 'input_m', ...rest } = props;
+  const {
+    className = 'input_m',
+    placeholder,
+    disabled,
+    invalid,
+    setDate,
+    ...rest
+  } = props;
   const [inputValue, setInputValue] = useState('');
   const [year, setYear] = useState(2023);
   const [month, setMonth] = useState(8);
   const [showCalendar, setShowCalendar] = useState<boolean>(false);
+  const uid = useId();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const clickCheck = (e: any) => {
-      if (
-        document.activeElement !== ref.current &&
-        !ref.current?.contains(e.target)
-      ) {
-        setShowCalendar(false);
-      } else {
-        setShowCalendar(true);
-      }
-    };
-    document.addEventListener('click', clickCheck);
+    if (!disabled) {
+      const clickCheck = (e: any) => {
+        if (
+          document.activeElement !== ref.current &&
+          !ref.current?.contains(e.target)
+        ) {
+          setShowCalendar(false);
+        } else {
+          setShowCalendar(true);
+        }
+      };
+      document.addEventListener('click', clickCheck);
 
-    return () => document.removeEventListener('click', clickCheck);
-  }, []);
+      return () => document.removeEventListener('click', clickCheck);
+    }
+  }, [disabled]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (isNaN(Number(e.target.value))) return;
@@ -72,20 +94,32 @@ const DateInput = (props: DateInputProps) => {
       setMonth(0);
       newValue += e.target.value.substring(4, 6);
     }
-
     setInputValue(newValue);
+    if (newValue.length === 6) setDate(newValue);
+    else setDate('');
   };
 
   const handleMonthBtnClick = (mon: string) => {
     setMonth(Number(mon));
     setShowCalendar(false);
     setInputValue(`${year}${mon}`);
+    setDate(`${year}${mon}`);
   };
 
   return (
-    <Wrapper className={className} ref={ref}>
+    <Wrapper className={`${className} ${invalid ? 'invalid' : ''}`} ref={ref}>
+      <Calendar className="calendar-logo" />
+      <label
+        className={showCalendar || inputValue ? 'focused' : ''}
+        htmlFor={`input-date-${uid}`}
+      >
+        {placeholder}
+      </label>
       <input
         {...rest}
+        ref={inputRef}
+        disabled={disabled}
+        id={`input-date-${uid}`}
         // value={`${year}${month.toString().padStart(2, '0')}`}
         value={inputValue}
         onChange={handleInputChange}
@@ -136,9 +170,36 @@ const Wrapper = styled.div<WrapperProps>`
   border-radius: 4px;
   box-sizing: border-box;
   width: ${({ width }) => `${width}px`};
+  & .focused {
+    top: 0;
+    left: 12px;
+    transform: scale(90%) translateY(-50%);
+    background-color: #ffffff;
+    padding: 6px;
+  }
+  & label {
+    cursor: unset;
+    position: absolute;
+    top: 50%;
+    left: 34px;
+    transform: translateY(-50%);
+    font-size: 14px;
+    transition: all 300ms ease;
+  }
+  & .calendar-logo {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 10px;
+    top: 12px;
+    & path {
+      stroke: #8491a7;
+      stroke-width: 1px;
+    }
+  }
   & input {
     width: 100%;
-    padding: 0 12px;
+    padding: 0 12px 0 36px;
     height: 100%;
     border: 0;
     border-radius: 4px;
@@ -192,7 +253,7 @@ const Wrapper = styled.div<WrapperProps>`
   & .active {
     background-color: #2d65f2;
     color: #ffffff;
-    font-weight: 700;
+    font-weight: bold;
   }
   & .non-active:hover {
     background-color: #f7fafe;

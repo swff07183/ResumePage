@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react';
+import React, { useId } from 'react';
 import styled from 'styled-components';
 
 interface CheckboxInputProps {
@@ -9,8 +9,6 @@ interface CheckboxInputProps {
 
 const CheckboxInput = (props: CheckboxInputProps) => {
   const { content, isChecked, setIsChecked } = props;
-
-  // const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const uid = useId();
   return (
@@ -47,6 +45,7 @@ const Wrapper = styled.div`
     position: relative;
     display: flex;
     align-items: center;
+    font-size: 14px;
   }
   & label::before {
     display: inline-block;

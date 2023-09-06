@@ -1,12 +1,14 @@
 import React from 'react';
 import styled from 'styled-components';
 import Resume from '../containers/Resume';
+import ResumeSideBar from '../containers/ResumeSideBar';
 
 const IndexPage = () => {
   return (
     <Wrapper>
       <ContentDiv>
         <Resume />
+        <ResumeSideBar />
       </ContentDiv>
     </Wrapper>
   );
@@ -22,7 +24,8 @@ const ContentDiv = styled.div`
   box-sizing: border-box;
   width: 1250px;
   display: flex;
-  flex-direction: column;
+  gap: 20px;
+  /* flex-direction: column; */
   padding: 0 20px;
 `;
 

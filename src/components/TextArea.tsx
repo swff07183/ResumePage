@@ -1,10 +1,12 @@
 import React, { useState, TextareaHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
-interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {}
+interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  title?: string;
+}
 
 const TextArea = (props: TextAreaProps) => {
-  const { ...rest } = props;
+  const { title, ...rest } = props;
 
   const [text, setText] = useState<string>('');
 
@@ -27,7 +29,7 @@ const TextArea = (props: TextAreaProps) => {
 
   return (
     <Wrapper>
-      <h5>TextArea Title</h5>
+      <h5>{title}</h5>
       <textarea {...rest} onChange={handleTextChange} />
       <div className="text-len">
         <span>
@@ -48,10 +50,14 @@ const Wrapper = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  & h5 {
+    margin: 10px 0;
+    font-size: 16px;
+  }
   & textarea {
     height: 237px;
     padding: 24px;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
     border: 1px solid #8491a7;
     border-radius: 4px;
   }
@@ -66,7 +72,7 @@ const Wrapper = styled.div`
     letter-spacing: -1px;
   }
   & .text-bold {
-    font-weight: 700;
+    font-weight: bold;
   }
 `;
 

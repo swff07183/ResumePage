@@ -21,6 +21,9 @@ const EduUniversityForm = () => {
     graduateDate: '',
     passDate: '',
   });
+  const [isError, setIsError] = useState({
+    school: false,
+  });
   const [isTransfer, setIsTransfer] = useState<boolean>(false);
 
   // 추가전공
@@ -54,6 +57,7 @@ const EduUniversityForm = () => {
   };
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUniversityInfo({ ...universityInfo, [e.target.name]: e.target.value });
+    setIsError({ ...isError, [e.target.name]: false });
   };
 
   const handleClickAdd = (type: 'major' | 'grade' | 'region') => {
@@ -76,14 +80,26 @@ const EduUniversityForm = () => {
           active: !prev.active,
         }));
         break;
-      // default:
-      //   throw new Error('없음');
     }
+  };
+
+  const handleSubmit = () => {
+    const submitInfo = {
+      ...universityInfo,
+      extraMajorInfo,
+      gradeInfo,
+      regionInfo,
+    };
+    setIsError({
+      school: universityInfo.school === '',
+    });
+    console.log(submitInfo);
+    // closeEduForm();
   };
 
   return (
     <Wrapper hidden={finalEdu !== 'university'}>
-      <div className="form-col">
+      <div className="form-div">
         <div className="form-row">
           <SelectInput
             options={EDUCATION_OPTIONS}
@@ -95,7 +111,12 @@ const EduUniversityForm = () => {
             options={REGION_OPTIONS}
             onChange={handleSelectRegion}
           />
-          <Input name="school" placeholder="학교명" onChange={onChange} />
+          <Input
+            name="school"
+            placeholder="학교명"
+            onChange={onChange}
+            invalid={isError.school}
+          />
           <CheckboxInput
             content="편입"
             isChecked={isTransfer}
@@ -167,10 +188,7 @@ const EduUniversityForm = () => {
             onClick={() => handleClickAdd('region')}
           />
         </div>
-        <FormButtons
-          onCancel={closeEduForm}
-          onSubmit={() => console.log(universityInfo)}
-        />
+        <FormButtons onCancel={closeEduForm} onSubmit={handleSubmit} />
       </div>
     </Wrapper>
   );

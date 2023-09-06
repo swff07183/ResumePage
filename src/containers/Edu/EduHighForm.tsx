@@ -37,9 +37,14 @@ const EduHighForm = () => {
     setHighInfo({ ...highInfo, [e.target.name]: e.target.value });
   };
 
+  const handleSubmit = () => {
+    console.log({ ...highInfo, isQualificationExam });
+    closeEduForm();
+  };
+
   return (
     <Wrapper hidden={finalEdu !== 'high'}>
-      <div className="form-col">
+      <div className="form-div">
         <div className="form-row">
           {!isQualificationExam && (
             <SelectInput
@@ -76,7 +81,7 @@ const EduHighForm = () => {
           />
         </div>
         <div
-          className="form-col"
+          className="form-div"
           style={{ display: isQualificationExam ? 'none' : 'flex' }}
         >
           <div className="form-row">
@@ -110,10 +115,7 @@ const EduHighForm = () => {
             <Input name="major" placeholder="전공" type="text" />
           </div>
         </div>
-        <FormButtons
-          onCancel={closeEduForm}
-          onSubmit={() => console.log(highInfo)}
-        />
+        <FormButtons onCancel={closeEduForm} onSubmit={handleSubmit} />
       </div>
     </Wrapper>
   );
