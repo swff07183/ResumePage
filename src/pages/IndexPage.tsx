@@ -1,15 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import Resume from '../containers/Resume';
-import ResumeSideBar from '../containers/ResumeSideBar';
+import ResumeSideBar from '@components/ResumeSideBar';
+import User from '@/features/user/components/User';
+import Education from '@/features/education/components/Education';
+import Career from '@/features/career/components/Career';
 
 const IndexPage = () => {
   return (
     <Wrapper>
       <ContentDiv>
-        <Resume />
-        <ResumeSideBar />
+        <User />
+        <Education />
+        <Career />
       </ContentDiv>
+      <ResumeSideBar />
     </Wrapper>
   );
 };
@@ -18,14 +22,14 @@ const Wrapper = styled.div`
   min-width: 1250px;
   display: flex;
   justify-content: center;
+  gap: 20px;
 `;
 
 const ContentDiv = styled.div`
-  box-sizing: border-box;
-  width: 1250px;
   display: flex;
+  flex-direction: column;
   gap: 20px;
-  /* flex-direction: column; */
+  box-sizing: border-box;
   padding: 0 20px;
 `;
 

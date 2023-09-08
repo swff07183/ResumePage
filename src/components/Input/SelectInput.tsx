@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { optionType } from '../../common/Options';
+import { IOptionType } from '@/types';
 
 interface SelectInputProps {
   className?: string;
-  options?: optionType[];
+  options?: IOptionType[];
   value?: string;
   style?: object;
   invalid?: boolean;
