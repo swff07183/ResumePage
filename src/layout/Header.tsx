@@ -4,7 +4,7 @@ import styled from 'styled-components';
 const Header = () => {
   return (
     <Wrapper>
-      <h3>header</h3>
+      <h3>Resume</h3>
     </Wrapper>
   );
 };
@@ -12,8 +12,9 @@ const Header = () => {
 const Wrapper = styled.div`
   width: 100vw;
   height: 64px;
+  padding: 0 40px;
   position: fixed;
-  box-shadow: 0 4px 16px 0 rgba(17, 42, 128, 0.08);
+  box-shadow: 0 1px 4px 0 rgba(17, 42, 128, 0.08);
   background-color: rgba(255, 255, 255, 0.95);
   /* border: 1px solid black; */
 `;

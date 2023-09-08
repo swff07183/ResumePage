@@ -9,11 +9,13 @@ import { useCareerForm } from '../../recoil/career/hooks';
 import UserInfo from '../user/UserInfo';
 import { useUserForm } from '../../recoil/user/hooks';
 import UserForm from '../user/UserForm';
+import { useExtraState } from '../../recoil/extra/hooks';
 
 const Resume = () => {
+  const { isUserFormOpen } = useUserForm();
   const { isEduFormOpen, openEduForm } = useEduForm();
   const { isCareerFormOpen, openCareerForm } = useCareerForm();
-  const { isUserFormOpen } = useUserForm();
+  const { extraListState, extraFormState } = useExtraState();
 
   return (
     <Wrapper>

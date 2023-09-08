@@ -8,6 +8,7 @@ import { ExtraMenuType } from '../models/common';
 interface IMenu {
   name: string;
   key?: ExtraMenuType;
+  required?: boolean;
 }
 
 const ResumeSideBar = () => {
@@ -15,6 +16,7 @@ const ResumeSideBar = () => {
   const menuList: IMenu[] = [
     {
       name: '학력',
+      required: true,
     },
     {
       name: '경력',
@@ -61,6 +63,7 @@ const ResumeSideBar = () => {
           >
             {menu.name}
           </button>
+          {menu.required && <div className="menu-required">필수</div>}
           {menu.key && (
             <button
               className={`menu-icon ${
@@ -101,12 +104,17 @@ const SideMenuItem = styled.div`
   align-items: center;
   height: 24px;
   font-weight: 900;
+  & .menu-required {
+    font-size: 12px;
+    font-weight: 700;
+    color: #67738e;
+  }
 
   & .menu-title {
     border: none;
-    background-color: transparent;
     font-size: 14px;
     font-weight: 900;
+    background-color: transparent;
     color: #67738e;
   }
   & .menu-icon {

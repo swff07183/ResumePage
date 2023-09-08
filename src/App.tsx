@@ -10,7 +10,6 @@ function App() {
       <Routes>
         <Route path="" element={<Layout />}>
           <Route path="/" element={<IndexPage />} />
-          <Route path="/test" element={<div>test</div>} />
         </Route>
       </Routes>
     </RecoilRoot>
