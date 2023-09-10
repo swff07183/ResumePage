@@ -1,15 +1,17 @@
 import React from 'react';
 import styled from 'styled-components';
+import logo from '@assets/img/logo.png';
 
 const Header = () => {
   return (
     <Wrapper>
-      <h3>Resume</h3>
+      <img src={logo} alt="logo" />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
+  z-index: 1000;
   display: flex;
   align-items: center;
   width: 100vw;
@@ -19,6 +21,9 @@ const Wrapper = styled.div`
   box-shadow: 0 1px 4px 0 rgba(17, 42, 128, 0.08);
   background-color: rgba(255, 255, 255, 0.95);
   /* border: 1px solid black; */
+  & img {
+    height: 100%;
+  }
 `;
 
 export default Header;
