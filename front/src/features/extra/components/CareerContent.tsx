@@ -14,7 +14,7 @@ const CareerContent = () => {
     <Resume
       title="경력기술서"
       isFormOpen={extraFormState.careerContent}
-      handleAddButtonClick={openExtraForm('careerContent')}
+      handleAddButtonClick={() => openExtraForm('careerContent')}
     >
       {extraFormState.careerContent ? (
         <CareerContentForm />
@@ -51,7 +51,7 @@ const CareerContentForm = () => {
         />
       </ResumeForm.Row>
       <ResumeForm.Buttons
-        onCancel={closeExtraForm('careerContent')}
+        onCancel={() => closeExtraForm('careerContent')}
         onSubmit={handleSubmit}
       />
     </ResumeForm>

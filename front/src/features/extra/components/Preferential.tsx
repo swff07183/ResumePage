@@ -13,7 +13,7 @@ const Preferential = () => {
     <Resume
       title="취업우대사항"
       isFormOpen={extraFormState.preferential}
-      handleAddButtonClick={openExtraForm('preferential')}
+      handleAddButtonClick={() => openExtraForm('preferential')}
     >
       {extraFormState.preferential ? (
         <PreferentialForm />
@@ -38,7 +38,7 @@ const PreferentialForm = () => {
         <CheckboxInput content="" />
       </ResumeForm.Row>
       <ResumeForm.Buttons
-        onCancel={closeExtraForm('careerContent')}
+        onCancel={() => closeExtraForm('careerContent')}
         onSubmit={handleSubmit}
       />
     </ResumeForm>

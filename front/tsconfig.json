@@ -3,11 +3,13 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
+      "@api/*": ["./src/api/*"],
       "@assets/*": ["./src/assets/*"],
       "@components/*": ["./src/components/*"],
       "@containers/*": ["./src/containers/*"],
       "@features/*": ["./src/features/*"],
-      "@hooks/*": ["./src/hooks/*"]
+      "@hooks/*": ["./src/hooks/*"],
+      "@mocks/*": ["./src/mocks/*"]
     },
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
@@ -25,5 +27,5 @@
     "noEmit": true,
     "jsx": "react-jsx"
   },
-  "include": ["src", "../craco.config.ts"]
+  "include": ["src", "../craco.config.ts", "src/mocks"]
 }

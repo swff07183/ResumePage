@@ -60,7 +60,7 @@ const ResumeSideBar = () => {
             className={`menu-title ${
               menu.key && extraListState[menu.key] ? 'active' : ''
             }`}
-            onClick={menu.key && openExtraList(menu.key)}
+            onClick={() => menu.key && openExtraList(menu.key)}
           >
             {menu.name}
           </button>
@@ -70,7 +70,7 @@ const ResumeSideBar = () => {
               className={`menu-icon ${
                 menu.key && extraListState[menu.key] ? 'icon-active' : ''
               }`}
-              onClick={menu.key && toggleExtraList(menu.key)}
+              onClick={() => menu.key && toggleExtraList(menu.key)}
             >
               {extraListState[menu.key] ? (
                 <Minus className="icon-minus" />

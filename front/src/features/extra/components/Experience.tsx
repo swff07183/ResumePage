@@ -17,7 +17,7 @@ const Experience = () => {
     <Resume
       title="경험/활동/교육"
       isFormOpen={extraFormState.skill}
-      handleAddButtonClick={openExtraForm('experience')}
+      handleAddButtonClick={() => openExtraForm('experience')}
     >
       {extraFormState.experience ? <ExperienceForm /> : <ExperienceList />}
     </Resume>
@@ -73,7 +73,7 @@ const ExperienceForm = () => {
         />
       </ResumeForm.Row>
       <ResumeForm.Buttons
-        onCancel={closeExtraForm('experience')}
+        onCancel={() => closeExtraForm('experience')}
         onSubmit={handleSubmit}
       />
     </ResumeForm>

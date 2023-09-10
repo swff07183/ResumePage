@@ -16,7 +16,7 @@ const Award = () => {
     <Resume
       title="자격/어학/수상"
       isFormOpen={extraFormState.award}
-      handleAddButtonClick={openExtraForm('award')}
+      handleAddButtonClick={() => openExtraForm('award')}
     >
       {extraFormState.award ? <AwardForm /> : <AwardList />}
     </Resume>
@@ -48,7 +48,7 @@ const AwardForm = () => {
             />
           </ResumeForm.Row>
           <ResumeForm.Buttons
-            onCancel={closeExtraForm('award')}
+            onCancel={() => closeExtraForm('award')}
             onSubmit={handleSubmit}
           />
         </ResumeForm>
@@ -69,7 +69,7 @@ const AwardForm = () => {
             <DateInput placeholder="합격년월" />
           </ResumeForm.Row>
           <ResumeForm.Buttons
-            onCancel={closeExtraForm('award')}
+            onCancel={() => closeExtraForm('award')}
             onSubmit={handleSubmit}
           />
         </ResumeForm>
@@ -91,7 +91,7 @@ const AwardForm = () => {
             <SelectInput className="input_s" />
           </ResumeForm.Row>
           <ResumeForm.Buttons
-            onCancel={closeExtraForm('award')}
+            onCancel={() => closeExtraForm('award')}
             onSubmit={handleSubmit}
           />
         </ResumeForm>
@@ -111,7 +111,7 @@ const AwardForm = () => {
             <Input placeholder="수여∙주최기관" />
           </ResumeForm.Row>
           <ResumeForm.Buttons
-            onCancel={closeExtraForm('award')}
+            onCancel={() => closeExtraForm('award')}
             onSubmit={handleSubmit}
           />
         </ResumeForm>

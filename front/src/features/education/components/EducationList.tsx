@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import NoListMessage from '@components/NoListMessage';
 import ResumeList from '@/components/ResumeList';
 

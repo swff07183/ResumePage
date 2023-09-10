@@ -8,34 +8,34 @@ export const useExtraState = () => {
   const [extraFormState, setExtraFormState] =
     useRecoilState(extraFormRecoilState);
 
-  const openExtraList = (key: ExtraMenuType) => () =>
+  const openExtraList = (key: ExtraMenuType) =>
     setExtraListState({
       ...extraListState,
       [key]: true,
     });
 
-  const closeExtraList = (key: ExtraMenuType) => () =>
+  const closeExtraList = (key: ExtraMenuType) =>
     setExtraListState({
       ...extraListState,
       [key]: false,
     });
 
-  const toggleExtraList = (key: ExtraMenuType) => () =>
+  const toggleExtraList = (key: ExtraMenuType) =>
     setExtraListState((prev) => ({
       ...extraListState,
       [key]: !prev[key],
     }));
 
-  const openExtraForm = (key: ExtraMenuType) => () =>
+  const openExtraForm = (key: ExtraMenuType) =>
     setExtraFormState({
       ...extraFormState,
       [key]: true,
     });
-  const closeExtraForm = (key: ExtraMenuType) => () =>
-    setExtraFormState({
-      ...extraFormState,
+  const closeExtraForm = (key: ExtraMenuType) =>
+    setExtraFormState((prev) => ({
+      ...prev,
       [key]: false,
-    });
+    }));
 
   return {
     extraListState,

@@ -14,7 +14,7 @@ const SelfIntroduction = () => {
     <Resume
       title="자기소개서"
       isFormOpen={extraFormState.selfIntroduction}
-      handleAddButtonClick={openExtraForm('selfIntroduction')}
+      handleAddButtonClick={() => openExtraForm('selfIntroduction')}
     >
       {extraFormState.selfIntroduction ? (
         <SelfIntroductionForm />
@@ -51,7 +51,7 @@ const SelfIntroductionForm = () => {
         />
       </ResumeForm.Row>
       <ResumeForm.Buttons
-        onCancel={closeExtraForm('selfIntroduction')}
+        onCancel={() => closeExtraForm('selfIntroduction')}
         onSubmit={handleSubmit}
       />
     </ResumeForm>
