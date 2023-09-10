@@ -57,6 +57,7 @@ const Wrapper = styled.div<WrapperProps>`
     transform: translateY(-50%);
     left: 12px;
     font-size: 14px;
+    color: #67738e;
     transition: all 300ms ease;
   }
   & input {

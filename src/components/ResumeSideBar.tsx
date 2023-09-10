@@ -53,6 +53,7 @@ const ResumeSideBar = () => {
 
   return (
     <Wrapper>
+      <ResumeProgress />
       {menuList.map((menu: IMenu) => (
         <SideMenuItem key={`menu-${menu.name}`}>
           <button
@@ -87,6 +88,7 @@ const ResumeSideBar = () => {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 8px;
 
   padding: 24px 16px 24px;
@@ -138,6 +140,68 @@ const SideMenuItem = styled.div`
   }
   & .active {
     color: #2d64f2;
+  }
+`;
+
+const ResumeProgress = () => {
+  return (
+    <ResumeProgressWrapper>
+      <div className="title">
+        <span>이력서 완성도</span>
+        <span>0%</span>
+      </div>
+      <div className="progress-bar" />
+      <div className="content">
+        <span>
+          <span>기본정보, 학력</span>만 입력하면
+        </span>
+        <span>이력서가 완성돼요!</span>
+      </div>
+    </ResumeProgressWrapper>
+  );
+};
+
+const ResumeProgressWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 24px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid #d3d6dc;
+  & > .title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: -2px;
+  }
+  & > .progress-bar {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    background-color: #eaedf4;
+    position: relative;
+    overflow: hidden;
+    &::after {
+      z-index: 100;
+      content: '';
+      position: absolute;
+      border-radius: 4px;
+      left: 0;
+      top: 0;
+      width: 8px;
+      height: 100%;
+      background: linear-gradient(270deg, #5189fa 0%, #bcd1fc 100%);
+    }
+  }
+  & > .content {
+    display: flex;
+    flex-direction: column;
+    font-size: 13px;
+    & > span > span {
+      color: #2d65f2;
+      font-weight: bold;
+    }
   }
 `;
 

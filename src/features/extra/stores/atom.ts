@@ -3,7 +3,7 @@ import { atom } from 'recoil';
 export const extraListRecoilState = atom({
   key: 'extraListRecoilState',
   default: {
-    skill: true, // 스킬
+    skill: false, // 스킬
     experience: false, // 경험/활동/교육
     award: false, // 자격/어학/수상
     portfolio: false, // 포트폴리오

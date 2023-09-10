@@ -10,6 +10,8 @@ const Header = () => {
 };
 
 const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
   width: 100vw;
   height: 64px;
   padding: 0 40px;

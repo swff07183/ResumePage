@@ -44,7 +44,11 @@ const SelfIntroductionForm = () => {
         />
       </ResumeForm.Row>
       <ResumeForm.Row>
-        <TextArea name="content" placeholder="" onChange={handleInputChange} />
+        <TextArea
+          name="content"
+          placeholder="차별화된 자기소개서를 완성해보세요."
+          onChange={handleInputChange}
+        />
       </ResumeForm.Row>
       <ResumeForm.Buttons
         onCancel={closeExtraForm('selfIntroduction')}

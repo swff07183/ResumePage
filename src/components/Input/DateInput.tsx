@@ -186,6 +186,7 @@ const Wrapper = styled.div<WrapperProps>`
     left: 34px;
     transform: translateY(-50%);
     font-size: 14px;
+    color: #67738e;
     transition: all 300ms ease;
   }
   & .calendar-logo {

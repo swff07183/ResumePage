@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 const ContentDiv = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 40px;
   box-sizing: border-box;
   padding: 0 20px;
 `;
