@@ -1,0 +1,83 @@
+@font-face {
+  font-family: 'NanumGothic';
+  font-style: normal;
+  font-weight: 500;
+  src: url('./assets/font/NanumGothic-Regular.ttf') format('woff');
+}
+
+@font-face {
+  font-family: 'NanumGothic';
+  font-style: normal;
+  font-weight: bold;
+  src: url('./assets/font/NanumGothic-Bold.ttf') format('woff');
+}
+
+@font-face {
+  font-family: 'NanumGothic';
+  font-style: normal;
+  font-weight: 900;
+  src: url('./assets/font/NanumGothic-ExtraBold.ttf') format('woff');
+}
+
+* {
+  font-family: 'NanumGothic';
+}
+
+body {
+  margin: 0;
+  font-family: 'NanumGothic', -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  letter-spacing: -1px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  font-size: 20px;
+}
+button {
+  padding: 0;
+  cursor: pointer;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.input_s {
+  width: 135px;
+  height: 48px;
+}
+
+.input_m {
+  width: 278px;
+  height: 48px;
+}
+
+.input_l {
+  width: 375px;
+  height: 48px;
+}
+
+.input_xl {
+  width: 100%;
+  height: 48px;
+}
+
+.invalid {
+  border: 1px solid #cd0d0d !important;
+}
