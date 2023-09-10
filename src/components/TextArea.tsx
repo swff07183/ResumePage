@@ -31,7 +31,7 @@ const TextArea = (props: TextAreaProps) => {
 
   return (
     <Wrapper>
-      <h5>{title}</h5>
+      {title && <h5>{title}</h5>}
       <textarea name={name} {...rest} onChange={handleTextChange} />
       <div className="text-len">
         <span>

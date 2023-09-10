@@ -8,9 +8,19 @@ interface ResumeDivProps {
   handleAddButtonClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-export const Resume = (props: ResumeDivProps) => {
-  const { title, isRequired, isFormOpen, children, handleAddButtonClick } =
-    props;
+/**
+ * Random Component
+ * @augments {Component<Props, State>}
+ */
+export const Resume = ({
+  title,
+  isRequired,
+  isFormOpen,
+  children,
+  handleAddButtonClick,
+}: ResumeDivProps) => {
+  // const { title, isRequired, isFormOpen, children, handleAddButtonClick } =
+  //   props;
   return (
     <Wrapper>
       <div className="resume-title-div">
@@ -35,9 +45,11 @@ export const Resume = (props: ResumeDivProps) => {
 const Wrapper = styled.div`
   width: 930px;
   & .resume-title-div {
+    height: 46px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 6px;
   }
   & .resume-title {
     padding: 0 16px;

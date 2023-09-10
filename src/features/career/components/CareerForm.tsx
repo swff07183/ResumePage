@@ -61,7 +61,7 @@ const CareerForm = () => {
 
   return (
     <ResumeForm>
-      <div className="form-row">
+      <ResumeForm.Row>
         <Input
           name="company"
           placeholder="회사명*"
@@ -90,8 +90,8 @@ const CareerForm = () => {
           invalid={isError.exitDate}
           setDate={handleDateChange('exitDate')}
         />
-      </div>
-      <div className="form-row">
+      </ResumeForm.Row>
+      <ResumeForm.Row>
         <Input
           name="position"
           placeholder="직급/직책"
@@ -103,17 +103,17 @@ const CareerForm = () => {
           onChange={handleInputChange}
         />
         {/* <CheckboxInput content="회사명 비공개" /> */}
-      </div>
-      <div className="form-row">
+      </ResumeForm.Row>
+      <ResumeForm.Row>
         <TextArea
           name="task"
           title="담당업무"
           placeholder={careerTextAreaPlaceHolder}
           onChange={handleInputChange}
         />
-      </div>
+      </ResumeForm.Row>
       {(checkSalary || checkCareerRegion) && (
-        <div className="form-row">
+        <ResumeForm.Row>
           {checkSalary && (
             <React.Fragment>
               <Input
@@ -133,9 +133,9 @@ const CareerForm = () => {
               onChange={handleSelectChange('careerRegion')}
             />
           )}
-        </div>
+        </ResumeForm.Row>
       )}
-      <div className="form-row">
+      <ResumeForm.Row>
         <AddButton
           content="연봉"
           isActive={checkSalary}
@@ -146,7 +146,7 @@ const CareerForm = () => {
           isActive={checkCareerRegion}
           onClick={() => setCheckCareerRegion((prev) => !prev)}
         />
-      </div>
+      </ResumeForm.Row>
       <FormButtons onCancel={closeCareerForm} onSubmit={handleSubmit} />
     </ResumeForm>
   );

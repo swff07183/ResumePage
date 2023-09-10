@@ -15,12 +15,14 @@ const Input = (props: InputProps) => {
 
   return (
     <Wrapper className={`${className} ${invalid ? 'invalid' : ''}`}>
-      <label
-        className={isFocused || inputRef.current?.value ? 'focused' : ''}
-        htmlFor={`input-${uid}`}
-      >
-        {placeholder}
-      </label>
+      {placeholder && (
+        <label
+          className={isFocused || inputRef.current?.value ? 'focused' : ''}
+          htmlFor={`input-${uid}`}
+        >
+          {placeholder}
+        </label>
+      )}
       <input
         ref={inputRef}
         id={`input-${uid}`}

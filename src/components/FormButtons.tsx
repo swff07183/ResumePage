@@ -10,7 +10,7 @@ interface FormButtonsProps {
 const FormButtons = (props: FormButtonsProps) => {
   const { onCancel, onSubmit } = props;
   return (
-    <Wrapper>
+    <FormButtonWrapper>
       <Button
         type="border"
         content="취소"
@@ -20,11 +20,11 @@ const FormButtons = (props: FormButtonsProps) => {
         }}
       />
       <Button type="fill" content="저장" onClick={onSubmit} />
-    </Wrapper>
+    </FormButtonWrapper>
   );
 };
 
-const Wrapper = styled.div`
+const FormButtonWrapper = styled.div`
   display: flex;
   justify-content: end;
   gap: 8px;

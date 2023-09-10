@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 import { extraFormRecoilState, extraListRecoilState } from './atom';
-import { ExtraMenuType } from '../types/ExtraMenuType';
+import { ExtraMenuType } from '../types';
 
 export const useExtraState = () => {
   const [extraListState, setExtraListState] =
@@ -8,30 +8,30 @@ export const useExtraState = () => {
   const [extraFormState, setExtraFormState] =
     useRecoilState(extraFormRecoilState);
 
-  const openExtraList = (key: ExtraMenuType) =>
+  const openExtraList = (key: ExtraMenuType) => () =>
     setExtraListState({
       ...extraListState,
       [key]: true,
     });
 
-  const closeExtraList = (key: ExtraMenuType) =>
+  const closeExtraList = (key: ExtraMenuType) => () =>
     setExtraListState({
       ...extraListState,
       [key]: false,
     });
 
-  const toggleExtraList = (key: ExtraMenuType) =>
+  const toggleExtraList = (key: ExtraMenuType) => () =>
     setExtraListState((prev) => ({
       ...extraListState,
       [key]: !prev[key],
     }));
 
-  const openExtraForm = (key: ExtraMenuType) =>
+  const openExtraForm = (key: ExtraMenuType) => () =>
     setExtraFormState({
       ...extraFormState,
       [key]: true,
     });
-  const closeExtraForm = (key: ExtraMenuType) =>
+  const closeExtraForm = (key: ExtraMenuType) => () =>
     setExtraFormState({
       ...extraFormState,
       [key]: false,

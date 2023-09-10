@@ -4,11 +4,12 @@ import { useEduForm } from '../stores/hooks';
 import EducationForm from './EducationForm';
 import EducationList from './EducationList';
 
-const Education = () => {
+export const Education = () => {
   const { isEduFormOpen, openEduForm } = useEduForm();
   return (
     <Resume
       title="학력"
+      isRequired
       isFormOpen={isEduFormOpen}
       handleAddButtonClick={openEduForm}
     >
@@ -16,5 +17,3 @@ const Education = () => {
     </Resume>
   );
 };
-
-export default Education;

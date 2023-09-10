@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useExtraState } from '../features/extra/stores/hooks';
-import { ReactComponent as Plus } from '../assets/svg/plus.svg';
-import { ReactComponent as Minus } from '../assets/svg/minus.svg';
-import { ExtraMenuType } from '../features/extra/types/ExtraMenuType';
+import { useExtraState } from '@features/extra/stores/hooks';
+import { ReactComponent as Plus } from '@assets/svg/plus.svg';
+import { ReactComponent as Minus } from '@assets/svg/minus.svg';
+import { ExtraMenuType } from '../features/extra/types';
 
 interface IMenu {
   name: string;
@@ -54,12 +54,12 @@ const ResumeSideBar = () => {
   return (
     <Wrapper>
       {menuList.map((menu: IMenu) => (
-        <SideMenuItem>
+        <SideMenuItem key={`menu-${menu.name}`}>
           <button
             className={`menu-title ${
               menu.key && extraListState[menu.key] ? 'active' : ''
             }`}
-            onClick={() => menu.key && openExtraList(menu.key)}
+            onClick={menu.key && openExtraList(menu.key)}
           >
             {menu.name}
           </button>
@@ -69,7 +69,7 @@ const ResumeSideBar = () => {
               className={`menu-icon ${
                 menu.key && extraListState[menu.key] ? 'icon-active' : ''
               }`}
-              onClick={() => menu.key && toggleExtraList(menu.key)}
+              onClick={menu.key && toggleExtraList(menu.key)}
             >
               {extraListState[menu.key] ? (
                 <Minus className="icon-minus" />

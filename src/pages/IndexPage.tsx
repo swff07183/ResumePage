@@ -1,9 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import ResumeSideBar from '@components/ResumeSideBar';
-import User from '@/features/user/components/User';
-import Education from '@/features/education/components/Education';
-import Career from '@/features/career/components/Career';
+import { Education } from '@/features/education';
+import { Career } from '@/features/career';
+import { User } from '@/features/user';
+import { Extra } from '@/features/extra';
 
 const IndexPage = () => {
   return (
@@ -12,6 +13,7 @@ const IndexPage = () => {
         <User />
         <Education />
         <Career />
+        <Extra />
       </ContentDiv>
       <ResumeSideBar />
     </Wrapper>
