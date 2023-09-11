@@ -38,6 +38,9 @@ schema_view = get_schema_view(
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/accounts/', include('dj_rest_auth.urls')),
+    path('api/accounts/', include('dj_rest_auth.registration.urls')),
+    path('api/accounts/', include('allauth.urls')),
+    path('api/accounts/', include('accounts.urls')),
     path('api/resume/', include('resume.urls')),
     re_path(
         r"^swagger/$",
