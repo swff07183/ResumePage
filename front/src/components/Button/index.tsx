@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 interface ButtonProps {
   type: 'fill' | 'border' | 'transparent';
   content: string;
+  style?: any;
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 

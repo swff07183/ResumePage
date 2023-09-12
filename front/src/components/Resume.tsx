@@ -19,8 +19,6 @@ export const Resume = ({
   children,
   handleAddButtonClick,
 }: ResumeDivProps) => {
-  // const { title, isRequired, isFormOpen, children, handleAddButtonClick } =
-  //   props;
   return (
     <Wrapper>
       <div className="resume-title-div">
@@ -28,7 +26,7 @@ export const Resume = ({
           <h2>{title}</h2>
           {isRequired && <span>필수</span>}
         </div>
-        {!isFormOpen && (
+        {!isFormOpen && handleAddButtonClick && (
           <button
             className="resume-create-button"
             onClick={handleAddButtonClick}

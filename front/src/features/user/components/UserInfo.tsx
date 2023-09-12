@@ -46,7 +46,7 @@ const UserInfo = () => {
         </div>
       </div>
       <div className="info-right">
-        <img src={default_user_img} alt="default_user_img" />
+        {/* <img src={default_user_img} alt="default_user_img" /> */}
         <button className="btn-user-edit" onClick={openUserForm}>
           <Pencil />
         </button>
@@ -57,6 +57,7 @@ const UserInfo = () => {
 
 const Wrapper = styled.div`
   display: flex;
+  min-height: 140px;
 
   & .info-content-item {
     display: flex;

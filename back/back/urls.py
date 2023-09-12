@@ -34,14 +34,11 @@ schema_view = get_schema_view(
     permission_classes=[permissions.AllowAny],
 )
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/accounts/', include('dj_rest_auth.urls')),
-    path('api/accounts/', include('dj_rest_auth.registration.urls')),
-    path('api/accounts/', include('allauth.urls')),
-    path('api/accounts/', include('accounts.urls')),
-    path('api/resume/', include('resume.urls')),
+    path('api/user/', include('dj_rest_auth.urls')),
+    path('api/user/', include('user.urls')),
+    path('api/user/signup/', include('dj_rest_auth.registration.urls')),
     re_path(
         r"^swagger/$",
         schema_view.with_ui('swagger', cache_timeout=0),

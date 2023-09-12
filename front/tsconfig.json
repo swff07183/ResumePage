@@ -9,6 +9,7 @@
       "@containers/*": ["./src/containers/*"],
       "@features/*": ["./src/features/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@pages/*": ["./src/pages/*"],
       "@mocks/*": ["./src/mocks/*"]
     },
     "target": "es5",
