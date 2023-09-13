@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import SelectInput from '@components/Input/SelectInput';
+import { SelectInput } from '@components';
 import { ReactComponent as Pencil } from '@assets/svg/pencil.svg';
 import { useUserForm } from '../stores/hooks';
 import default_user_img from '@assets/img/default-user-img.png';

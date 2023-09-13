@@ -1,11 +1,13 @@
 import React from 'react';
 import { ResumeForm } from '@components/ResumeForm';
-import FormButtons from '../../../components/FormButtons';
 import { useUserForm } from '../stores/hooks';
-import Input from '@components/Input';
-import SelectInput from '@components/Input/SelectInput';
-import DateInput from '@components/Input/DateInput';
-import { Resume } from '@/components/Resume';
+import {
+  FormButtons,
+  Input,
+  SelectInput,
+  DateInput,
+  Resume,
+} from '@components';
 
 const UserForm = () => {
   const { closeUserForm } = useUserForm();

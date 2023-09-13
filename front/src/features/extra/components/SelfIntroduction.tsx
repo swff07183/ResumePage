@@ -2,10 +2,8 @@ import React from 'react';
 import { Resume } from '@/components/Resume';
 import { useExtraState } from '../stores/hooks';
 import { ResumeForm } from '@/components/ResumeForm';
-import NoListMessage from '@/components/NoListMessage';
 import { useForm } from '@/hooks';
-import TextArea from '@/components/TextArea';
-import Input from '@/components/Input';
+import { TextArea, NoListMessage, Input } from '@components';
 
 const SelfIntroduction = () => {
   const { extraFormState, openExtraForm } = useExtraState();

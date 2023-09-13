@@ -6,7 +6,7 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   name?: string;
 }
 
-const TextArea = (props: TextAreaProps) => {
+export const TextArea = (props: TextAreaProps) => {
   const { title, name, onChange, ...rest } = props;
 
   const [text, setText] = useState<string>('');
@@ -77,5 +77,3 @@ const Wrapper = styled.div`
     font-weight: bold;
   }
 `;
-
-export default TextArea;

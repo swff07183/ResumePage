@@ -11,7 +11,7 @@ interface IMenu {
   required?: boolean;
 }
 
-const ResumeSideBar = () => {
+export const ResumeSideBar = () => {
   const { extraListState, openExtraList, toggleExtraList } = useExtraState();
   const menuList: IMenu[] = [
     {
@@ -204,5 +204,3 @@ const ResumeProgressWrapper = styled.div`
     }
   }
 `;
-
-export default ResumeSideBar;

@@ -1,10 +1,8 @@
 import React from 'react';
 import { Resume } from '@/components/Resume';
 import { useExtraState } from '../stores/hooks';
-import { ResumeForm } from '@/components/ResumeForm';
-import NoListMessage from '@/components/NoListMessage';
 import { useForm } from '@/hooks';
-import CheckboxInput from '@/components/Input/CheckboxInput';
+import { ResumeForm, CheckboxInput, NoListMessage } from '@components';
 
 const Preferential = () => {
   const { extraFormState, openExtraForm } = useExtraState();

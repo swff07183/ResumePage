@@ -67,5 +67,3 @@ ResumeList.DetailContent = styled.div`
     content: '';
   }
 `;
-
-export default ResumeList;

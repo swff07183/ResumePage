@@ -5,6 +5,7 @@
       "@/*": ["./src/*"],
       "@api/*": ["./src/api/*"],
       "@assets/*": ["./src/assets/*"],
+      "@components": ["./src/components/index.ts"],
       "@components/*": ["./src/components/*"],
       "@containers/*": ["./src/containers/*"],
       "@features/*": ["./src/features/*"],

@@ -8,7 +8,7 @@ interface ButtonProps {
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
-const Button = (props: ButtonProps) => {
+export const Button = (props: ButtonProps) => {
   const { type, content, ...rest } = props;
   return (
     <StyledButton type={type} {...rest}>
@@ -46,5 +46,3 @@ const StyledButton = styled.button<StyledButtonProps>`
       `
       : ``}
 `;
-
-export default Button;

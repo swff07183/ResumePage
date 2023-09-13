@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import SelectInput from '@components/Input/SelectInput';
 import { EDUCATION_OPTIONS, GRADUATION_OPTIONS } from '../options';
 import { REGION_OPTIONS } from '@/common/Options';
-import FormButtons from '@/components/FormButtons';
-import CheckboxInput from '@components/Input/CheckboxInput';
-import Input from '@components/Input';
 import { useEduForm, useFinalEdu } from '../stores/hooks';
-import DateInput from '@components/Input/DateInput';
+import {
+  SelectInput,
+  FormButtons,
+  CheckboxInput,
+  Input,
+  DateInput,
+} from '@components';
 import { ResumeForm } from '@/components/ResumeForm';
 
 const EduPrimaryForm = () => {

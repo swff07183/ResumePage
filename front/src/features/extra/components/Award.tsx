@@ -2,12 +2,9 @@ import React, { ChangeEvent, useState } from 'react';
 import { Resume } from '@/components/Resume';
 import { useExtraState } from '../stores/hooks';
 import { ResumeForm } from '@/components/ResumeForm';
-import NoListMessage from '@/components/NoListMessage';
 import { useForm } from '@/hooks';
-import SelectInput from '@/components/Input/SelectInput';
 import { AWARD_TYPE } from '../options';
-import Input from '@/components/Input';
-import DateInput from '@/components/Input/DateInput';
+import { SelectInput, NoListMessage, Input, DateInput } from '@components';
 
 const Award = () => {
   const { extraFormState, openExtraForm } = useExtraState();

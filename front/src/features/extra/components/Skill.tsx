@@ -1,13 +1,10 @@
 import React, { useEffect } from 'react';
 import { Resume } from '@/components/Resume';
 import { useExtraState } from '../stores/hooks';
-import { ResumeForm } from '@/components/ResumeForm';
-import NoListMessage from '@/components/NoListMessage';
-import Input from '@/components/Input';
 import { useForm } from '@/hooks';
 import { useSkillQuery } from '../hooks/skill';
 import { styled } from 'styled-components';
-import ResumeList from '@/components/ResumeList';
+import { Input, NoListMessage, ResumeList, ResumeForm } from '@components';
 
 const Skill = () => {
   const { extraFormState, openExtraForm } = useExtraState();

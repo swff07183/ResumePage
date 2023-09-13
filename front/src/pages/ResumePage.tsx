@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import ResumeSideBar from '@components/ResumeSideBar';
+import { ResumeSideBar } from '@/components';
 import { Education } from '@/features/education';
 import { Career } from '@/features/career';
 import { User } from '@/features/user';

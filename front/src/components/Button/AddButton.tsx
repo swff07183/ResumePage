@@ -9,7 +9,7 @@ interface AddButtonProps {
   onClick?: React.MouseEventHandler<HTMLElement>;
 }
 
-const AddButton = (props: AddButtonProps) => {
+export const AddButton = (props: AddButtonProps) => {
   const { content, isActive, onClick } = props;
 
   return (
@@ -33,5 +33,3 @@ const Wrapper = styled.button`
   border-radius: 4px;
   font-size: 14px;
 `;
-
-export default AddButton;

@@ -5,7 +5,7 @@ interface NoListMessageProps {
   message: string;
 }
 
-const NoListMessage = (props: NoListMessageProps) => {
+export const NoListMessage = (props: NoListMessageProps) => {
   const { message } = props;
   return <Wrapper>{message}</Wrapper>;
 };
@@ -18,5 +18,3 @@ const Wrapper = styled.div`
   color: #67738e;
   height: 140px;
 `;
-
-export default NoListMessage;

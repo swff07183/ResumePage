@@ -1,13 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from './Button';
+import { Button } from './Button/Button';
 
 interface FormButtonsProps {
   onCancel?: () => void;
   onSubmit?: () => void;
 }
 
-const FormButtons = (props: FormButtonsProps) => {
+export const FormButtons = (props: FormButtonsProps) => {
   const { onCancel, onSubmit } = props;
   return (
     <FormButtonWrapper>
@@ -29,5 +29,3 @@ const FormButtonWrapper = styled.div`
   justify-content: end;
   gap: 8px;
 `;
-
-export default FormButtons;

@@ -11,7 +11,7 @@ interface SelectInputProps {
   onChange?: React.ChangeEventHandler<HTMLSelectElement>;
 }
 
-const SelectInput = (props: SelectInputProps) => {
+export const SelectInput = (props: SelectInputProps) => {
   const {
     className = 'input_m',
     options = [],
@@ -55,5 +55,3 @@ const Wrapper = styled.div`
     background-repeat: no-repeat;
   }
 `;
-
-export default SelectInput;

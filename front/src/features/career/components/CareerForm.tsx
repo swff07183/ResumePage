@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 
 import { ResumeForm } from '@components/ResumeForm';
-import FormButtons from '@/components/FormButtons';
-import Input from '@components/Input';
-import SelectInput from '@components/Input/SelectInput';
-import TextArea from '@components/TextArea';
+import {
+  FormButtons,
+  Input,
+  SelectInput,
+  TextArea,
+  DateInput,
+  AddButton,
+} from '@components';
+
 import { useCareerForm } from '../stores/hooks';
-import DateInput from '@components/Input/DateInput';
-import AddButton from '@components/Button/AddButton';
+
 import { useForm } from '@/hooks';
 
 import { CAREER_STATUS_OPTIONS } from '../options';

@@ -34,7 +34,7 @@ interface DateInputProps extends InputHTMLAttributes<HTMLInputElement> {
   invalid?: boolean;
 }
 
-const DateInput = (props: DateInputProps) => {
+export const DateInput = (props: DateInputProps) => {
   const {
     className = 'input_m',
     placeholder,
@@ -262,5 +262,3 @@ const Wrapper = styled.div<WrapperProps>`
     background-color: #f7fafe;
   }
 `;
-
-export default DateInput;

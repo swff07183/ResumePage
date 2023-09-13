@@ -1,6 +1,6 @@
 import { HTMLAttributes } from 'react';
 import { styled } from 'styled-components';
-import Button from './Button';
+import { Button } from './Button/Button';
 
 interface ResumeFormProps extends HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;

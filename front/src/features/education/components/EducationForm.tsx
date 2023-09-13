@@ -1,13 +1,12 @@
 import React from 'react';
 import { ResumeForm } from '@components/ResumeForm';
-import SelectInput from '@components/Input/SelectInput';
 import { EDUCATION_OPTIONS } from '../options';
 import EduPrimaryForm from './EduPrimaryForm';
 import EduMiddleForm from './EduMiddleForm';
 import EduHighForm from './EduHighForm';
 import EduUniversityForm from './EduUniversityForm';
-import FormButtons from '../../../components/FormButtons';
 import { useEduForm, useFinalEdu } from '../stores/hooks';
+import { FormButtons, SelectInput } from '@components';
 
 const EducationForm = () => {
   const { closeEduForm } = useEduForm();

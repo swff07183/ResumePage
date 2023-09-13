@@ -7,7 +7,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   invalid?: boolean;
 }
 
-const Input = (props: InputProps) => {
+export const Input = (props: InputProps) => {
   const { className = 'input_m', placeholder, invalid, ...rest } = props;
   const uid = useId();
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -69,5 +69,3 @@ const Wrapper = styled.div<WrapperProps>`
     box-sizing: border-box;
   }
 `;
-
-export default Input;

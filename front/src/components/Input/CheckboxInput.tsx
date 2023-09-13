@@ -7,7 +7,7 @@ interface CheckboxInputProps {
   setIsChecked?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const CheckboxInput = (props: CheckboxInputProps) => {
+export const CheckboxInput = (props: CheckboxInputProps) => {
   const { content, isChecked, setIsChecked } = props;
 
   const uid = useId();
@@ -77,5 +77,3 @@ const Wrapper = styled.div`
     content: '';
   }
 `;
-
-export default CheckboxInput;

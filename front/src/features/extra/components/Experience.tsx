@@ -2,13 +2,15 @@ import React from 'react';
 import { Resume } from '@/components/Resume';
 import { useExtraState } from '../stores/hooks';
 import { ResumeForm } from '@/components/ResumeForm';
-import NoListMessage from '@/components/NoListMessage';
-import Input from '@/components/Input';
 import { useForm } from '@/hooks';
-import SelectInput from '@/components/Input/SelectInput';
 import { EXPERIENCE_TYPE } from '../options';
-import DateInput from '@/components/Input/DateInput';
-import TextArea from '@/components/TextArea';
+import {
+  SelectInput,
+  Input,
+  DateInput,
+  TextArea,
+  NoListMessage,
+} from '@components';
 
 const Experience = () => {
   const { extraFormState, openExtraForm } = useExtraState();

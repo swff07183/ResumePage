@@ -1,5 +1,5 @@
 import React from 'react';
-import NoListMessage from '@/components/NoListMessage';
+import { NoListMessage } from '@components';
 
 const CareerList = () => {
   return (
