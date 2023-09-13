@@ -39,6 +39,7 @@ urlpatterns = [
     path('api/user/', include('dj_rest_auth.urls')),
     path('api/user/', include('user.urls')),
     path('api/user/signup/', include('dj_rest_auth.registration.urls')),
+    path('api/', include('api.urls')),
     re_path(
         r"^swagger/$",
         schema_view.with_ui('swagger', cache_timeout=0),

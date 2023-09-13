@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # local app
     'user',
+    'api',
     # drf
     'corsheaders',
     'django_extensions',
