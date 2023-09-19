@@ -4,13 +4,13 @@ import logo from '@assets/img/IvyLeaguer.png';
 import { Link } from 'react-router-dom';
 import { useUserState } from '@/features/user';
 import { useMutation } from '@tanstack/react-query';
-import { getUserInfo } from '@/api/user';
+import { getUser } from '@/api/user';
 
 const Header = () => {
   const { user, setUser } = useUserState();
 
   const mutation = useMutation({
-    mutationFn: () => getUserInfo(),
+    mutationFn: () => getUser(),
     onSuccess: (data) => {
       setUser({ username: data.username });
     },
@@ -25,8 +25,9 @@ const Header = () => {
   };
 
   useEffect(() => {
-    console.log('fetch userInfo');
-    if (sessionStorage.getItem('token')) mutation.mutate();
+    if (sessionStorage.getItem('token')) {
+      mutation.mutate();
+    }
   }, []);
 
   return (
@@ -34,9 +35,6 @@ const Header = () => {
       <Link to="/">
         <img src={logo} alt="logo" />
       </Link>
-      {/* <div className="logo">
-        IVY LEAGUE<span>R</span>
-      </div> */}
       {user ? (
         <div className="user-control">
           <div className="user-info">{`${user.username}`}</div>

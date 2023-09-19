@@ -1,5 +1,5 @@
 import { useRecoilState } from 'recoil';
-import { userFormState, userState } from './atoms';
+import { userFormState, userInfoDataState, userState } from './atoms';
 
 export const useUserForm = () => {
   const [isUserFormOpen, setIsUserFormOpen] = useRecoilState(userFormState);
@@ -14,4 +14,10 @@ export const useUserState = () => {
   const [user, setUser] = useRecoilState(userState);
 
   return { user, setUser };
+};
+
+export const useUserInfoData = () => {
+  const [userInfoData, setUserInfoData] = useRecoilState(userInfoDataState);
+
+  return { userInfoData, setUserInfoData };
 };

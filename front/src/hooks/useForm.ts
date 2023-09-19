@@ -34,6 +34,12 @@ export const useForm = <T>(form: T) => {
     };
   };
 
+  const handleCheckboxChange = (key: string) => {
+    return () => {
+      setFormData((prev: any) => ({ ...prev, [key]: !prev?.[key] }));
+    };
+  };
+
   return {
     formData,
     setFormData,
@@ -42,5 +48,6 @@ export const useForm = <T>(form: T) => {
     handleSelectChange,
     handleInputChange,
     handleDateChange,
+    handleCheckboxChange,
   };
 };

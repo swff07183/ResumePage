@@ -27,9 +27,7 @@ const SkillForm = () => {
   const { mutation } = useSkillQuery();
 
   const handleSubmit = () => {
-    // console.log(formData);
-    mutation.mutate();
-    console.log('close');
+    mutation.mutate(formData);
     closeExtraForm('skill');
   };
 
@@ -65,7 +63,7 @@ const SkillList = () => {
       </ResumeList.Row>
       <ResumeList.Row>
         {query.data.map((item: any) => (
-          <SkillItem>{item.title}</SkillItem>
+          <SkillItem>{item.skill}</SkillItem>
         ))}
       </ResumeList.Row>
     </ResumeList>

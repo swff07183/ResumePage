@@ -1,54 +1,96 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { SelectInput } from '@components';
-import { ReactComponent as Pencil } from '@assets/svg/pencil.svg';
-import { useUserForm } from '../stores/hooks';
+import { ReactComponent as IconPencil } from '@assets/svg/pencil.svg';
+import { useUserForm, useUserInfoData } from '../stores/hooks';
 import default_user_img from '@assets/img/default-user-img.png';
 import { USER_TYPE } from '../options';
 import { ReactComponent as IconMail } from '@assets/svg/mail.svg';
 import { ReactComponent as IconHome } from '@assets/svg/home.svg';
 import { ReactComponent as IconMobile } from '@assets/svg/mobile.svg';
 import { ReactComponent as IconPhone } from '@assets/svg/phone.svg';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getUserInfo, postUserInfoType } from '@/api/user';
+import { IUserInfo } from '../types';
+import { queryClient } from '@/index';
 
 const UserInfo = () => {
   const { openUserForm } = useUserForm();
+  const { userInfoData, setUserInfoData } = useUserInfoData();
+
+  const { data } = useQuery<IUserInfo>({
+    queryKey: ['user', 'userInfo'],
+    queryFn: () => getUserInfo(),
+  });
+
+  const mutation = useMutation({
+    mutationFn: (data: { userType: string }) => postUserInfoType(data),
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ['user', 'userInfo'] });
+    },
+  });
+
+  useEffect(() => {
+    setUserInfoData(data);
+  }, [data]);
 
   return (
     <Wrapper>
       <div className="info-div">
         <div className="info-name">
-          <span>홍성목</span>
+          <span>{userInfoData?.name}</span>
           <SelectInput
             className="input_s"
             style={{ width: '128px', height: '32px' }}
             options={USER_TYPE}
+            value={userInfoData?.userType}
+            onChange={(e) => mutation.mutate({ userType: e.target.value })}
           />
         </div>
         <div>
           <div className="info-content-row">
             <div className="info-content-item">
               <IconMail />
-              <span>swff07183@naver.com</span>
+              {userInfoData?.email ? (
+                <span>{userInfoData.email}</span>
+              ) : (
+                <span className="no-data">이메일을 입력해주세요.</span>
+              )}
             </div>
             <div className="info-content-item">
               <IconMobile />
-              <span>051-1234-5678</span>
+              {userInfoData?.mobile ? (
+                <span>{userInfoData.mobile}</span>
+              ) : (
+                <span className="no-data">휴대폰 번호를 입력해주세요.</span>
+              )}
             </div>
             <div className="info-content-item">
               <IconPhone />
-              <span>010-1234-5678</span>
+              {userInfoData?.number ? (
+                <span>{userInfoData.number}</span>
+              ) : (
+                <span className="no-data">전화번호를 입력해주세요.</span>
+              )}
             </div>
           </div>
           <div className="info-content-item">
             <IconHome />
-            <span>부산광역시 해운대구 달맞이길 65번길 33, 101동 1234호</span>
+            {userInfoData?.address ? (
+              <>
+                <span>{userInfoData.address}</span>
+                <span>{userInfoData?.addressDetail || ''}</span>
+              </>
+            ) : (
+              <span className="no-data">주소를 입력해주세요.</span>
+            )}
           </div>
         </div>
       </div>
       <div className="info-right">
         {/* <img src={default_user_img} alt="default_user_img" /> */}
         <button className="btn-user-edit" onClick={openUserForm}>
-          <Pencil />
+          <IconPencil />
         </button>
       </div>
     </Wrapper>
@@ -73,6 +115,9 @@ const Wrapper = styled.div`
         stroke-width: 1px;
       }
     }
+  }
+  & .no-data {
+    color: #677382;
   }
 
   & .info-content-row {

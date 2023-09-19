@@ -17,3 +17,7 @@ export type ExperienceType =
   | '수행과제'
   | '해외연수'
   | '교육이수내역';
+
+export interface ISkill {
+  skill: string;
+}

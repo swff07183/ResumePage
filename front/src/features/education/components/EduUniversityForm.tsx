@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
   EDUCATION_OPTIONS,
-  GRADUATION_OPTIONS,
-  HIGH_MAJOR_OPTIONS,
+  EXTRA_MAJOR_TYPE_OPTIONS,
+  STANDARD_GRADE_OPTIONS,
+  UNIVERSITY_GRADUATION_OPTIONS,
   UNIVERSITY_TIME_OPTIONS,
   UNIVERSITY_TYPE_OPTIONS,
 } from '../options';
@@ -17,110 +18,95 @@ import {
   AddButton,
 } from '@components';
 import { ResumeForm } from '@/components/ResumeForm';
+import { IEducation } from '../types/IEducation';
+import { useForm } from '@/hooks';
+import { useMutation } from '@tanstack/react-query';
+import { postEducation } from '@/api/education';
+import { useEducationInfoQuery } from '../hooks';
 
 const EduUniversityForm = () => {
-  const [universityInfo, setUniversityInfo] = useState({
-    school: '',
-    major: '',
-    graduate: '',
-    enterDate: '',
-    graduateDate: '',
-    universityType: '',
-    universityTime: '',
-    passDate: '',
-  });
-  const [isError, setIsError] = useState({
-    school: false,
-    graduate: false,
-    universityType: false,
-  });
-  const [isTransfer, setIsTransfer] = useState<boolean>(false);
+  const { educationInfo } = useEducationInfoQuery();
+  const {
+    formData,
+    setFormData,
+    isError,
+    setIsError,
+    handleInputChange,
+    handleSelectChange,
+    handleDateChange,
+  } = useForm<IEducation>(
+    educationInfo ?? {
+      name: '',
+      major: '',
+      state: '',
+      enterDate: '',
+      graduateDate: '',
+      universityType: '',
+      universityTime: '',
+      passDate: '',
+      extraMajor: '',
+      extraMajorType: '',
+      grade: '',
+      standardGrade: '',
+      region: '',
+      isTransfer: false,
+    }
+  );
 
   // 추가전공
-  const [extraMajorInfo, setExtraMajorInfo] = useState({
-    active: false,
-    extraMajor: '',
-    extraMajorType: '',
-  });
+  const [activeExtraMajor, setActiveExtraMajor] = useState<boolean>(
+    educationInfo?.extraMajor ? true : false
+  );
 
   // 학점
-  const [gradeInfo, setGradeInfo] = useState({
-    active: false,
-    grade: '',
-    standardGrade: '',
-  });
+  const [activeGrade, setActiveGrade] = useState<boolean>(
+    educationInfo?.grade ? true : false
+  );
 
   // 지역
-  const [regionInfo, setRegionInfo] = useState({
-    active: false,
-    region: '',
-  });
+  const [activeRegion, setActiveRegion] = useState<boolean>(
+    educationInfo?.region ? true : false
+  );
 
   const { closeEduForm } = useEduForm();
   const { finalEdu, handleSelectFinalEdu } = useFinalEdu();
 
-  const handleSelectGraduation = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setUniversityInfo({ ...universityInfo, graduate: e.target.value });
-  };
-  const handleSelectUniversityType = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setUniversityInfo({ ...universityInfo, universityType: e.target.value });
-  };
-  const handleSelectUniversityTime = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setUniversityInfo({ ...universityInfo, universityTime: e.target.value });
-  };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUniversityInfo({ ...universityInfo, [e.target.name]: e.target.value });
-    setIsError({ ...isError, [e.target.name]: false });
-  };
-
-  const handleClickAdd = (type: 'major' | 'grade' | 'region') => {
-    switch (type) {
-      case 'major':
-        setExtraMajorInfo((prev) => ({
-          ...extraMajorInfo,
-          active: !prev.active,
-        }));
-        break;
-      case 'grade':
-        setGradeInfo((prev) => ({
-          ...gradeInfo,
-          active: !prev.active,
-        }));
-        break;
-      case 'region':
-        setRegionInfo((prev) => ({
-          ...regionInfo,
-          active: !prev.active,
-        }));
-        break;
-    }
-  };
+  const mutation = useMutation({
+    mutationFn: (data: IEducation) => postEducation(data),
+    onSuccess: (data) => {
+      console.log(data);
+      closeEduForm();
+    },
+  });
 
   const handleSubmit = () => {
     const submitInfo = {
-      ...universityInfo,
-      extraMajorInfo,
-      gradeInfo,
-      regionInfo,
+      ...formData,
+      finalEdu: 'university',
+      passDate: formData.isTransfer ? formData.passDate : '',
+      extraMajor: activeExtraMajor ? formData.extraMajor : '',
+      extraMajorType: activeExtraMajor ? formData.extraMajorType : '',
+      grade: activeGrade ? formData.grade : '',
+      standardGrade: activeGrade ? formData.standardGrade : '',
+      region: activeRegion ? formData.region : '',
     };
     console.log(submitInfo);
 
     setIsError({
-      universityType: universityInfo.universityType === '',
-      school: universityInfo.school === '',
-      graduate: universityInfo.graduate === '',
+      ...isError,
+      universityType: formData.universityType === '',
+      name: formData.name === '',
+      state: formData.state === '',
     });
 
     if (
-      universityInfo.universityType &&
-      universityInfo.school !== '' &&
-      universityInfo.graduate !== ''
-    )
-      closeEduForm();
+      formData.universityType &&
+      formData.name !== '' &&
+      formData.state !== ''
+    ) {
+      mutation.mutate(submitInfo);
+      // closeEduForm();
+    }
   };
 
   return (
@@ -134,19 +120,23 @@ const EduUniversityForm = () => {
         <SelectInput
           className="input_s"
           options={UNIVERSITY_TYPE_OPTIONS}
-          onChange={handleSelectUniversityType}
+          onChange={handleSelectChange('universityType')}
           invalid={isError.universityType}
+          value={formData.universityType}
         />
         <Input
-          name="school"
+          name="name"
           placeholder="학교명"
-          onChange={onChange}
-          invalid={isError.school}
+          onChange={handleInputChange}
+          invalid={isError.name}
+          value={formData.name}
         />
         <CheckboxInput
           content="편입"
-          isChecked={isTransfer}
-          setIsChecked={setIsTransfer}
+          isChecked={formData.isTransfer}
+          setIsChecked={() =>
+            setFormData((prev) => ({ ...prev, isTransfer: !prev.isTransfer }))
+          }
         />
       </div>
       <div className="form-row">
@@ -154,77 +144,101 @@ const EduUniversityForm = () => {
           name="major"
           placeholder="전공"
           type="text"
-          onChange={onChange}
+          onChange={handleInputChange}
+          value={formData.major}
         />
         <SelectInput
           className="input_s"
-          invalid={isError.graduate}
-          options={GRADUATION_OPTIONS}
-          onChange={handleSelectGraduation}
-          value={universityInfo.graduate}
+          invalid={isError.state}
+          options={UNIVERSITY_GRADUATION_OPTIONS}
+          onChange={handleSelectChange('state')}
+          value={formData.state}
         />
         <SelectInput
           className="input_s"
           options={UNIVERSITY_TIME_OPTIONS}
-          onChange={handleSelectUniversityTime}
+          onChange={handleSelectChange('universityTime')}
+          value={formData.universityTime}
         />
         <DateInput
           className="input_s"
           name="enterDate"
           placeholder="입학년월"
           type="text"
-          setDate={(date: string) => {
-            setUniversityInfo({ ...universityInfo, enterDate: date });
-          }}
-          initialValue={universityInfo.enterDate}
+          setDate={handleDateChange('enterDate')}
+          initialValue={formData.enterDate}
         />
         <DateInput
           className="input_s"
           name="graduateDate"
           placeholder="졸업년월"
           type="text"
-          setDate={(date: string) => {
-            setUniversityInfo({ ...universityInfo, graduateDate: date });
-          }}
-          initialValue={universityInfo.graduateDate}
+          setDate={handleDateChange('graduateDate')}
+          initialValue={formData.graduateDate}
         />
       </div>
-      {(extraMajorInfo.active || gradeInfo.active) && (
+      {(activeExtraMajor || activeGrade) && (
         <div className="form-row">
-          {extraMajorInfo.active && (
-            <React.Fragment>
-              <Input placeholder="추가전공" />
-              <SelectInput className="input_s" options={HIGH_MAJOR_OPTIONS} />
-            </React.Fragment>
+          {activeExtraMajor && (
+            <>
+              <Input
+                name="extraMajor"
+                placeholder="추가전공"
+                onChange={handleInputChange}
+                value={formData.extraMajor}
+              />
+              <SelectInput
+                className="input_s"
+                options={EXTRA_MAJOR_TYPE_OPTIONS}
+                onChange={handleSelectChange('extraMajorType')}
+                value={formData.extraMajorType}
+              />
+            </>
           )}
-          {gradeInfo.active && (
-            <React.Fragment>
-              <Input className="input_s" placeholder="학점" />
-              <SelectInput className="input_s" options={HIGH_MAJOR_OPTIONS} />
-            </React.Fragment>
+          {activeGrade && (
+            <>
+              <Input
+                name="grade"
+                className="input_s"
+                placeholder="학점"
+                onChange={handleInputChange}
+                value={formData.grade}
+              />
+              <SelectInput
+                className="input_s"
+                options={STANDARD_GRADE_OPTIONS}
+                onChange={handleSelectChange('standardGrade')}
+                value={formData.standardGrade}
+              />
+            </>
           )}
         </div>
       )}
-      {regionInfo.active && (
+      {activeRegion && (
         <div className="form-row">
-          <SelectInput className="input_s" options={REGION_OPTIONS} />
+          <SelectInput
+            className="input_s"
+            options={REGION_OPTIONS}
+            onChange={handleSelectChange('region')}
+            value={formData.region}
+          />
         </div>
       )}
       <div className="form-row">
         <AddButton
           content="추가전공"
-          isActive={extraMajorInfo.active}
-          onClick={() => handleClickAdd('major')}
+          isActive={activeExtraMajor}
+          onClick={() => setActiveExtraMajor((prev) => !prev)}
         />
         <AddButton
           content="학점"
-          isActive={gradeInfo.active}
-          onClick={() => handleClickAdd('grade')}
+          isActive={activeGrade}
+          onClick={() => setActiveGrade((prev) => !prev)}
         />
         <AddButton
           content="지역"
-          isActive={regionInfo.active}
-          onClick={() => handleClickAdd('region')}
+          isActive={activeRegion}
+          onClick={() => setActiveRegion((prev) => !prev)}
         />
       </div>
       <FormButtons onCancel={closeEduForm} onSubmit={handleSubmit} />

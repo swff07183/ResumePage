@@ -1,3 +1,4 @@
+import { ISkill } from '@/features/extra/types';
 import { BASE_URL, client } from './client';
 
 export const getSelfIntroduction = async () => {
@@ -12,8 +13,8 @@ export const getSkill = async () => {
   return data;
 };
 
-export const postSkill = async () => {
-  const { data } = await client.post(`${BASE_URL}/skill/`);
+export const postSkill = async (params: ISkill) => {
+  const { data } = await client.post(`${BASE_URL}/skill/`, params);
 
   return data;
 };

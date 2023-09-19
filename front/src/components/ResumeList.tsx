@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { ReactComponent as Pencil } from '@assets/svg/pencil.svg';
 
 interface ResumeListProps {
   children?: React.ReactNode;
@@ -25,6 +26,11 @@ ResumeList.Row = styled.div`
   gap: 8px;
 `;
 
+ResumeList.State = styled.div`
+  color: #67738e;
+  font-size: 14px;
+`;
+
 ResumeList.Title = styled.div`
   font-size: 18px;
   font-weight: bold;
@@ -47,15 +53,22 @@ ResumeList.Date = styled.div`
   }
 `;
 
+ResumeList.DetailDiv = styled.div`
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+  font-size: 13px;
+`;
+
 ResumeList.Detail = styled.div`
   color: #292141;
-  font-size: 14px;
-  width: 80px;
+  /* font-size: 14px; */
+  width: 60px;
 `;
 
 ResumeList.DetailContent = styled.div`
   color: #292141;
-  font-size: 14px;
+  /* font-size: 14px; */
   display: flex;
   align-items: center;
   &::before {
@@ -67,3 +80,32 @@ ResumeList.DetailContent = styled.div`
     content: '';
   }
 `;
+
+const EditButton = ({ onClick }: { onClick: () => void }) => {
+  return (
+    <EditButtonWrapper onClick={onClick}>
+      <Pencil />
+    </EditButtonWrapper>
+  );
+};
+
+const EditButtonWrapper = styled.button`
+  background-color: transparent;
+  border: none;
+  width: 30px;
+  height: 30px;
+  margin-left: auto;
+  cursor: pointer;
+  &:hover {
+    background-color: #a6b0c02f;
+  }
+  & svg {
+    width: 30px;
+    height: 30px;
+  }
+  & path {
+    fill: #8491a7;
+  }
+`;
+
+ResumeList.EditButton = EditButton;

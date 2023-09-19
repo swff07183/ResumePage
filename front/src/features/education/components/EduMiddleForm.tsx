@@ -12,56 +12,60 @@ import {
   DateInput,
 } from '@components';
 import { ResumeForm } from '@/components/ResumeForm';
+import { useEducationInfoQuery } from '../hooks';
+import { useForm } from '@/hooks';
+import { IEducation } from '../types/IEducation';
+import { initialEducation } from '../constant';
 
 const EduMiddleForm = () => {
-  const [middleInfo, setMiddleInfo] = useState({
-    school: '',
-    graduate: '',
-    enterDate: '',
-    graduateDate: '',
-    region: '',
-    passDate: '',
-  });
-  const [isError, setIsError] = useState({
-    school: false,
-    graduate: false,
-    passDate: false,
-  });
-  const [isQualificationExam, setIsQualificationExam] =
-    useState<boolean>(false);
+  const { educationInfo, mutation } = useEducationInfoQuery();
+  const {
+    formData,
+    isError,
+    setIsError,
+    handleInputChange,
+    handleSelectChange,
+    handleDateChange,
+  } = useForm<IEducation>(
+    educationInfo?.finalEdu === 'middle'
+      ? {
+          ...initialEducation,
+          finalEdu: 'middle',
+          name: educationInfo.name,
+          state: educationInfo.state,
+          enterDate: educationInfo.enterDate,
+          graduateDate: educationInfo.graduateDate,
+          region: educationInfo.region,
+          passDate: educationInfo.passDate,
+        }
+      : { ...initialEducation, finalEdu: 'middle' }
+  );
+  const [isQualificationExam, setIsQualificationExam] = useState<boolean>(
+    educationInfo?.finalEdu === 'middle' && educationInfo?.isQualificationExam
+      ? true
+      : false
+  );
 
   const { finalEdu, handleSelectFinalEdu } = useFinalEdu();
   const { closeEduForm } = useEduForm();
+  const { mutation } = useEducationInfoQuery();
 
-  const handleSelectGraduation = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMiddleInfo({ ...middleInfo, graduate: e.target.value });
-    setIsError({ ...isError, graduate: false });
-  };
-  const handleSelectRegion = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setMiddleInfo({ ...middleInfo, region: e.target.value });
-  };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMiddleInfo({ ...middleInfo, [e.target.name]: e.target.value });
-    setIsError({ ...isError, [e.target.name]: false });
-  };
   const handleSubmit = () => {
-    console.log({ ...middleInfo, isQualificationExam });
+    console.log({ ...formData, isQualificationExam });
     if (!isQualificationExam)
       setIsError({
         ...isError,
-        school: middleInfo.school === '',
-        graduate: middleInfo.graduate === '',
+        name: formData.name === '',
+        state: formData.state === '',
       });
     else
       setIsError({
         ...isError,
-        passDate: middleInfo.passDate === '',
+        passDate: formData.passDate === '',
       });
     if (
-      (!isQualificationExam &&
-        middleInfo.school !== '' &&
-        middleInfo.graduate !== '') ||
-      (isQualificationExam && middleInfo.passDate !== '')
+      (!isQualificationExam && formData.name !== '' && formData.state !== '') ||
+      (isQualificationExam && formData.passDate !== '')
     ) {
       closeEduForm();
     }
@@ -89,7 +93,7 @@ const EduMiddleForm = () => {
               className="input_s"
               options={REGION_OPTIONS}
               onChange={handleSelectRegion}
-              value={middleInfo.region}
+              value={formData.region}
             />
             <DateInput
               className="input_s"
@@ -97,11 +101,11 @@ const EduMiddleForm = () => {
               placeholder="합격년월*"
               onChange={onChange}
               setDate={(date: string) => {
-                setMiddleInfo({ ...middleInfo, passDate: date });
+                // setMiddleInfo({ ...formData, passDate: date });
                 setIsError({ ...isError, passDate: false });
               }}
               invalid={isError.passDate}
-              initialValue={middleInfo.passDate}
+              initialValue={formData.passDate}
             />
           </React.Fragment>
         )}
@@ -119,12 +123,12 @@ const EduMiddleForm = () => {
           className="input_m"
           name="school"
           placeholder="학교명"
-          invalid={isError.school}
+          invalid={isError.name}
           onChange={onChange}
         />
         <SelectInput
           className="input_s"
-          invalid={isError.graduate}
+          invalid={isError.state}
           options={GRADUATION_OPTIONS}
           onChange={handleSelectGraduation}
         />
@@ -133,20 +137,16 @@ const EduMiddleForm = () => {
           name="enterDate"
           placeholder="입학년월"
           type="text"
-          setDate={(date: string) => {
-            setMiddleInfo({ ...middleInfo, enterDate: date });
-          }}
-          initialValue={middleInfo.enterDate}
+          setDate={(date: string) => {}}
+          initialValue={formData.enterDate}
         />
         <DateInput
           className="input_s"
           name="graduateDate"
           placeholder="졸업년월"
           type="text"
-          setDate={(date: string) =>
-            setMiddleInfo({ ...middleInfo, graduateDate: date })
-          }
-          initialValue={middleInfo.graduateDate}
+          setDate={(date: string) => {}}
+          initialValue={formData.graduateDate}
         />
         <SelectInput
           className="input_s"

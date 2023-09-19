@@ -8,7 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input = (props: InputProps) => {
-  const { className = 'input_m', placeholder, invalid, ...rest } = props;
+  const { className = 'input_m', placeholder, value, invalid, ...rest } = props;
   const uid = useId();
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -17,7 +17,9 @@ export const Input = (props: InputProps) => {
     <Wrapper className={`${className} ${invalid ? 'invalid' : ''}`}>
       {placeholder && (
         <label
-          className={isFocused || inputRef.current?.value ? 'focused' : ''}
+          className={
+            isFocused || inputRef.current?.value || value ? 'focused' : ''
+          }
           htmlFor={`input-${uid}`}
         >
           {placeholder}
@@ -27,6 +29,7 @@ export const Input = (props: InputProps) => {
         ref={inputRef}
         id={`input-${uid}`}
         placeholder={placeholder}
+        value={value}
         {...rest}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}

@@ -10,59 +10,82 @@ import {
   DateInput,
 } from '@components';
 import { ResumeForm } from '@/components/ResumeForm';
+import { useEducationInfoQuery } from '../hooks';
+import { IEducation } from '../types/IEducation';
+import { useForm } from '@/hooks';
+import { initialEducation } from '../constant';
 
 const EduPrimaryForm = () => {
-  const [primaryInfo, setPrimaryInfo] = useState({
-    school: '',
-    graduate: '',
-    enterDate: '',
-    graduateDate: '',
-    region: '',
-    passDate: '',
-  });
-  const [isError, setIsError] = useState({
-    school: false,
-    graduate: false,
-    passDate: false,
-  });
-  const [isQualificationExam, setIsQualificationExam] =
-    useState<boolean>(false);
+  const { educationInfo, mutation } = useEducationInfoQuery();
+  const {
+    formData,
+    isError,
+    setIsError,
+    handleInputChange,
+    handleSelectChange,
+    handleDateChange,
+  } = useForm<IEducation>(
+    educationInfo?.finalEdu === 'primary'
+      ? {
+          ...initialEducation,
+          finalEdu: 'primary',
+          name: educationInfo.name,
+          state: educationInfo.state,
+          enterDate: educationInfo.enterDate,
+          graduateDate: educationInfo.graduateDate,
+          region: educationInfo.region,
+          passDate: educationInfo.passDate,
+        }
+      : { ...initialEducation, finalEdu: 'primary' }
+  );
+
+  const [isQualificationExam, setIsQualificationExam] = useState<boolean>(
+    educationInfo?.finalEdu === 'primary' && educationInfo?.isQualificationExam
+      ? true
+      : false
+  );
 
   const { finalEdu, handleSelectFinalEdu } = useFinalEdu();
   const { closeEduForm } = useEduForm();
 
-  const handleSelectGraduation = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPrimaryInfo({ ...primaryInfo, graduate: e.target.value });
-    setIsError({ ...isError, graduate: false });
-  };
-  const handleSelectRegion = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPrimaryInfo({ ...primaryInfo, region: e.target.value });
-  };
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPrimaryInfo({ ...primaryInfo, [e.target.name]: e.target.value });
-    setIsError({ ...isError, [e.target.name]: false });
-  };
-
   const handleSubmit = () => {
-    console.log({ ...primaryInfo, isQualificationExam });
     if (!isQualificationExam)
       setIsError({
         ...isError,
-        school: primaryInfo.school === '',
-        graduate: primaryInfo.graduate === '',
+        name: formData.name === '',
+        state: formData.state === '',
       });
     else
       setIsError({
         ...isError,
-        passDate: primaryInfo.passDate === '',
+        passDate: formData.passDate === '',
       });
     if (
-      (!isQualificationExam &&
-        primaryInfo.school !== '' &&
-        primaryInfo.graduate !== '') ||
-      (isQualificationExam && primaryInfo.passDate !== '')
-    )
-      closeEduForm();
+      (!isQualificationExam && formData.name !== '' && formData.state !== '') ||
+      (isQualificationExam && formData.passDate !== '')
+    ) {
+      console.log('formData', formData);
+      const postData = !isQualificationExam
+        ? {
+            ...initialEducation,
+            finalEdu: 'primary',
+            isQualificationExam: false,
+            name: formData.name,
+            state: formData.state,
+            enterDate: formData.enterDate,
+            graduateDate: formData.graduateDate,
+            region: formData.region,
+          }
+        : {
+            ...initialEducation,
+            finalEdu: 'primary',
+            isQualificationExam: true,
+            passDate: formData.passDate ?? '',
+            region: formData.region,
+          };
+      console.log(postData);
+      mutation.mutate(postData);
+    }
   };
 
   return (
@@ -86,19 +109,16 @@ const EduPrimaryForm = () => {
             <SelectInput
               className="input_s"
               options={REGION_OPTIONS}
-              onChange={handleSelectRegion}
-              value={primaryInfo.region}
+              onChange={handleSelectChange('region')}
+              value={formData.region}
             />
             <DateInput
               className="input_s"
               name="passDate"
               placeholder="합격년월*"
-              setDate={(date: string) => {
-                setPrimaryInfo({ ...primaryInfo, passDate: date });
-                setIsError({ ...isError, passDate: false });
-              }}
+              setDate={handleDateChange('passDate')}
               invalid={isError.passDate}
-              initialValue={primaryInfo.passDate}
+              initialValue={formData.passDate}
             />
           </React.Fragment>
         )}
@@ -113,42 +133,40 @@ const EduPrimaryForm = () => {
         style={{ display: isQualificationExam ? 'none' : 'flex' }}
       >
         <Input
-          name="school"
+          name="name"
           placeholder="학교명"
-          invalid={isError.school}
-          onChange={onChange}
+          invalid={isError.name}
+          onChange={handleInputChange}
+          value={formData.name}
         />
         <SelectInput
           className="input_s"
-          invalid={isError.graduate}
+          invalid={isError.state}
           options={GRADUATION_OPTIONS}
-          onChange={handleSelectGraduation}
+          onChange={handleSelectChange('state')}
+          value={formData.state}
         />
         <DateInput
           className="input_s"
           name="enterDate"
           placeholder="입학년월"
           type="text"
-          setDate={(date: string) => {
-            setPrimaryInfo({ ...primaryInfo, enterDate: date });
-          }}
-          initialValue={primaryInfo.enterDate}
+          setDate={handleDateChange('enterDate')}
+          initialValue={formData.enterDate}
         />
         <DateInput
           className="input_s"
           name="graduateDate"
           placeholder="졸업년월"
           type="text"
-          setDate={(date: string) =>
-            setPrimaryInfo({ ...primaryInfo, graduateDate: date })
-          }
-          initialValue={primaryInfo.graduateDate}
+          setDate={handleDateChange('graduateDate')}
+          initialValue={formData.graduateDate}
         />
         <SelectInput
           className="input_s"
           options={REGION_OPTIONS}
-          onChange={handleSelectRegion}
-          value={primaryInfo.region}
+          onChange={handleSelectChange('region')}
+          value={formData.region}
         />
       </div>
       <FormButtons onCancel={closeEduForm} onSubmit={handleSubmit} />

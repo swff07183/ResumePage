@@ -1,6 +1,7 @@
 import { getSkill, postSkill } from '@/api/extra';
 import { queryClient } from '@/index';
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { ISkill } from '../types';
 
 export const useSkillQuery = () => {
   const query = useQuery({
@@ -9,7 +10,7 @@ export const useSkillQuery = () => {
   });
 
   const mutation = useMutation({
-    mutationFn: postSkill,
+    mutationFn: (data: ISkill) => postSkill(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['skill'] });
     },
