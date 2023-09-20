@@ -17,30 +17,34 @@ import {
 import { ResumeForm } from '@/components/ResumeForm';
 import { useForm } from '@/hooks';
 import { IEducation } from '../types/IEducation';
+import { initialEducation } from '../constant';
+import { useEducationInfoQuery } from '../hooks';
 
 const EduHighForm = () => {
+  const { educationInfo, mutation } = useEducationInfoQuery();
   const {
     formData,
-    setFormData,
+    isError,
+    setIsError,
     handleInputChange,
     handleSelectChange,
     handleDateChange,
     handleCheckboxChange,
-  } = useForm<IEducation>({
-    name: '',
-    state: '',
-    enterDate: '',
-    graduateDate: '',
-    major: '',
-    passDate: '',
-    isQualificationExam: false,
-    isTransfer: false,
-  });
-  const [isError, setIsError] = useState({
-    name: false,
-    state: false,
-    passDate: false,
-  });
+  } = useForm<IEducation>(
+    educationInfo?.finalEdu === 'high'
+      ? {
+          ...initialEducation,
+          name: educationInfo.name,
+          state: educationInfo.state,
+          enterDate: educationInfo.enterDate,
+          graduateDate: educationInfo.graduateDate,
+          major: educationInfo.major,
+          passDate: educationInfo.passDate,
+          isQualificationExam: educationInfo.isQualificationExam,
+          isTransfer: educationInfo.isTransfer,
+        }
+      : { ...initialEducation, finalEdu: 'high' }
+  );
 
   const { finalEdu, handleSelectFinalEdu } = useFinalEdu();
   const { closeEduForm } = useEduForm();
@@ -62,8 +66,29 @@ const EduHighForm = () => {
         formData.name !== '' &&
         formData.state !== '') ||
       (formData.isQualificationExam && formData.passDate !== '')
-    )
-      closeEduForm();
+    ) {
+      const postData = !formData.isQualificationExam
+        ? {
+            ...initialEducation,
+            finalEdu: 'high',
+            name: formData.name,
+            state: formData.state,
+            enterDate: formData.enterDate,
+            graduateDate: formData.graduateDate,
+            major: formData.major,
+            passDate: formData.passDate,
+            isQualificationExam: false,
+            isTransfer: false,
+          }
+        : {
+            ...initialEducation,
+            finalEdu: 'high',
+            isQualificationExam: true,
+            passDate: formData.passDate ?? '',
+            region: formData.region,
+          };
+      mutation.mutate(postData);
+    }
   };
 
   return (
@@ -114,12 +139,14 @@ const EduHighForm = () => {
             placeholder="학교명"
             invalid={isError.name}
             onChange={handleInputChange}
+            value={formData.name}
           />
           <SelectInput
             className="input_s"
             invalid={isError.state}
             options={GRADUATION_OPTIONS}
             onChange={handleSelectChange('state')}
+            value={formData.state}
           />
           <DateInput
             className="input_s"

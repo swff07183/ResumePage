@@ -4,27 +4,22 @@ import styled from 'styled-components';
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   title?: string;
   name?: string;
+  value?: string;
+  invalid?: boolean;
 }
 
 export const TextArea = (props: TextAreaProps) => {
-  const { title, name, onChange, ...rest } = props;
-
-  const [text, setText] = useState<string>('');
-
-  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(e.target.value);
-    onChange?.(e);
-  };
+  const { title, value = '', invalid, ...rest } = props;
 
   const getLength = (isIncludeSpace: boolean = true) => {
-    return isIncludeSpace ? text.length : text.replaceAll(' ', '').length;
+    return isIncludeSpace ? value.length : value.replaceAll(' ', '').length;
   };
 
   const getBytes = (isIncludeSpace: boolean = true) => {
     let bytes = 0;
-    for (let i = 0; i < text.length; i++) {
-      if (!isIncludeSpace && text.charAt(i) === ' ') continue;
-      bytes += text.charCodeAt(i) > 128 ? 2 : 1;
+    for (let i = 0; i < value.length; i++) {
+      if (!isIncludeSpace && value.charAt(i) === ' ') continue;
+      bytes += value.charCodeAt(i) > 128 ? 2 : 1;
     }
     return bytes;
   };
@@ -32,7 +27,7 @@ export const TextArea = (props: TextAreaProps) => {
   return (
     <Wrapper>
       {title && <h5>{title}</h5>}
-      <textarea name={name} {...rest} onChange={handleTextChange} />
+      <textarea className={invalid ? 'invalid' : ''} value={value} {...rest} />
       <div className="text-len">
         <span>
           <span className="text-bold">총 글자 수</span>

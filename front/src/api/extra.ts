@@ -18,3 +18,9 @@ export const postSkill = async (params: ISkill) => {
 
   return data;
 };
+
+export const getCareerContent = async () => {
+  const { data } = await client.get(`${BASE_URL}/careercontent/`);
+
+  return data;
+};

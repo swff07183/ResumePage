@@ -48,10 +48,8 @@ const EduMiddleForm = () => {
 
   const { finalEdu, handleSelectFinalEdu } = useFinalEdu();
   const { closeEduForm } = useEduForm();
-  const { mutation } = useEducationInfoQuery();
 
   const handleSubmit = () => {
-    console.log({ ...formData, isQualificationExam });
     if (!isQualificationExam)
       setIsError({
         ...isError,
@@ -67,7 +65,25 @@ const EduMiddleForm = () => {
       (!isQualificationExam && formData.name !== '' && formData.state !== '') ||
       (isQualificationExam && formData.passDate !== '')
     ) {
-      closeEduForm();
+      const postData = !isQualificationExam
+        ? {
+            ...initialEducation,
+            finalEdu: 'middle',
+            isQualificationExam: false,
+            name: formData.name,
+            state: formData.state,
+            enterDate: formData.enterDate,
+            graduateDate: formData.graduateDate,
+            region: formData.region,
+          }
+        : {
+            ...initialEducation,
+            finalEdu: 'middle',
+            isQualificationExam: true,
+            passDate: formData.passDate ?? '',
+            region: formData.region,
+          };
+      mutation.mutate(postData);
     }
   };
 
@@ -92,18 +108,14 @@ const EduMiddleForm = () => {
             <SelectInput
               className="input_s"
               options={REGION_OPTIONS}
-              onChange={handleSelectRegion}
+              onChange={handleSelectChange('region')}
               value={formData.region}
             />
             <DateInput
               className="input_s"
               name="passDate"
               placeholder="합격년월*"
-              onChange={onChange}
-              setDate={(date: string) => {
-                // setMiddleInfo({ ...formData, passDate: date });
-                setIsError({ ...isError, passDate: false });
-              }}
+              setDate={handleDateChange('passDate')}
               invalid={isError.passDate}
               initialValue={formData.passDate}
             />
@@ -121,23 +133,25 @@ const EduMiddleForm = () => {
       >
         <Input
           className="input_m"
-          name="school"
+          name="name"
           placeholder="학교명"
           invalid={isError.name}
-          onChange={onChange}
+          onChange={handleInputChange}
+          value={formData.name}
         />
         <SelectInput
           className="input_s"
           invalid={isError.state}
           options={GRADUATION_OPTIONS}
-          onChange={handleSelectGraduation}
+          onChange={handleSelectChange('state')}
+          value={formData.state}
         />
         <DateInput
           className="input_s"
           name="enterDate"
           placeholder="입학년월"
           type="text"
-          setDate={(date: string) => {}}
+          setDate={handleDateChange('enterDate')}
           initialValue={formData.enterDate}
         />
         <DateInput
@@ -145,13 +159,14 @@ const EduMiddleForm = () => {
           name="graduateDate"
           placeholder="졸업년월"
           type="text"
-          setDate={(date: string) => {}}
+          setDate={handleDateChange('graduateDate')}
           initialValue={formData.graduateDate}
         />
         <SelectInput
           className="input_s"
           options={REGION_OPTIONS}
-          onChange={handleSelectRegion}
+          onChange={handleSelectChange('region')}
+          value={formData.region}
         />
       </div>
       <FormButtons onCancel={closeEduForm} onSubmit={handleSubmit} />

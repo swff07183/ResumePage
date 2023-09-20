@@ -26,7 +26,7 @@ export const Resume = ({
           <h2>{title}</h2>
           {isRequired && <span>필수</span>}
         </div>
-        {!isFormOpen && handleAddButtonClick && (
+        {!isFormOpen && handleAddButtonClick !== undefined && (
           <button
             className="resume-create-button"
             onClick={handleAddButtonClick}

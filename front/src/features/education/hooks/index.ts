@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { IEducation } from '../types/IEducation';
 import { getEducation, postEducation } from '@/api/education';
 import { useEduForm } from '../stores/hooks';
+import { queryClient } from '@/index';
 
 export const useEducationInfoQuery = () => {
   const { closeEduForm } = useEduForm();
@@ -12,8 +13,8 @@ export const useEducationInfoQuery = () => {
 
   const mutation = useMutation({
     mutationFn: (params: IEducation) => postEducation(params),
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['education', 'info'] });
       closeEduForm();
     },
   });

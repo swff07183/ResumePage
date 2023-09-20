@@ -23,6 +23,7 @@ import { useForm } from '@/hooks';
 import { useMutation } from '@tanstack/react-query';
 import { postEducation } from '@/api/education';
 import { useEducationInfoQuery } from '../hooks';
+import { initialEducation } from '../constant';
 
 const EduUniversityForm = () => {
   const { educationInfo } = useEducationInfoQuery();
@@ -35,22 +36,12 @@ const EduUniversityForm = () => {
     handleSelectChange,
     handleDateChange,
   } = useForm<IEducation>(
-    educationInfo ?? {
-      name: '',
-      major: '',
-      state: '',
-      enterDate: '',
-      graduateDate: '',
-      universityType: '',
-      universityTime: '',
-      passDate: '',
-      extraMajor: '',
-      extraMajorType: '',
-      grade: '',
-      standardGrade: '',
-      region: '',
-      isTransfer: false,
-    }
+    educationInfo?.finalEdu === 'university'
+      ? {
+          ...initialEducation,
+          ...educationInfo,
+        }
+      : { ...initialEducation }
   );
 
   // 추가전공
