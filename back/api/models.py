@@ -44,7 +44,7 @@ class Career(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
-    company = models.TextField(null=True, blank=True)
+    name = models.TextField(null=True, blank=True)
     state = models.TextField(null=True, blank=True)
     enterDate = models.TextField(null=True, blank=True)
     exitDate = models.TextField(null=True, blank=True)
@@ -53,7 +53,7 @@ class Career(models.Model):
     detail = models.TextField(null=True, blank=True)
     money = models.TextField(null=True, blank=True)
     moneyUnit = models.TextField(null=True, blank=True)
-    place = models.TextField(null=True, blank=True)
+    region = models.TextField(null=True, blank=True)
 
 
 class Skill(models.Model):
@@ -82,4 +82,12 @@ class CareerContent(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE
     )
+    content = models.TextField()
+
+class SelfIntroduction(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    title = models.TextField()
     content = models.TextField()

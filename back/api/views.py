@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .models import Education, Career, Skill, UserInfo, Experience, CareerContent
-from .serializers import EducationSerializer, CareerSerializer, SkillSerializer, UserInfoSerializer, ExperienceSerializer, CareerContentSerializer
+from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction
+from .serializers import EducationSerializer, CareerSerializer, SkillSerializer, UserInfoSerializer, ExperienceSerializer, CareerContentSerializer, SelfIntroductionSerializer
 from drf_yasg.utils import swagger_auto_schema
 
 
@@ -301,6 +301,58 @@ class CareerContentViewSet(viewsets.ModelViewSet):
     def update(self, request):
         careerContent = get_object_or_404(CareerContent, user=request.user.id)
         serializer = CareerContentSerializer(instance=careerContent, data=request.data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class SelfIntroductionViewSet(viewsets.ModelViewSet):
+
+    @swagger_auto_schema()
+    def retrieve(self, request):
+        selfIntroduction = get_object_or_404(SelfIntroduction, user=request.user.id)
+        serializer = SelfIntroductionSerializer(instance=selfIntroduction)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema()
+    def create(self, request):
+        if SelfIntroduction.objects.filter(user=request.user.id).exists():
+            selfIntroduction = get_object_or_404(SelfIntroduction, user=request.user.id)
+            serializer = SelfIntroductionSerializer(instance=selfIntroduction, data=request.data)
+
+
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            data = request.data
+            serializer = SelfIntroductionSerializer(data=data)
+            user = request.user
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(user=user)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema()
+    def destroy(self, request):
+        selfIntroduction = get_object_or_404(SelfIntroduction, user=request.user.id)
+        
+        selfIntroduction.delete()
+
+        data = {
+            'delete': '데이터가 삭제되었습니다.'
+        }
+
+        return Response(data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema()
+    def update(self, request):
+        selfIntroduction = get_object_or_404(SelfIntroduction, user=request.user.id)
+        serializer = SelfIntroductionSerializer(instance=selfIntroduction, data=request.data)
 
         if serializer.is_valid(raise_exception=True):
             serializer.save()
