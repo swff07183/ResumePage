@@ -1,10 +1,11 @@
 import { styled } from 'styled-components';
 
 interface ResumeDivProps {
+  children?: React.ReactNode;
   title: string;
   isRequired?: boolean;
   isFormOpen?: boolean;
-  children?: React.ReactNode;
+  hideAddButton?: boolean;
   handleAddButtonClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
@@ -13,10 +14,11 @@ interface ResumeDivProps {
  * @augments {Component<Props, State>}
  */
 export const Resume = ({
+  children,
   title,
   isRequired,
   isFormOpen,
-  children,
+  hideAddButton,
   handleAddButtonClick,
 }: ResumeDivProps) => {
   return (
@@ -26,14 +28,16 @@ export const Resume = ({
           <h2>{title}</h2>
           {isRequired && <span>필수</span>}
         </div>
-        {!isFormOpen && handleAddButtonClick !== undefined && (
-          <button
-            className="resume-create-button"
-            onClick={handleAddButtonClick}
-          >
-            + 추가
-          </button>
-        )}
+        {!isFormOpen &&
+          handleAddButtonClick !== undefined &&
+          !hideAddButton && (
+            <button
+              className="resume-create-button"
+              onClick={handleAddButtonClick}
+            >
+              + 추가
+            </button>
+          )}
       </div>
       <div className="resume-content-div">{children}</div>
     </Wrapper>

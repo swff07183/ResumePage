@@ -2,8 +2,11 @@ import { getSkill, postSkill } from '@/api/extra';
 import { queryClient } from '@/index';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ISkill } from '../types';
+import { useExtraState } from '../stores/hooks';
 
 export const useSkillQuery = () => {
+  const { closeExtraForm } = useExtraState();
+
   const query = useQuery({
     queryKey: ['skill'],
     queryFn: getSkill,
@@ -13,6 +16,7 @@ export const useSkillQuery = () => {
     mutationFn: (data: ISkill) => postSkill(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['skill'] });
+      closeExtraForm('skill');
     },
   });
 

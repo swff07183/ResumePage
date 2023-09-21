@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Pencil } from '@assets/svg/pencil.svg';
+import { ReactComponent as Trash } from '@assets/svg/trash.svg';
 
 interface ResumeListProps {
   children?: React.ReactNode;
@@ -14,10 +15,22 @@ export const ResumeList = (props: ResumeListProps) => {
 
 const Wrapper = styled.div`
   display: flex;
-  gap: 18px;
+  justify-content: space-between;
   padding: 28px;
-  flex-direction: column;
   border-top: 1px solid #d7dce5;
+`;
+
+ResumeList.Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+  /* width: 100%; */
+`;
+
+ResumeList.Col = styled.div`
+  display: flex;
+  gap: 18px;
+  flex-direction: column;
+  flex-grow: 1;
 `;
 
 ResumeList.Row = styled.div`
@@ -81,31 +94,66 @@ ResumeList.DetailContent = styled.div`
   }
 `;
 
-const EditButton = ({ onClick }: { onClick: () => void }) => {
+const Button = ({
+  type,
+  onClick,
+}: {
+  type: 'edit' | 'delete';
+  onClick: () => void;
+}) => {
   return (
-    <EditButtonWrapper onClick={onClick}>
-      <Pencil />
-    </EditButtonWrapper>
+    <ButtonWrapper onClick={onClick}>
+      {type === 'edit' && <Pencil className="pencil" />}
+      {type === 'delete' && <Trash className="trash" />}
+    </ButtonWrapper>
   );
 };
 
-const EditButtonWrapper = styled.button`
+const ButtonWrapper = styled.button`
   background-color: transparent;
   border: none;
   width: 30px;
   height: 30px;
-  margin-left: auto;
+  margin-left: 6px;
   cursor: pointer;
   &:hover {
     background-color: #a6b0c02f;
   }
   & svg {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
   }
-  & path {
+  & .pencil > path {
     fill: #8491a7;
+    stroke-width: 1px;
+  }
+  & .trash > path {
+    stroke: #8491a7;
+    stroke-width: 1.5px;
   }
 `;
 
-ResumeList.EditButton = EditButton;
+const TextArea = ({ content }: { content: string }) => {
+  return (
+    <TextAreaWrapper>
+      {content.split('\n').map((line) => {
+        return (
+          <div>
+            {line}
+            <br />
+          </div>
+        );
+      })}
+    </TextAreaWrapper>
+  );
+};
+
+const TextAreaWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  letter-spacing: -2px;
+`;
+
+ResumeList.Button = Button;
+ResumeList.TextArea = TextArea;

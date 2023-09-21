@@ -4,21 +4,25 @@ import { useExtraState } from '../stores/hooks';
 import { ResumeForm } from '@/components/ResumeForm';
 import { useForm } from '@/hooks';
 import { styled } from 'styled-components';
-import { TextArea, NoListMessage } from '@components';
+import { TextArea, NoListMessage, ResumeList } from '@components';
 import {
   TEMPLATE_1,
   TEMPLATE_2,
   TEMPLATE_3,
   TEMPLATE_4,
 } from '../constants/careerContentTemplate';
+import { ICareerContent } from '../types';
+import { useCareerContentQuery } from '../hooks/careerContent';
 
 const CareerContent = () => {
   const { extraFormState, openExtraForm } = useExtraState();
+  const { query } = useCareerContentQuery();
 
   return (
     <Resume
       title="경력기술서"
       isFormOpen={extraFormState.careerContent}
+      hideAddButton={query.data !== undefined}
       handleAddButtonClick={() => openExtraForm('careerContent')}
     >
       {extraFormState.careerContent ? (
@@ -30,11 +34,13 @@ const CareerContent = () => {
   );
 };
 
+const TEMPLATE = { TEMPLATE_1, TEMPLATE_2, TEMPLATE_3, TEMPLATE_4 };
+
 const CareerContentForm = () => {
   const { closeExtraForm } = useExtraState();
+  const { query, mutation } = useCareerContentQuery();
   const { formData, setFormData, isError, setIsError, handleInputChange } =
-    useForm({ content: '' });
-  const TEMPLATE = { TEMPLATE_1, TEMPLATE_2, TEMPLATE_3, TEMPLATE_4 };
+    useForm<ICareerContent>({ content: query?.data?.content ?? '' });
 
   const handleTemplateButtonClick =
     (templateKey: 'TEMPLATE_1' | 'TEMPLATE_2' | 'TEMPLATE_3' | 'TEMPLATE_4') =>
@@ -45,12 +51,13 @@ const CareerContentForm = () => {
           '작성한 내용이 사라집니다. 다른 양식을 선택하시겠습니까?'
         )
       ) {
-        setFormData({ ...formData, content: TEMPLATE[templateKey] });
+        setFormData({ content: TEMPLATE[templateKey] });
       }
     };
 
   const handleSubmit = () => {
     if (formData.content !== '') {
+      mutation.mutate(formData);
     } else {
       setIsError({ content: true });
     }
@@ -92,7 +99,32 @@ const CareerContentForm = () => {
 };
 
 const CareerContentList = () => {
-  return <NoListMessage message="경력기술서를 입력해주세요." />;
+  const { query, deleteMutation } = useCareerContentQuery();
+  const { openExtraForm } = useExtraState();
+
+  return query.data?.content ? (
+    <ResumeList>
+      <ResumeList.TextArea content={query.data.content} />
+      <div>
+        <ResumeList.Button
+          type="edit"
+          onClick={() => {
+            openExtraForm('careerContent');
+          }}
+        />
+        <ResumeList.Button
+          type="delete"
+          onClick={() => {
+            if (window.confirm('해당 항목을 삭제하시겠습니까?')) {
+              deleteMutation.mutate();
+            }
+          }}
+        />
+      </div>
+    </ResumeList>
+  ) : (
+    <NoListMessage message="경력기술서를 입력해주세요." />
+  );
 };
 
 const ContentRecommend = styled.div`

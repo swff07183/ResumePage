@@ -14,17 +14,28 @@ export const useExtraState = () => {
       [key]: true,
     });
 
-  const closeExtraList = (key: ExtraMenuType) =>
+  const closeExtraList = (key: ExtraMenuType) => {
     setExtraListState({
       ...extraListState,
       [key]: false,
     });
+    setExtraFormState({
+      ...extraListState,
+      [key]: false,
+    });
+  };
 
-  const toggleExtraList = (key: ExtraMenuType) =>
+  const toggleExtraList = (key: ExtraMenuType) => {
+    if (extraListState[key])
+      setExtraFormState({
+        ...extraListState,
+        [key]: false,
+      });
     setExtraListState((prev) => ({
       ...extraListState,
       [key]: !prev[key],
     }));
+  };
 
   const openExtraForm = (key: ExtraMenuType) =>
     setExtraFormState({

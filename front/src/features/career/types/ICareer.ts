@@ -1,5 +1,5 @@
 export interface ICareer {
-  company: string;
+  name: string;
   state: string;
   enterDate: string;
   exitDate: string;
@@ -8,5 +8,5 @@ export interface ICareer {
   detail: string;
   money: string;
   moneyUnit: string;
-  place: string;
+  region: string;
 }

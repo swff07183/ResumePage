@@ -15,7 +15,9 @@ import { useCareerForm } from '../stores/hooks';
 import { useForm } from '@/hooks';
 
 import { CAREER_STATUS_OPTIONS } from '../options';
-import { REGION_OPTIONS } from '@/common/Options';
+import { MONEY_OPTIONS, REGION_OPTIONS } from '@/common/Options';
+import { ICareer } from '../types/ICareer';
+import { useCareerQuery } from '../hooks';
 
 const careerTextAreaPlaceHolder = `담당업무를 입력해주세요.
 - 진행한 업무를 다 적기 보다는 경력사항 별로 중요한 내용만 엄선해서 작성하는 것이 중요합니다!
@@ -24,42 +26,44 @@ const careerTextAreaPlaceHolder = `담당업무를 입력해주세요.
 `;
 
 const CareerForm = () => {
+  const [checkSalary, setCheckSalary] = useState<boolean>(false);
+  const [checkCareerRegion, setCheckCareerRegion] = useState<boolean>(false);
+
+  const { closeCareerForm } = useCareerForm();
+  const { data, mutation } = useCareerQuery();
+  console.log(data);
+
   const {
     formData,
-    setFormData,
     isError,
     setIsError,
     handleSelectChange,
     handleInputChange,
     handleDateChange,
-  } = useForm({
-    company: '',
-    status: '',
+  } = useForm<ICareer>({
+    name: '',
+    state: '',
     enterDate: '',
     exitDate: '',
     position: '',
     part: '',
-    task: '',
-    salary: '',
-    careerRegion: '',
+    detail: '',
+    money: '',
+    moneyUnit: '',
+    region: '',
   });
-  const [checkSalary, setCheckSalary] = useState<boolean>(false);
-  const [checkCareerRegion, setCheckCareerRegion] = useState<boolean>(false);
-
-  const { closeCareerForm } = useCareerForm();
 
   const handleSubmit = () => {
-    const { company, status, enterDate, exitDate } = formData;
+    const { name, state, enterDate, exitDate } = formData;
     setIsError({
       ...isError,
-      company: company === '',
-      status: status === '',
+      name: name === '',
+      state: state === '',
       enterDate: enterDate === '',
       exitDate: exitDate === '',
     });
-    if (company && status && enterDate && exitDate) {
-      console.log({ ...formData, checkSalary, checkCareerRegion });
-      closeCareerForm();
+    if (name && state && enterDate && exitDate) {
+      mutation.mutate(formData);
     }
   };
 
@@ -67,18 +71,18 @@ const CareerForm = () => {
     <ResumeForm>
       <ResumeForm.Row>
         <Input
-          name="company"
+          name="name"
           placeholder="회사명*"
-          value={formData.company}
-          invalid={isError.company}
+          value={formData.name}
+          invalid={isError.name}
           onChange={handleInputChange}
         />
         <SelectInput
           className="input_s"
           options={CAREER_STATUS_OPTIONS}
-          value={formData.status}
-          invalid={isError.status}
-          onChange={handleSelectChange('status')}
+          value={formData.state}
+          invalid={isError.state}
+          onChange={handleSelectChange('state')}
         />
         <DateInput
           className="input_s"
@@ -110,10 +114,11 @@ const CareerForm = () => {
       </ResumeForm.Row>
       <ResumeForm.Row>
         <TextArea
-          name="task"
+          name="detail"
           title="담당업무"
           placeholder={careerTextAreaPlaceHolder}
           onChange={handleInputChange}
+          value={formData.detail}
         />
       </ResumeForm.Row>
       {(checkSalary || checkCareerRegion) && (
@@ -121,20 +126,25 @@ const CareerForm = () => {
           {checkSalary && (
             <React.Fragment>
               <Input
-                name="salary"
+                name="money"
                 className="input_s"
                 placeholder="연봉"
                 onChange={handleInputChange}
               />
-              <SelectInput className="input_s" />
+              <SelectInput
+                className="input_s"
+                options={MONEY_OPTIONS}
+                value={formData.moneyUnit}
+                onChange={handleSelectChange('moneyUnit')}
+              />
             </React.Fragment>
           )}
           {checkCareerRegion && (
             <SelectInput
               className="input_s"
               options={REGION_OPTIONS}
-              value={formData.careerRegion}
-              onChange={handleSelectChange('careerRegion')}
+              value={formData.region}
+              onChange={handleSelectChange('region')}
             />
           )}
         </ResumeForm.Row>

@@ -21,3 +21,12 @@ export type ExperienceType =
 export interface ISkill {
   skill: string;
 }
+
+export interface ICareerContent {
+  content: string;
+}
+
+export interface ISelfIntroduction {
+  title: string;
+  content: string;
+}

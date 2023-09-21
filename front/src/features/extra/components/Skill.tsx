@@ -58,14 +58,14 @@ const SkillList = () => {
 
   return query.data?.length > 0 ? (
     <ResumeList>
-      <ResumeList.Row>
+      <ResumeList.Col>
         <ResumeList.Title>나의 스킬</ResumeList.Title>
-      </ResumeList.Row>
-      <ResumeList.Row>
-        {query.data.map((item: any) => (
-          <SkillItem>{item.skill}</SkillItem>
-        ))}
-      </ResumeList.Row>
+        <ResumeList.Row>
+          {query.data.map((item: any) => (
+            <SkillItem>{item.skill}</SkillItem>
+          ))}
+        </ResumeList.Row>
+      </ResumeList.Col>
     </ResumeList>
   ) : (
     <NoListMessage message="스킬을 추가해주세요." />

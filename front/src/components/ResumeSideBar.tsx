@@ -33,10 +33,10 @@ export const ResumeSideBar = () => {
       name: '자격/어학/수상',
       key: 'award',
     },
-    {
-      name: '포트폴리오',
-      key: 'portfolio',
-    },
+    // {
+    //   name: '포트폴리오',
+    //   key: 'portfolio',
+    // },
     {
       name: '경력기술서',
       key: 'careerContent',

@@ -35,3 +35,12 @@ export const REGION_OPTIONS: IOptionType[] = [
   },
   ...regionList.map((region) => ({ content: region, value: region })),
 ];
+
+const moneyList = ['만원', '달러', '엔'];
+
+export const MONEY_OPTIONS: IOptionType[] = [
+  {
+    content: '금액 단위',
+  },
+  ...moneyList.map((item) => ({ content: item, value: item })),
+];
