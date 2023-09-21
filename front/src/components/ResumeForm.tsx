@@ -21,7 +21,7 @@ const Wrapper = styled.div<WrapperProps>`
   padding: 32px 40px;
   flex-direction: column;
   gap: 16px;
-  border-top: 2px solid #4876ef;
+  border-top: 2px solid #549985;
   border-bottom-right-radius: 8px;
   border-bottom-left-radius: 8px;
   box-shadow: 0 4px 16px 0 rgba(17, 42, 128, 0.08);

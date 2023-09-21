@@ -129,17 +129,17 @@ const SideMenuItem = styled.div`
     border: 0.5px solid #67738edd;
     border-radius: 50%;
     & .icon-minus > path {
-      stroke: #2d65f2;
+      stroke: #00553d;
     }
     & .icon-plus > path {
       stroke: #67738e;
     }
   }
   & button.icon-active {
-    border: 0.5px solid #2d64f2;
+    border: 0.5px solid #00553d;
   }
   & .active {
-    color: #2d64f2;
+    color: #00553d;
   }
 `;
 
@@ -199,7 +199,7 @@ const ResumeProgressWrapper = styled.div`
     flex-direction: column;
     font-size: 13px;
     & > span > span {
-      color: #2d65f2;
+      color: #00553d;
       font-weight: bold;
     }
   }

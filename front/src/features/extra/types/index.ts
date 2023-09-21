@@ -30,3 +30,17 @@ export interface ISelfIntroduction {
   title: string;
   content: string;
 }
+
+export interface IAward {
+  type: string;
+  licenseName?: string;
+  licenseDate?: string;
+  licensePlace?: string;
+  language?: string;
+  languageScore?: string;
+  languageName?: string;
+  languageDate?: string;
+  awardName?: string;
+  awardDate?: string;
+  awardPlace?: string;
+}

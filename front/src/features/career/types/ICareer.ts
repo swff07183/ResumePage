@@ -1,4 +1,5 @@
 export interface ICareer {
+  id?: number;
   name: string;
   state: string;
   enterDate: string;

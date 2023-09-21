@@ -13,9 +13,9 @@ export const Extra = () => {
     <>
       {extraListState.skill && <Skill />}
       {extraListState.experience && <Experience />}
+      {extraListState.award && <Award />}
       {extraListState.careerContent && <CareerContent />}
       {extraListState.selfIntroduction && <SelfIntroduction />}
-      {extraListState.award && <Award />}
       {/* {extraListState.preferential && <Preferential />} */}
     </>
   );

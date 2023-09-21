@@ -24,6 +24,10 @@ ResumeList.Item = styled.div`
   display: flex;
   justify-content: space-between;
   /* width: 100%; */
+  & + & {
+    padding-top: 18px;
+    border-top: 1px solid #eaedf4;
+  }
 `;
 
 ResumeList.Col = styled.div`
@@ -136,14 +140,12 @@ const ButtonWrapper = styled.button`
 const TextArea = ({ content }: { content: string }) => {
   return (
     <TextAreaWrapper>
-      {content.split('\n').map((line) => {
-        return (
-          <div>
-            {line}
-            <br />
-          </div>
-        );
-      })}
+      {content.split('\n').map((line, idx) => (
+        <div key={`content-${idx}`}>
+          {line}
+          <br />
+        </div>
+      ))}
     </TextAreaWrapper>
   );
 };

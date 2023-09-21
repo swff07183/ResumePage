@@ -1,45 +1,79 @@
 import React from 'react';
 import { NoListMessage, ResumeList } from '@components';
 import { useCareerQuery } from '../hooks';
+import { useCareerForm, useSelectedCareer } from '../stores/hooks';
+import { formatDate } from '@/utils';
 
 const CareerList = () => {
-  const { data } = useCareerQuery();
+  const { data, updateMutation, deleteMutation } = useCareerQuery();
+  const { setSelectedCareer } = useSelectedCareer();
+  const { openCareerForm } = useCareerForm();
 
   return data ? (
     <ResumeList>
       <ResumeList.Col>
-        {data.map((item) => (
-          <ResumeList.Item>
-            <ResumeList.Col>
-              {/*  */}
-              <ResumeList.Row>
-                <ResumeList.Title>티맥스티베로</ResumeList.Title>
-                <ResumeList.Date>2023.07~2023.09</ResumeList.Date>
-              </ResumeList.Row>
-              {/*  */}
-              <ResumeList.Row>DB3-2팀 연구원/팀원</ResumeList.Row>
-              <ResumeList.Row>
-                <ResumeList.TextArea
-                  content={`데이터베이스 GUI 툴 개발\n\n프론트엔드 개발`}
+        {data.map((career, idx) => (
+          <>
+            <ResumeList.Item style={{ minHeight: '80px' }}>
+              <ResumeList.Col>
+                {/*  */}
+                <ResumeList.Row>
+                  <ResumeList.Title>{career.name}</ResumeList.Title>
+                  <ResumeList.Date>
+                    {formatDate(career.enterDate)}~{formatDate(career.exitDate)}
+                  </ResumeList.Date>
+                </ResumeList.Row>
+                {/*  */}
+                {(career.part || career.position) && (
+                  <ResumeList.Row>
+                    {career.part} {career.position}
+                  </ResumeList.Row>
+                )}
+                {career.detail && (
+                  <ResumeList.Row>
+                    <ResumeList.TextArea content={career.detail} />
+                  </ResumeList.Row>
+                )}
+                {/*  */}
+                {(career.money || career.region) && (
+                  <ResumeList.DetailDiv>
+                    {career.money && (
+                      <ResumeList.Row>
+                        <ResumeList.Detail>연봉</ResumeList.Detail>
+                        <ResumeList.DetailContent>
+                          {`${career.money}${career.moneyUnit}`}
+                        </ResumeList.DetailContent>
+                      </ResumeList.Row>
+                    )}
+                    {career.region && (
+                      <ResumeList.Row>
+                        <ResumeList.Detail>근무지역</ResumeList.Detail>
+                        <ResumeList.DetailContent>
+                          {career.region}
+                        </ResumeList.DetailContent>
+                      </ResumeList.Row>
+                    )}
+                  </ResumeList.DetailDiv>
+                )}
+              </ResumeList.Col>
+              <div>
+                <ResumeList.Button
+                  type="edit"
+                  onClick={() => {
+                    setSelectedCareer(career);
+                    openCareerForm();
+                  }}
                 />
-              </ResumeList.Row>
-              {/*  */}
-              <ResumeList.DetailDiv>
-                <ResumeList.Row>
-                  <ResumeList.Detail>연봉</ResumeList.Detail>
-                  <ResumeList.DetailContent>5000만원</ResumeList.DetailContent>
-                </ResumeList.Row>
-                <ResumeList.Row>
-                  <ResumeList.Detail>근무지역</ResumeList.Detail>
-                  <ResumeList.DetailContent>경기</ResumeList.DetailContent>
-                </ResumeList.Row>
-              </ResumeList.DetailDiv>
-            </ResumeList.Col>
-            <div>
-              <ResumeList.Button type="edit" onClick={() => {}} />
-              <ResumeList.Button type="delete" onClick={() => {}} />
-            </div>
-          </ResumeList.Item>
+                <ResumeList.Button
+                  type="delete"
+                  onClick={() => {
+                    if (window.confirm('해당 항목을 삭제하시겠습니까?'))
+                      deleteMutation.mutate(career.id!);
+                  }}
+                />
+              </div>
+            </ResumeList.Item>
+          </>
         ))}
       </ResumeList.Col>
     </ResumeList>

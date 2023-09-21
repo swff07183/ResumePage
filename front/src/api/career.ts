@@ -19,8 +19,20 @@ export const postCareer = async (params: ICareer) => {
   return data;
 };
 
+export const putCareer = async (id: number, params: ICareer) => {
+  const { data } = await client.put(`${BASE_URL}/career/${id}/`, params);
+
+  return data;
+};
+
+export const deleteCareer = async (id: number) => {
+  const { data } = await client.delete(`${BASE_URL}/career/${id}/`);
+
+  return data;
+};
+
 export const putEducation = async (id: number, params: ICareer) => {
-  const { data } = await client.put(`${BASE_URL}/education/${id}`, params);
+  const { data } = await client.put(`${BASE_URL}/education/${id}/`, params);
 
   return data;
 };

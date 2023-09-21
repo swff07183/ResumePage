@@ -10,7 +10,7 @@ import {
   AddButton,
 } from '@components';
 
-import { useCareerForm } from '../stores/hooks';
+import { useCareerForm, useSelectedCareer } from '../stores/hooks';
 
 import { useForm } from '@/hooks';
 
@@ -30,7 +30,8 @@ const CareerForm = () => {
   const [checkCareerRegion, setCheckCareerRegion] = useState<boolean>(false);
 
   const { closeCareerForm } = useCareerForm();
-  const { data, mutation } = useCareerQuery();
+  const { selectedCareer } = useSelectedCareer();
+  const { data, mutation, updateMutation } = useCareerQuery();
   console.log(data);
 
   const {
@@ -40,18 +41,20 @@ const CareerForm = () => {
     handleSelectChange,
     handleInputChange,
     handleDateChange,
-  } = useForm<ICareer>({
-    name: '',
-    state: '',
-    enterDate: '',
-    exitDate: '',
-    position: '',
-    part: '',
-    detail: '',
-    money: '',
-    moneyUnit: '',
-    region: '',
-  });
+  } = useForm<ICareer>(
+    selectedCareer ?? {
+      name: '',
+      state: '',
+      enterDate: '',
+      exitDate: '',
+      position: '',
+      part: '',
+      detail: '',
+      money: '',
+      moneyUnit: '',
+      region: '',
+    }
+  );
 
   const handleSubmit = () => {
     const { name, state, enterDate, exitDate } = formData;
@@ -63,7 +66,11 @@ const CareerForm = () => {
       exitDate: exitDate === '',
     });
     if (name && state && enterDate && exitDate) {
-      mutation.mutate(formData);
+      if (formData.id) {
+        updateMutation.mutate(formData);
+      } else {
+        mutation.mutate(formData);
+      }
     }
   };
 

@@ -1,7 +1,12 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ICareer } from '../types/ICareer';
 import { useCareerForm } from '../stores/hooks';
-import { getCareerList, postCareer } from '@/api/career';
+import {
+  deleteCareer,
+  getCareerList,
+  postCareer,
+  putCareer,
+} from '@/api/career';
 import { queryClient } from '@/index';
 
 export const useCareerQuery = () => {
@@ -19,5 +24,21 @@ export const useCareerQuery = () => {
     },
   });
 
-  return { data, mutation };
+  const updateMutation = useMutation({
+    mutationFn: (params: ICareer) => putCareer(params.id!, params),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['career', 'list'] });
+      closeCareerForm();
+    },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteCareer(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['career', 'list'] });
+      closeCareerForm();
+    },
+  });
+
+  return { data, mutation, updateMutation, deleteMutation };
 };
