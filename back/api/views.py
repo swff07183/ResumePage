@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction
-from .serializers import EducationSerializer, CareerSerializer, SkillSerializer, UserInfoSerializer, ExperienceSerializer, CareerContentSerializer, SelfIntroductionSerializer
+from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction, Award
+from .serializers import EducationSerializer, CareerSerializer, SkillSerializer, UserInfoSerializer, ExperienceSerializer, CareerContentSerializer, SelfIntroductionSerializer, AwardSerializer
 from drf_yasg.utils import swagger_auto_schema
 
 
@@ -358,3 +358,50 @@ class SelfIntroductionViewSet(viewsets.ModelViewSet):
             serializer.save()
 
             return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class AwardViewset(viewsets.ModelViewSet):
+
+
+    @swagger_auto_schema()
+    def list(self, request):
+        awards = Award.objects.filter(user=request.user.id)
+        serializer = AwardSerializer(instance=awards, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema()
+    def create(self, request):
+        data = request.data
+        serializer = AwardSerializer(data=data)
+        user = request.user
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=user)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema()
+    def destroy(self, request, pk):
+        award = get_object_or_404(Award, pk=pk)
+        
+        if request.user == award.user:
+
+            award.delete()
+
+            data = {
+                'delete': '데이터가 삭제되었습니다.'
+            }
+
+        return Response(data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema()
+    def update(self, request, pk):
+        award = get_object_or_404(Award, pk=pk)
+        
+        if request.user == award.user:
+            serializer = Award(instance=award, data=request.data)
+
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+
+                return Response(serializer.data, status=status.HTTP_200_OK)

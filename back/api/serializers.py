@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction
+from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction, Award
 from django.contrib.auth import get_user_model
 
 class UserInfoSerializer(serializers.ModelSerializer):
@@ -50,5 +50,12 @@ class SelfIntroductionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SelfIntroduction
+        fields = '__all__'
+        read_only_fields = ('user',)
+
+class AwardSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Award
         fields = '__all__'
         read_only_fields = ('user',)

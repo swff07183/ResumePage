@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import EducationViewSet, CareerViewSet, SkillViewSet, UserInfoViewSet, CareerContentViewSet, SelfIntroductionViewSet
+from .views import EducationViewSet, CareerViewSet, SkillViewSet, UserInfoViewSet, CareerContentViewSet, SelfIntroductionViewSet, AwardViewset
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
@@ -16,5 +16,7 @@ urlpatterns = [
     path('api/skill/', SkillViewSet.as_view({'get':'list', 'post': 'create'})),
     path('api/skill/<int:pk>/', SkillViewSet.as_view({'put': 'update', 'delete': 'destroy'})),
     path('api/career-content/', CareerContentViewSet.as_view({'get':'retrieve', 'post': 'create', 'put': 'update', 'delete': 'destroy' })),
-    path('api/self-introduction/', SelfIntroductionViewSet.as_view({'get':'retrieve', 'post': 'create', 'put': 'update', 'delete': 'destroy' }))
+    path('api/self-introduction/', SelfIntroductionViewSet.as_view({'get':'retrieve', 'post': 'create', 'put': 'update', 'delete': 'destroy' })),
+    path('api/award/', AwardViewset.as_view({'get':'list', 'post': 'create'})),
+    path('api/award/<int:pk>/', AwardViewset.as_view({'put': 'update', 'delete': 'destroy'})),
 ]

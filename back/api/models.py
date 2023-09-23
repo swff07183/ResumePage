@@ -91,3 +91,20 @@ class SelfIntroduction(models.Model):
     )
     title = models.TextField()
     content = models.TextField()
+
+class Award(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    type = models.TextField()
+    licenseName = models.TextField(null=True, blank=True)
+    licenseDate = models.TextField(null=True, blank=True)
+    licensePlace = models.TextField(null=True, blank=True)
+    language = models.TextField(null=True, blank=True)
+    languageScore = models.TextField(null=True, blank=True)
+    languageName = models.TextField(null=True, blank=True)
+    languageDate = models.TextField(null=True, blank=True)
+    awardName = models.TextField(null=True, blank=True)
+    awardDate = models.TextField(null=True, blank=True)
+    awardPlace = models.TextField(null=True, blank=True)
