@@ -1,6 +1,5 @@
 import { useRecoilState } from 'recoil';
 import { careerFormState, selectedCareerState } from './atoms';
-import { ICareer } from '../types/ICareer';
 
 export const useSelectedCareer = () => {
   const [selectedCareer, setSelectedCareer] =

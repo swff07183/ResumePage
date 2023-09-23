@@ -6,9 +6,12 @@ import CareerContent from './CareerContent';
 import SelfIntroduction from './SelfIntroduction';
 import Preferential from './Preferential';
 import Award from './Award';
+import { useInitialExtrastate } from '../hooks/extra';
 
 export const Extra = () => {
   const { extraListState } = useExtraState();
+  useInitialExtrastate();
+
   return (
     <>
       {extraListState.skill && <Skill />}

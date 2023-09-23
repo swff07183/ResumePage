@@ -16,13 +16,13 @@ import { useCareerContentQuery } from '../hooks/careerContent';
 
 const CareerContent = () => {
   const { extraFormState, openExtraForm } = useExtraState();
-  const { query } = useCareerContentQuery();
+  const { data } = useCareerContentQuery();
 
   return (
     <Resume
       title="경력기술서"
       isFormOpen={extraFormState.careerContent}
-      hideAddButton={query.data !== undefined}
+      hideAddButton={data !== undefined}
       handleAddButtonClick={() => openExtraForm('careerContent')}
     >
       {extraFormState.careerContent ? (
@@ -38,9 +38,9 @@ const TEMPLATE = { TEMPLATE_1, TEMPLATE_2, TEMPLATE_3, TEMPLATE_4 };
 
 const CareerContentForm = () => {
   const { closeExtraForm } = useExtraState();
-  const { query, mutation } = useCareerContentQuery();
+  const { data, mutation } = useCareerContentQuery();
   const { formData, setFormData, isError, setIsError, handleInputChange } =
-    useForm<ICareerContent>({ content: query?.data?.content ?? '' });
+    useForm<ICareerContent>({ content: data?.content ?? '' });
 
   const handleTemplateButtonClick =
     (templateKey: 'TEMPLATE_1' | 'TEMPLATE_2' | 'TEMPLATE_3' | 'TEMPLATE_4') =>
@@ -99,12 +99,12 @@ const CareerContentForm = () => {
 };
 
 const CareerContentList = () => {
-  const { query, deleteMutation } = useCareerContentQuery();
+  const { data, deleteMutation } = useCareerContentQuery();
   const { openExtraForm } = useExtraState();
 
-  return query.data?.content ? (
+  return data?.content ? (
     <ResumeList>
-      <ResumeList.TextArea content={query.data.content} />
+      <ResumeList.TextArea content={data.content} />
       <div>
         <ResumeList.Button
           type="edit"

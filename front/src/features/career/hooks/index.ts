@@ -36,7 +36,6 @@ export const useCareerQuery = () => {
     mutationFn: (id: number) => deleteCareer(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['career', 'list'] });
-      closeCareerForm();
     },
   });
 

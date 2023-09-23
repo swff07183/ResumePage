@@ -50,19 +50,15 @@ const SkillForm = () => {
 };
 
 const SkillList = () => {
-  const { query } = useSkillQuery();
+  const { data } = useSkillQuery();
 
-  useEffect(() => {
-    console.log(query.data);
-  }, [query]);
-
-  return query.data?.length > 0 ? (
+  return data?.length > 0 ? (
     <ResumeList>
       <ResumeList.Col>
         <ResumeList.Title>나의 스킬</ResumeList.Title>
         <ResumeList.Row>
-          {query.data.map((item: any) => (
-            <SkillItem>{item.skill}</SkillItem>
+          {data.map((item: any) => (
+            <SkillItem key={item.id}>{item.skill}</SkillItem>
           ))}
         </ResumeList.Row>
       </ResumeList.Col>

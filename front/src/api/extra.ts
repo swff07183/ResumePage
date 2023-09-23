@@ -1,6 +1,6 @@
 import { ICareerContent, ISkill } from '@/features/extra';
 import { BASE_URL, client } from './client';
-import { ISelfIntroduction } from '@/features/extra/types';
+import { IAward, ISelfIntroduction } from '@/features/extra/types';
 
 export const getSkill = async () => {
   const { data } = await client.get(`${BASE_URL}/skill/`);
@@ -46,6 +46,54 @@ export const postSelfIntroduction = async (params: ISelfIntroduction) => {
 
 export const deleteSelfIntroduction = async () => {
   const { data } = await client.delete(`${BASE_URL}/self-introduction/`);
+
+  return data;
+};
+
+export const getAward = async () => {
+  const { data } = await client.get(`${BASE_URL}/award/`);
+
+  return data;
+};
+
+export const postAward = async (params: IAward) => {
+  const { data } = await client.post(`${BASE_URL}/award/`, params);
+
+  return data;
+};
+
+export const putAward = async (id: number, params: IAward) => {
+  const { data } = await client.put(`${BASE_URL}/award/${id}/`, params);
+
+  return data;
+};
+
+export const deleteAward = async (id: number) => {
+  const { data } = await client.delete(`${BASE_URL}/award/${id}/`);
+
+  return data;
+};
+
+export const getExperience = async () => {
+  const { data } = await client.get(`${BASE_URL}/experience/`);
+
+  return data;
+};
+
+export const postExperience = async (params: IAward) => {
+  const { data } = await client.post(`${BASE_URL}/experience/`, params);
+
+  return data;
+};
+
+export const putExperience = async (id: number, params: IAward) => {
+  const { data } = await client.put(`${BASE_URL}/experience/${id}/`, params);
+
+  return data;
+};
+
+export const deleteExperience = async (id: number) => {
+  const { data } = await client.delete(`${BASE_URL}/experience/${id}/`);
 
   return data;
 };

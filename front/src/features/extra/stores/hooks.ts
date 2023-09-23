@@ -1,52 +1,77 @@
 import { useRecoilState } from 'recoil';
-import { extraFormRecoilState, extraListRecoilState } from './atom';
+import {
+  extraFormRecoilState,
+  extraListRecoilState,
+  selectedAwardState,
+  selectedExperienceState,
+} from './atom';
 import { ExtraMenuType } from '../types';
+
+export const useSelectedAward = () => {
+  const [selectedAward, setSelectedAward] = useRecoilState(selectedAwardState);
+
+  return { selectedAward, setSelectedAward };
+};
+
+export const useSelectedExperience = () => {
+  const [selectedExperience, setSelectedExperience] = useRecoilState(
+    selectedExperienceState
+  );
+
+  return { selectedExperience, setSelectedExperience };
+};
 
 export const useExtraState = () => {
   const [extraListState, setExtraListState] =
     useRecoilState(extraListRecoilState);
   const [extraFormState, setExtraFormState] =
     useRecoilState(extraFormRecoilState);
+  const { setSelectedAward } = useSelectedAward();
+  const { setSelectedExperience } = useSelectedExperience();
 
   const openExtraList = (key: ExtraMenuType) =>
-    setExtraListState({
-      ...extraListState,
+    setExtraListState((prev) => ({
+      ...prev,
       [key]: true,
-    });
+    }));
 
   const closeExtraList = (key: ExtraMenuType) => {
-    setExtraListState({
-      ...extraListState,
+    setExtraListState((prev) => ({
+      ...prev,
       [key]: false,
-    });
-    setExtraFormState({
-      ...extraListState,
+    }));
+    setExtraFormState((prev) => ({
+      ...prev,
       [key]: false,
-    });
+    }));
   };
 
   const toggleExtraList = (key: ExtraMenuType) => {
     if (extraListState[key])
-      setExtraFormState({
-        ...extraListState,
+      setExtraFormState((prev) => ({
+        ...prev,
         [key]: false,
-      });
+      }));
     setExtraListState((prev) => ({
-      ...extraListState,
+      ...prev,
       [key]: !prev[key],
     }));
   };
 
   const openExtraForm = (key: ExtraMenuType) =>
-    setExtraFormState({
-      ...extraFormState,
+    setExtraFormState((prev) => ({
+      ...prev,
       [key]: true,
-    });
-  const closeExtraForm = (key: ExtraMenuType) =>
+    }));
+
+  const closeExtraForm = (key: ExtraMenuType) => {
+    if (key === 'award') setSelectedAward(null);
+    if (key === 'experience') setSelectedExperience(null);
     setExtraFormState((prev) => ({
       ...prev,
       [key]: false,
     }));
+  };
 
   return {
     extraListState,

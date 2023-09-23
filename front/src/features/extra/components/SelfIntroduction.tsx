@@ -9,13 +9,13 @@ import { ISelfIntroduction } from '../types';
 
 const SelfIntroduction = () => {
   const { extraFormState, openExtraForm } = useExtraState();
-  const { query } = useSelfIntroductionQuery();
+  const { data } = useSelfIntroductionQuery();
 
   return (
     <Resume
       title="자기소개서"
       isFormOpen={extraFormState.selfIntroduction}
-      hideAddButton={query.data !== undefined}
+      hideAddButton={data !== undefined}
       handleAddButtonClick={() => openExtraForm('selfIntroduction')}
     >
       {extraFormState.selfIntroduction ? (
@@ -29,11 +29,11 @@ const SelfIntroduction = () => {
 
 const SelfIntroductionForm = () => {
   const { closeExtraForm } = useExtraState();
-  const { query, mutation } = useSelfIntroductionQuery();
+  const { data, mutation } = useSelfIntroductionQuery();
   const { formData, isError, setIsError, handleInputChange } =
     useForm<ISelfIntroduction>({
-      title: query.data?.title ?? '',
-      content: query.data?.content ?? '',
+      title: data?.title ?? '',
+      content: data?.content ?? '',
     });
 
   const handleSubmit = () => {
@@ -76,14 +76,14 @@ const SelfIntroductionForm = () => {
 };
 
 const SelfIntroductionList = () => {
-  const { query, deleteMutation } = useSelfIntroductionQuery();
+  const { data, deleteMutation } = useSelfIntroductionQuery();
   const { openExtraForm } = useExtraState();
 
-  return query.data ? (
+  return data ? (
     <ResumeList>
       <ResumeList.Col>
-        <ResumeList.Title>{query.data.title}</ResumeList.Title>
-        <ResumeList.TextArea content={query.data.content} />
+        <ResumeList.Title>{data.title}</ResumeList.Title>
+        <ResumeList.TextArea content={data.content} />
       </ResumeList.Col>
       <div>
         <ResumeList.Button

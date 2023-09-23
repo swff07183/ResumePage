@@ -9,71 +9,69 @@ const CareerList = () => {
   const { setSelectedCareer } = useSelectedCareer();
   const { openCareerForm } = useCareerForm();
 
-  return data ? (
+  return data && data?.length > 0 ? (
     <ResumeList>
       <ResumeList.Col>
         {data.map((career, idx) => (
-          <>
-            <ResumeList.Item style={{ minHeight: '80px' }}>
-              <ResumeList.Col>
-                {/*  */}
+          <ResumeList.Item style={{ minHeight: '80px' }} key={career.id}>
+            <ResumeList.Col>
+              {/*  */}
+              <ResumeList.Row>
+                <ResumeList.Title>{career.name}</ResumeList.Title>
+                <ResumeList.Date>
+                  {formatDate(career.enterDate)}~{formatDate(career.exitDate)}
+                </ResumeList.Date>
+              </ResumeList.Row>
+              {/*  */}
+              {(career.part || career.position) && (
                 <ResumeList.Row>
-                  <ResumeList.Title>{career.name}</ResumeList.Title>
-                  <ResumeList.Date>
-                    {formatDate(career.enterDate)}~{formatDate(career.exitDate)}
-                  </ResumeList.Date>
+                  {career.part} {career.position}
                 </ResumeList.Row>
-                {/*  */}
-                {(career.part || career.position) && (
-                  <ResumeList.Row>
-                    {career.part} {career.position}
-                  </ResumeList.Row>
-                )}
-                {career.detail && (
-                  <ResumeList.Row>
-                    <ResumeList.TextArea content={career.detail} />
-                  </ResumeList.Row>
-                )}
-                {/*  */}
-                {(career.money || career.region) && (
-                  <ResumeList.DetailDiv>
-                    {career.money && (
-                      <ResumeList.Row>
-                        <ResumeList.Detail>연봉</ResumeList.Detail>
-                        <ResumeList.DetailContent>
-                          {`${career.money}${career.moneyUnit}`}
-                        </ResumeList.DetailContent>
-                      </ResumeList.Row>
-                    )}
-                    {career.region && (
-                      <ResumeList.Row>
-                        <ResumeList.Detail>근무지역</ResumeList.Detail>
-                        <ResumeList.DetailContent>
-                          {career.region}
-                        </ResumeList.DetailContent>
-                      </ResumeList.Row>
-                    )}
-                  </ResumeList.DetailDiv>
-                )}
-              </ResumeList.Col>
-              <div>
-                <ResumeList.Button
-                  type="edit"
-                  onClick={() => {
-                    setSelectedCareer(career);
-                    openCareerForm();
-                  }}
-                />
-                <ResumeList.Button
-                  type="delete"
-                  onClick={() => {
-                    if (window.confirm('해당 항목을 삭제하시겠습니까?'))
-                      deleteMutation.mutate(career.id!);
-                  }}
-                />
-              </div>
-            </ResumeList.Item>
-          </>
+              )}
+              {career.detail && (
+                <ResumeList.Row>
+                  <ResumeList.TextArea content={career.detail} />
+                </ResumeList.Row>
+              )}
+              {/*  */}
+              {(career.money || career.region) && (
+                <ResumeList.DetailDiv>
+                  {career.money && (
+                    <ResumeList.Row>
+                      <ResumeList.Detail>연봉</ResumeList.Detail>
+                      <ResumeList.DetailContent>
+                        {`${career.money}${career.moneyUnit}`}
+                      </ResumeList.DetailContent>
+                    </ResumeList.Row>
+                  )}
+                  {career.region && (
+                    <ResumeList.Row>
+                      <ResumeList.Detail>근무지역</ResumeList.Detail>
+                      <ResumeList.DetailContent>
+                        {career.region}
+                      </ResumeList.DetailContent>
+                    </ResumeList.Row>
+                  )}
+                </ResumeList.DetailDiv>
+              )}
+            </ResumeList.Col>
+            <div>
+              <ResumeList.Button
+                type="edit"
+                onClick={() => {
+                  setSelectedCareer(career);
+                  openCareerForm();
+                }}
+              />
+              <ResumeList.Button
+                type="delete"
+                onClick={() => {
+                  if (window.confirm('해당 항목을 삭제하시겠습니까?'))
+                    deleteMutation.mutate(career.id!);
+                }}
+              />
+            </div>
+          </ResumeList.Item>
         ))}
       </ResumeList.Col>
     </ResumeList>

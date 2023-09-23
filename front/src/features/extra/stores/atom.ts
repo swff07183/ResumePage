@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import { IAward, IExperience } from '../types';
 
 export const extraListRecoilState = atom({
   key: 'extraListRecoilState',
@@ -24,4 +25,14 @@ export const extraFormRecoilState = atom({
     selfIntroduction: false, // 자기소개서
     preferential: false, // 우대사항
   },
+});
+
+export const selectedAwardState = atom<IAward | null>({
+  key: 'selectedAwardState',
+  default: null,
+});
+
+export const selectedExperienceState = atom<IExperience | null>({
+  key: 'selectedExperienceState',
+  default: null,
 });

@@ -7,7 +7,7 @@ import { useExtraState } from '../stores/hooks';
 export const useSkillQuery = () => {
   const { closeExtraForm } = useExtraState();
 
-  const query = useQuery({
+  const { data } = useQuery({
     queryKey: ['skill'],
     queryFn: getSkill,
   });
@@ -20,5 +20,5 @@ export const useSkillQuery = () => {
     },
   });
 
-  return { query, mutation };
+  return { data, mutation };
 };

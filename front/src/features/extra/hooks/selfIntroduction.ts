@@ -11,7 +11,7 @@ import {
 export const useSelfIntroductionQuery = () => {
   const { closeExtraForm } = useExtraState();
 
-  const query = useQuery<ISelfIntroduction>({
+  const { data } = useQuery<ISelfIntroduction>({
     queryKey: ['selfIntroduction'],
     queryFn: getSelfIntroduction,
     retry: 0,
@@ -32,5 +32,5 @@ export const useSelfIntroductionQuery = () => {
     },
   });
 
-  return { query, mutation, deleteMutation };
+  return { data, mutation, deleteMutation };
 };

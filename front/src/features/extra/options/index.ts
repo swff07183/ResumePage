@@ -13,10 +13,21 @@ const languageList = [
   '기타',
 ];
 
+const experienceList = [
+  '교내활동',
+  '인턴',
+  '자원봉사',
+  '동아리',
+  '아르바이트',
+  '사회활동',
+  '수행과제',
+  '해외연수',
+  '교육이수내역',
+];
+
 export const EXPERIENCE_TYPE: IOptionType[] = [
   { content: '활동구분 선택 *' },
-  { content: '교내활동', value: '1' },
-  { content: '인턴', value: '2' },
+  ...experienceList.map((exp) => ({ content: exp, value: exp })),
 ];
 
 export const AWARD_TYPE: IOptionType[] = [

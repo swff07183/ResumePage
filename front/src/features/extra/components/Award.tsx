@@ -1,11 +1,19 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React from 'react';
 import { Resume } from '@/components/Resume';
-import { useExtraState } from '../stores/hooks';
+import { useExtraState, useSelectedAward } from '../stores/hooks';
 import { ResumeForm } from '@/components/ResumeForm';
 import { useForm } from '@/hooks';
 import { AWARD_TYPE, LANGUAGE_OPTIONS } from '../options';
-import { SelectInput, NoListMessage, Input, DateInput } from '@components';
+import {
+  SelectInput,
+  NoListMessage,
+  Input,
+  DateInput,
+  ResumeList,
+} from '@components';
 import { IAward } from '../types';
+import { useAwardQuery } from '../hooks/award';
+import { formatDate } from '@/utils';
 
 const Award = () => {
   const { extraFormState, openExtraForm } = useExtraState();
@@ -23,6 +31,7 @@ const Award = () => {
 
 const AwardForm = () => {
   const { closeExtraForm } = useExtraState();
+  const { selectedAward } = useSelectedAward();
   const {
     formData,
     setFormData,
@@ -31,44 +40,104 @@ const AwardForm = () => {
     handleInputChange,
     handleSelectChange,
     handleDateChange,
-  } = useForm<IAward>({
-    type: '',
-    licenseName: '',
-    licenseDate: '',
-    licensePlace: '',
-    language: '',
-    languageScore: '',
-    languageName: '',
-    languageDate: '',
-    awardName: '',
-    awardDate: '',
-    awardPlace: '',
-  });
+  } = useForm<IAward>(
+    selectedAward ?? {
+      type: '',
+      licenseName: '',
+      licenseDate: '',
+      licensePlace: '',
+      language: '',
+      languageScore: '',
+      languageName: '',
+      languageDate: '',
+      awardName: '',
+      awardDate: '',
+      awardPlace: '',
+    }
+  );
+
+  const { mutation, updateMutation } = useAwardQuery();
 
   const handleSubmit = () => {
-    console.log(formData);
     if (formData.type === 'license') {
+      const { id, licenseName, licenseDate, licensePlace } = formData;
       setIsError({
         ...isError,
-        licenseName: formData.licenseName === '',
-        licenseDate: formData.licenseDate === '',
-        licensePlace: formData.licensePlace === '',
+        licenseName: licenseName === '',
+        licenseDate: licenseDate === '',
+        licensePlace: licensePlace === '',
       });
+      if (licenseName && licenseDate && licensePlace) {
+        if (id) {
+          updateMutation.mutate({
+            type: 'license',
+            id,
+            licenseName,
+            licenseDate,
+            licensePlace,
+          });
+        } else
+          mutation.mutate({
+            type: 'license',
+            licenseName,
+            licenseDate,
+            licensePlace,
+          });
+      }
     } else if (formData.type === 'language') {
+      const { id, language, languageScore, languageName, languageDate } =
+        formData;
       setIsError({
         ...isError,
-        language: formData.language === '',
-        languageScore: formData.languageScore === '',
-        languageName: formData.languageName === '',
-        languageDate: formData.languageDate === '',
+        language: language === '',
+        languageScore: languageScore === '',
+        languageName: languageName === '',
+        languageDate: languageDate === '',
       });
+      if (language && languageDate && languageName && languageScore) {
+        if (id)
+          updateMutation.mutate({
+            id,
+            type: 'language',
+            language,
+            languageScore,
+            languageName,
+            languageDate,
+          });
+        else
+          mutation.mutate({
+            type: 'language',
+            language,
+            languageScore,
+            languageName,
+            languageDate,
+          });
+      }
     } else if (formData.type === 'award') {
+      const { id, awardName, awardDate, awardPlace } = formData;
       setIsError({
         ...isError,
-        awardName: formData.awardName === '',
-        awardDate: formData.awardDate === '',
-        awardPlace: formData.awardPlace === '',
+        awardName: awardName === '',
+        awardDate: awardDate === '',
+        awardPlace: awardPlace === '',
       });
+      if (awardName && awardDate && awardPlace) {
+        if (id)
+          updateMutation.mutate({
+            type: 'award',
+            id,
+            awardName,
+            awardDate,
+            awardPlace,
+          });
+        else
+          mutation.mutate({
+            type: 'award',
+            awardName,
+            awardDate,
+            awardPlace,
+          });
+      }
     } else if (formData.type === '') {
       setIsError({
         ...isError,
@@ -164,7 +233,7 @@ const AwardForm = () => {
               invalid={isError.languageDate}
             />
             <Input
-              name="languagescore"
+              name="languageScore"
               className="input_s"
               type="number"
               placeholder="점수"
@@ -223,7 +292,74 @@ const AwardForm = () => {
 };
 
 const AwardList = () => {
-  return <NoListMessage message="자격/어학/수상 내역을 입력해주세요" />;
+  const { data, deleteMutation } = useAwardQuery();
+  const { setSelectedAward } = useSelectedAward();
+  const { openExtraForm } = useExtraState();
+  return data && data.length > 0 ? (
+    <ResumeList>
+      <ResumeList.Col>
+        {data.map((award, idx) => (
+          <ResumeList.Item style={{ minHeight: '80px' }} key={award.id}>
+            {award.type === 'license' && (
+              <ResumeList.Col>
+                <ResumeList.Row>
+                  <ResumeList.Title>{award.licenseName}</ResumeList.Title>
+                  <ResumeList.State>(취득)</ResumeList.State>
+                  <ResumeList.Date>
+                    {formatDate(award.licenseDate)}
+                  </ResumeList.Date>
+                </ResumeList.Row>
+                <ResumeList.Row>{award.licensePlace}</ResumeList.Row>
+              </ResumeList.Col>
+            )}
+            {award.type === 'language' && (
+              <ResumeList.Col>
+                <ResumeList.Row>
+                  <ResumeList.Title>{award.languageName}</ResumeList.Title>
+                  <ResumeList.State>({award.language})</ResumeList.State>
+                  <ResumeList.Date>
+                    {formatDate(award.languageDate)}
+                  </ResumeList.Date>
+                </ResumeList.Row>
+                <ResumeList.Row>{award.languageScore}점</ResumeList.Row>
+              </ResumeList.Col>
+            )}
+            {award.type === 'award' && (
+              <ResumeList.Col>
+                <ResumeList.Row>
+                  <ResumeList.Title>{award.awardName}</ResumeList.Title>
+                  <ResumeList.State>(수상)</ResumeList.State>
+                  <ResumeList.Date>
+                    {formatDate(award.awardDate)}
+                  </ResumeList.Date>
+                </ResumeList.Row>
+                <ResumeList.Row>{award.awardPlace}</ResumeList.Row>
+              </ResumeList.Col>
+            )}
+
+            <div>
+              <ResumeList.Button
+                type="edit"
+                onClick={() => {
+                  setSelectedAward(award);
+                  openExtraForm('award');
+                }}
+              />
+              <ResumeList.Button
+                type="delete"
+                onClick={() => {
+                  if (window.confirm('해당 항목을 삭제하시겠습니까?'))
+                    deleteMutation.mutate(award.id!);
+                }}
+              />
+            </div>
+          </ResumeList.Item>
+        ))}
+      </ResumeList.Col>
+    </ResumeList>
+  ) : (
+    <NoListMessage message="자격/어학/수상 내역을 입력해주세요" />
+  );
 };
 
 export default Award;

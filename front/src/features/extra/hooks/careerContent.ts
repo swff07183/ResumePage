@@ -11,7 +11,7 @@ import { useExtraState } from '../stores/hooks';
 export const useCareerContentQuery = () => {
   const { closeExtraForm } = useExtraState();
 
-  const query = useQuery<ICareerContent>({
+  const { data } = useQuery<ICareerContent>({
     queryKey: ['careerContent'],
     queryFn: getCareerContent,
     retry: 0,
@@ -32,5 +32,5 @@ export const useCareerContentQuery = () => {
     },
   });
 
-  return { query, mutation, deleteMutation };
+  return { data, mutation, deleteMutation };
 };

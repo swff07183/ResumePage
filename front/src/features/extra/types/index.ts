@@ -32,6 +32,7 @@ export interface ISelfIntroduction {
 }
 
 export interface IAward {
+  id?: number;
   type: string;
   licenseName?: string;
   licenseDate?: string;
@@ -43,4 +44,13 @@ export interface IAward {
   awardName?: string;
   awardDate?: string;
   awardPlace?: string;
+}
+
+export interface IExperience {
+  id?: number;
+  type: string;
+  place: string;
+  startDate: string;
+  endDate: string;
+  detail: string;
 }
