@@ -4,6 +4,9 @@ import { useExtraState } from '@features/extra/stores/hooks';
 import { ReactComponent as Plus } from '@assets/svg/plus.svg';
 import { ReactComponent as Minus } from '@assets/svg/minus.svg';
 import { ExtraMenuType } from '../features/extra/types';
+import { useUserInfoData } from '@/features/user/stores/hooks';
+import { useCareerQuery } from '@/features/career/hooks';
+import { useEducationInfoQuery } from '@/features/education/hooks';
 
 interface IMenu {
   name: string;
@@ -45,10 +48,10 @@ export const ResumeSideBar = () => {
       name: '자기소개서',
       key: 'selfIntroduction',
     },
-    {
-      name: '우대사항',
-      key: 'preferential',
-    },
+    // {
+    //   name: '우대사항',
+    //   key: 'preferential',
+    // },
   ];
 
   return (
@@ -129,39 +132,67 @@ const SideMenuItem = styled.div`
     border: 0.5px solid #67738edd;
     border-radius: 50%;
     & .icon-minus > path {
-      stroke: #00553d;
+      stroke: #17755b;
     }
     & .icon-plus > path {
       stroke: #67738e;
     }
   }
   & button.icon-active {
-    border: 0.5px solid #00553d;
+    border: 0.5px solid #17755b;
   }
   & .active {
-    color: #00553d;
+    color: #17755b;
   }
 `;
 
 const ResumeProgress = () => {
+  const { userInfoData } = useUserInfoData();
+  // const { data: career } = useCareerQuery();
+  const { educationInfo } = useEducationInfoQuery();
+  const completeRate =
+    userInfoData && educationInfo
+      ? 100
+      : userInfoData || educationInfo
+      ? 50
+      : 0;
+  console.log(userInfoData);
+  console.log(educationInfo);
   return (
-    <ResumeProgressWrapper>
+    <ResumeProgressWrapper progress={completeRate}>
       <div className="title">
         <span>이력서 완성도</span>
-        <span>0%</span>
+        <span>{completeRate}%</span>
       </div>
       <div className="progress-bar" />
       <div className="content">
-        <span>
-          <span>기본정보, 학력</span>만 입력하면
-        </span>
-        <span>이력서가 완성돼요!</span>
+        {userInfoData && educationInfo?.name ? (
+          <span>
+            <span>{userInfoData.name}님의</span> 이력서가 완성됐어요!
+          </span>
+        ) : (
+          <>
+            <span>
+              {!userInfoData && educationInfo?.name && <span>유저 정보</span>}
+              {userInfoData && !educationInfo?.name && <span>학력</span>}
+              {!userInfoData && !educationInfo?.name && (
+                <span>유저 정보, 학력</span>
+              )}
+              만 입력하면
+            </span>
+            <span>이력서가 완성돼요!</span>
+          </>
+        )}
       </div>
     </ResumeProgressWrapper>
   );
 };
 
-const ResumeProgressWrapper = styled.div`
+interface ProgressProps {
+  progress: number;
+}
+
+const ResumeProgressWrapper = styled.div<ProgressProps>`
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -189,9 +220,14 @@ const ResumeProgressWrapper = styled.div`
       border-radius: 4px;
       left: 0;
       top: 0;
-      width: 8px;
+      /* width: 8px; */
+      /* width: 100%; */
+      width: calc(${({ progress }) => `${progress}%`});
+      transition: width 0.5s ease;
+      min-width: 8px;
       height: 100%;
-      background: linear-gradient(270deg, #5189fa 0%, #bcd1fc 100%);
+      /* background: linear-gradient(270deg, #5189fa 0%, #bcd1fc 100%); */
+      background: linear-gradient(270deg, #367c68 0%, #bce1d7 100%);
     }
   }
   & > .content {

@@ -35,14 +35,14 @@ const StyledButton = styled.button<StyledButtonProps>`
     type === 'fill'
       ? `
         color: #ffffff;
-        background-color: #00553D;
+        background-color: #17755b;
         border: none;
       `
       : type === 'border'
       ? `
-        color: #00553D;
+        color: #17755b;
         background-color: transparent;
-        border: 1px solid #00553D;
+        border: 1px solid #17755b;
       `
       : ``}
 `;

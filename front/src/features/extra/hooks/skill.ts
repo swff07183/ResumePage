@@ -1,4 +1,4 @@
-import { getSkill, postSkill } from '@/api/extra';
+import { deleteSkill, getSkill, postSkill } from '@/api/extra';
 import { queryClient } from '@/index';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ISkill } from '../types';
@@ -20,5 +20,12 @@ export const useSkillQuery = () => {
     },
   });
 
-  return { data, mutation };
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteSkill(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['skill'] });
+    },
+  });
+
+  return { data, mutation, deleteMutation };
 };

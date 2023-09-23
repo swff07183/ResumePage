@@ -86,6 +86,7 @@ const UserForm = () => {
               name="birth"
               className="input_s"
               placeholder="생년월일(8자리) *"
+              maxLength={8}
               onChange={handleInputChange}
               value={formData.birth}
               invalid={isError.birth}

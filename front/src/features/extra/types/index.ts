@@ -19,6 +19,7 @@ export type ExperienceType =
   | '교육이수내역';
 
 export interface ISkill {
+  id?: number;
   skill: string;
 }
 

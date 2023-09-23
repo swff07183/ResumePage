@@ -7,7 +7,7 @@ class UserInfo(models.Model):
         on_delete=models.CASCADE,
     )
     name = models.TextField(null=True, blank=True)
-    userType = models.TextField(null=True, blank=True)
+    userType = models.TextField(null=True, blank=True, default="신입")
     gender = models.TextField(null=True, blank=True)
     birth = models.TextField(null=True, blank=True)
     email = models.TextField(null=True, blank=True)
@@ -95,7 +95,6 @@ class Award(models.Model):
     awardName = models.TextField(null=True, blank=True, default='')
     awardDate = models.TextField(null=True, blank=True, default='')
     awardPlace = models.TextField(null=True, blank=True, default='')
-
 
 class Experience(models.Model):
     user = models.ForeignKey(

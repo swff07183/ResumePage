@@ -22,7 +22,7 @@ const CareerContent = () => {
     <Resume
       title="경력기술서"
       isFormOpen={extraFormState.careerContent}
-      hideAddButton={data !== undefined}
+      hideAddButton={data?.content !== undefined}
       handleAddButtonClick={() => openExtraForm('careerContent')}
     >
       {extraFormState.careerContent ? (

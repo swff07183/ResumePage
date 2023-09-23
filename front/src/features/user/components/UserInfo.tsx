@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { SelectInput } from '@components';
 import { ReactComponent as IconPencil } from '@assets/svg/pencil.svg';
 import { useUserForm, useUserInfoData } from '../stores/hooks';
-import default_user_img from '@assets/img/default-user-img.png';
 import { USER_TYPE } from '../options';
 import { ReactComponent as IconMail } from '@assets/svg/mail.svg';
 import { ReactComponent as IconHome } from '@assets/svg/home.svg';
@@ -38,14 +37,20 @@ const UserInfo = () => {
     <Wrapper>
       <div className="info-div">
         <div className="info-name">
-          <span>{userInfoData?.name}</span>
-          <SelectInput
-            className="input_s"
-            style={{ width: '128px', height: '32px' }}
-            options={USER_TYPE}
-            value={userInfoData?.userType}
-            onChange={(e) => mutation.mutate({ userType: e.target.value })}
-          />
+          <div className="info-name-div">
+            {userInfoData?.name ? (
+              <span>{userInfoData?.name}</span>
+            ) : (
+              <span className="info-no-name">이름을 입력해주세요</span>
+            )}
+            <SelectInput
+              className="input_s"
+              style={{ width: '128px', height: '30px', marginLeft: '4px' }}
+              options={USER_TYPE}
+              value={userInfoData?.userType}
+              onChange={(e) => mutation.mutate({ userType: e.target.value })}
+            />
+          </div>
         </div>
         <div>
           <div className="info-content-row">
@@ -138,6 +143,15 @@ const Wrapper = styled.div`
     gap: 8px;
     font-size: 24px;
     font-weight: bold;
+  }
+  & .info-name-div {
+    display: flex;
+    align-items: end;
+    height: fit-content;
+    & .info-no-name {
+      font-size: 20px;
+      color: #677382;
+    }
   }
   & .info-right {
     margin-left: 220px;

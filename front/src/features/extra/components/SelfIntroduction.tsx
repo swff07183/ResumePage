@@ -15,7 +15,7 @@ const SelfIntroduction = () => {
     <Resume
       title="자기소개서"
       isFormOpen={extraFormState.selfIntroduction}
-      hideAddButton={data !== undefined}
+      hideAddButton={data?.title !== undefined}
       handleAddButtonClick={() => openExtraForm('selfIntroduction')}
     >
       {extraFormState.selfIntroduction ? (

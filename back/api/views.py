@@ -15,7 +15,10 @@ class EducationViewSet(viewsets.ModelViewSet):
 
     @swagger_auto_schema()
     def retrieve(self, request):
-        education = get_object_or_404(Education, user=request.user.id)
+        try:
+            education = Education.objects.get(user=request.user.id)
+        except Education.DoesNotExist:
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
         serializer = EducationSerializer(instance=education)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -161,7 +164,13 @@ class SkillViewSet(viewsets.ModelViewSet):
 class UserInfoViewSet(viewsets.ModelViewSet):
     @swagger_auto_schema()
     def retrieve(self, request):
-        userInfo = get_object_or_404(UserInfo, user=request.user.id)
+        # userInfo = get_object_or_404(UserInfo, user=request.user.id)
+        try:
+            userInfo = UserInfo.objects.get(user=request.user.id)
+        except UserInfo.DoesNotExist:
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
+
+        
         serializer = UserInfoSerializer(instance=userInfo)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -214,7 +223,10 @@ class CareerContentViewSet(viewsets.ModelViewSet):
 
     @swagger_auto_schema()
     def retrieve(self, request):
-        careerContent = get_object_or_404(CareerContent, user=request.user.id)
+        try:
+            careerContent = CareerContent.objects.get(user=request.user.id)
+        except CareerContent.DoesNotExist:
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
         serializer = CareerContentSerializer(instance=careerContent)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -266,7 +278,10 @@ class SelfIntroductionViewSet(viewsets.ModelViewSet):
 
     @swagger_auto_schema()
     def retrieve(self, request):
-        selfIntroduction = get_object_or_404(SelfIntroduction, user=request.user.id)
+        try:
+            selfIntroduction = SelfIntroduction.objects.get(user=request.user.id)
+        except SelfIntroduction.DoesNotExist:
+            return Response({}, status=status.HTTP_204_NO_CONTENT)
         serializer = SelfIntroductionSerializer(instance=selfIntroduction)
 
         return Response(serializer.data, status=status.HTTP_200_OK)

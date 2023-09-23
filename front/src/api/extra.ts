@@ -14,6 +14,12 @@ export const postSkill = async (params: ISkill) => {
   return data;
 };
 
+export const deleteSkill = async (id: number) => {
+  const { data } = await client.delete(`${BASE_URL}/skill/${id}`);
+
+  return data;
+};
+
 export const getCareerContent = async () => {
   const { data } = await client.get(`${BASE_URL}/career-content/`);
 

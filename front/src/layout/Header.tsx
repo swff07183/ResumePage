@@ -35,6 +35,7 @@ const Header = () => {
       <Link to="/">
         <img src={logo} alt="logo" />
       </Link>
+
       {user ? (
         <div className="user-control">
           <div className="user-info">{`${user.username}`}</div>
