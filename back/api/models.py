@@ -64,19 +64,6 @@ class Skill(models.Model):
 
     skill = models.TextField()
 
-
-class Experience(models.Model):
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
-    )
-    type = models.TextField(null=True, blank=True)
-    place = models.TextField(null=True, blank=True)
-    region = models.TextField(null=True, blank=True)
-    startData = models.TextField(null=True, blank=True)
-    endDate = models.TextField(null=True, blank=True)
-    detail = models.TextField(null=True, blank=True)
-
 class CareerContent(models.Model):
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -98,13 +85,25 @@ class Award(models.Model):
         on_delete=models.CASCADE
     )
     type = models.TextField()
-    licenseName = models.TextField(null=True, blank=True)
-    licenseDate = models.TextField(null=True, blank=True)
-    licensePlace = models.TextField(null=True, blank=True)
-    language = models.TextField(null=True, blank=True)
-    languageScore = models.TextField(null=True, blank=True)
-    languageName = models.TextField(null=True, blank=True)
-    languageDate = models.TextField(null=True, blank=True)
-    awardName = models.TextField(null=True, blank=True)
-    awardDate = models.TextField(null=True, blank=True)
-    awardPlace = models.TextField(null=True, blank=True)
+    licenseName = models.TextField(null=True, blank=True, default='')
+    licenseDate = models.TextField(null=True, blank=True, default='')
+    licensePlace = models.TextField(null=True, blank=True, default='')
+    language = models.TextField(null=True, blank=True, default='')
+    languageScore = models.TextField(null=True, blank=True, default='')
+    languageName = models.TextField(null=True, blank=True, default='')
+    languageDate = models.TextField(null=True, blank=True, default='')
+    awardName = models.TextField(null=True, blank=True, default='')
+    awardDate = models.TextField(null=True, blank=True, default='')
+    awardPlace = models.TextField(null=True, blank=True, default='')
+
+
+class Experience(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    type = models.TextField(null=True, blank=True)
+    place = models.TextField(null=True, blank=True)
+    startDate = models.TextField(null=True, blank=True)
+    endDate = models.TextField(null=True, blank=True)
+    detail = models.TextField(null=True, blank=True)

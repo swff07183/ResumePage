@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction, Award
+from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction, Award, Experience
 from django.contrib.auth import get_user_model
 
 class UserInfoSerializer(serializers.ModelSerializer):

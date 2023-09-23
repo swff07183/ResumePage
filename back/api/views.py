@@ -209,52 +209,6 @@ class UserInfoViewSet(viewsets.ModelViewSet):
         
 
 
-class ExperienceViewSet(viewsets.ModelViewSet):
-
-
-    @swagger_auto_schema()
-    def list(self, request):
-        experiences = Experience.objects.filter(user=request.user.id)
-        serializer = ExperienceSerializer(instance=experiences, many=True)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    @swagger_auto_schema()
-    def create(self, request):
-        data = request.data
-        serializer = ExperienceSerializer(data=data)
-        user = request.user
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(user=user)
-
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    
-    @swagger_auto_schema()
-    def destroy(self, request, pk):
-        skill = get_object_or_404(Experience, pk=pk)
-        
-        if request.user == skill.user:
-
-            skill.delete()
-
-            data = {
-                'delete': '데이터가 삭제되었습니다.'
-            }
-
-        return Response(data, status=status.HTTP_200_OK)
-
-    @swagger_auto_schema()
-    def update(self, request, pk):
-        experience = get_object_or_404(Experience, pk=pk)
-        
-        if request.user == experience.user:
-            serializer = ExperienceSerializer(instance=experience, data=request.data)
-
-            if serializer.is_valid(raise_exception=True):
-                serializer.save()
-
-                return Response(serializer.data, status=status.HTTP_200_OK)
-            
 
 class CareerContentViewSet(viewsets.ModelViewSet):
 
@@ -399,9 +353,57 @@ class AwardViewset(viewsets.ModelViewSet):
         award = get_object_or_404(Award, pk=pk)
         
         if request.user == award.user:
-            serializer = Award(instance=award, data=request.data)
+            serializer = AwardSerializer(instance=award, data=request.data)
 
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
+            
+
+class ExperienceViewSet(viewsets.ModelViewSet):
+
+
+    @swagger_auto_schema()
+    def list(self, request):
+        experiences = Experience.objects.filter(user=request.user.id)
+        serializer = ExperienceSerializer(instance=experiences, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema()
+    def create(self, request):
+        data = request.data
+        serializer = ExperienceSerializer(data=data)
+        user = request.user
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=user)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema()
+    def destroy(self, request, pk):
+        skill = get_object_or_404(Experience, pk=pk)
+        
+        if request.user == skill.user:
+
+            skill.delete()
+
+            data = {
+                'delete': '데이터가 삭제되었습니다.'
+            }
+
+        return Response(data, status=status.HTTP_200_OK)
+
+    @swagger_auto_schema()
+    def update(self, request, pk):
+        experience = get_object_or_404(Experience, pk=pk)
+        
+        if request.user == experience.user:
+            serializer = ExperienceSerializer(instance=experience, data=request.data)
+
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            
