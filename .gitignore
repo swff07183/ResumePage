@@ -321,5 +321,5 @@ pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/django,python,venv,visualstudiocode
 
-back/secrets.json
+secrets.json
 /back/secrets.json
