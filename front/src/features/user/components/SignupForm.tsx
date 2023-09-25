@@ -47,16 +47,16 @@ export const SignupForm = () => {
   const handleSubmit = () => {
     setErrorMessage('');
     if (formData.username === '') {
-      setIsError((prev: IUserSignup) => ({ ...prev, username: true }));
+      setIsError((prev) => ({ ...prev, username: true }));
       setErrorMessage('아이디를 입력하세요.');
     } else if (formData.password1 === '') {
-      setIsError((prev: IUserSignup) => ({ ...prev, password1: true }));
+      setIsError((prev) => ({ ...prev, password1: true }));
       setErrorMessage('비밀번호를 입력하세요.');
     } else if (formData.password2 === '') {
-      setIsError((prev: IUserSignup) => ({ ...prev, password2: true }));
+      setIsError((prev) => ({ ...prev, password2: true }));
       setErrorMessage('비밀번호를 입력하세요.');
     } else if (formData.password1 !== formData.password2) {
-      setIsError((prev: IUserSignup) => ({
+      setIsError((prev) => ({
         ...prev,
         password2: true,
       }));

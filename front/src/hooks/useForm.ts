@@ -1,17 +1,12 @@
+import { makeSameKeyObj } from '@/utils';
 import { useState } from 'react';
 
-const makeErrorObj = (obj: any) => {
-  const newObj = { ...obj };
-  for (const key in newObj) {
-    newObj[key] = false;
-  }
-  return newObj;
-};
-
-export const useForm = <T>(form: T) => {
+export const useForm = <T extends object>(form: T) => {
   const [formData, setFormData] = useState<T>({ ...form });
 
-  const [isError, setIsError] = useState(makeErrorObj(form));
+  const [isError, setIsError] = useState<{ [key in keyof T]: boolean }>(
+    makeSameKeyObj<T, boolean>(form, false)
+  );
 
   const handleSelectChange = (key: string) => {
     return (e: React.ChangeEvent<HTMLSelectElement>) => {

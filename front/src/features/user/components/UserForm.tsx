@@ -46,6 +46,7 @@ const UserForm = () => {
   const handleSubmit = () => {
     console.log(formData);
     setIsError({
+      ...isError,
       name: formData.name === '',
       birth: formData.birth === '',
       email: formData.email === '',

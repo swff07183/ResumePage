@@ -41,10 +41,10 @@ export const LoginForm = () => {
   const handleSubmit = () => {
     setErrorMessage('');
     if (formData.username === '') {
-      setIsError((prev: IUserLogin) => ({ ...prev, username: true }));
+      setIsError((prev) => ({ ...prev, username: true }));
       setErrorMessage('아이디를 입력하세요.');
     } else if (formData.password === '') {
-      setIsError((prev: IUserLogin) => ({ ...prev, password: true }));
+      setIsError((prev) => ({ ...prev, password: true }));
       setErrorMessage('비밀번호를 입력하세요.');
     } else {
       mutation.mutate(formData);

@@ -34,7 +34,6 @@ const AwardForm = () => {
   const { selectedAward } = useSelectedAward();
   const {
     formData,
-    setFormData,
     isError,
     setIsError,
     handleInputChange,
