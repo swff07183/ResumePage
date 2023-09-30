@@ -1,11 +1,11 @@
 import { makeSameKeyObj } from '@/utils';
 import { useState } from 'react';
 
-export const useForm = <T extends object>(form: T) => {
-  const [formData, setFormData] = useState<T>({ ...form });
+export const useForm = <T extends object>(initialValue: T) => {
+  const [formData, setFormData] = useState<T>(initialValue);
 
-  const [isError, setIsError] = useState<{ [key in keyof T]: boolean }>(
-    makeSameKeyObj<T, boolean>(form, false)
+  const [isError, setIsError] = useState<Record<keyof T, boolean>>(
+    makeSameKeyObj(initialValue, false)
   );
 
   const handleSelectChange = (key: string) => {
