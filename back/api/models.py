@@ -89,6 +89,7 @@ class Award(models.Model):
     licenseDate = models.TextField(null=True, blank=True, default='')
     licensePlace = models.TextField(null=True, blank=True, default='')
     language = models.TextField(null=True, blank=True, default='')
+    languageRating = models.TextField(null=True, blank=True, default='')
     languageScore = models.TextField(null=True, blank=True, default='')
     languageName = models.TextField(null=True, blank=True, default='')
     languageDate = models.TextField(null=True, blank=True, default='')

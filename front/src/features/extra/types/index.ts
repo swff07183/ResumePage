@@ -39,6 +39,7 @@ export interface IAward {
   licenseDate?: string;
   licensePlace?: string;
   language?: string;
+  languageRating?: string;
   languageScore?: string;
   languageName?: string;
   languageDate?: string;

@@ -46,6 +46,7 @@ const AwardForm = () => {
       licenseDate: '',
       licensePlace: '',
       language: '',
+      languageRating: '',
       languageScore: '',
       languageName: '',
       languageDate: '',
@@ -84,22 +85,28 @@ const AwardForm = () => {
           });
       }
     } else if (formData.type === 'language') {
-      const { id, language, languageScore, languageName, languageDate } =
-        formData;
+      const {
+        id,
+        language,
+        languageScore,
+        languageRating,
+        languageName,
+        languageDate,
+      } = formData;
       setIsError({
         ...isError,
         language: language === '',
-        languageScore: languageScore === '',
         languageName: languageName === '',
         languageDate: languageDate === '',
       });
-      if (language && languageDate && languageName && languageScore) {
+      if (language && languageDate && languageName) {
         if (id)
           updateMutation.mutate({
             id,
             type: 'language',
             language,
             languageScore,
+            languageRating,
             languageName,
             languageDate,
           });
@@ -108,6 +115,7 @@ const AwardForm = () => {
             type: 'language',
             language,
             languageScore,
+            languageRating,
             languageName,
             languageDate,
           });
@@ -230,6 +238,14 @@ const AwardForm = () => {
               initialValue={formData.languageDate}
               setDate={handleDateChange('languageDate')}
               invalid={isError.languageDate}
+            />
+            <Input
+              name="languageRating"
+              className="input_s"
+              placeholder="급수"
+              value={formData.languageRating}
+              onChange={handleInputChange}
+              invalid={isError.languageRating}
             />
             <Input
               name="languageScore"
