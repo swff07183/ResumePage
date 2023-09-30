@@ -8,9 +8,11 @@ import {
   postExperience,
   putExperience,
 } from '@/api/extra';
+import { useToast } from '@/hooks';
 
 export const useExperienceQuery = () => {
   const { closeExtraForm } = useExtraState();
+  const { saveToast } = useToast();
 
   const { data } = useQuery<IExperience[]>({
     queryKey: ['experience'],
@@ -20,6 +22,7 @@ export const useExperienceQuery = () => {
   const mutation = useMutation({
     mutationFn: (data: IExperience) => postExperience(data),
     onSuccess: () => {
+      saveToast();
       queryClient.invalidateQueries({ queryKey: ['experience'] });
       closeExtraForm('experience');
     },
@@ -28,6 +31,7 @@ export const useExperienceQuery = () => {
   const updateMutation = useMutation({
     mutationFn: (data: IExperience) => putExperience(data.id!, data),
     onSuccess: () => {
+      saveToast();
       queryClient.invalidateQueries({ queryKey: ['experience'] });
       closeExtraForm('experience');
     },
@@ -36,6 +40,7 @@ export const useExperienceQuery = () => {
   const deleteMutation = useMutation({
     mutationFn: (id: number) => deleteExperience(id),
     onSuccess: () => {
+      saveToast();
       queryClient.invalidateQueries({ queryKey: ['experience'] });
     },
   });

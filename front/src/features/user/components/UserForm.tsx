@@ -47,18 +47,18 @@ const UserForm = () => {
     console.log(formData);
     setIsError({
       ...isError,
-      name: formData.name === '',
-      birth: formData.birth === '',
-      email: formData.email === '',
-      mobile: formData.mobile === '',
-      address: formData.address === '',
+      name: !formData.name,
+      birth: !formData.birth,
+      email: !formData.email,
+      mobile: !formData.mobile,
+      address: !formData.address,
     });
     if (
-      formData.name !== '' &&
-      formData.birth !== '' &&
-      formData.email !== '' &&
-      formData.mobile !== '' &&
-      formData.address !== ''
+      formData.name &&
+      formData.birth &&
+      formData.email &&
+      formData.mobile &&
+      formData.address
     ) {
       mutation.mutate(formData);
     }

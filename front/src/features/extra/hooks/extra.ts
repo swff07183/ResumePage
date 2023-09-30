@@ -12,25 +12,25 @@ export const useInitialExtrastate = () => {
   const { data: skills } = useSkillQuery();
   useEffect(() => {
     if (skills && skills?.length > 0) openExtraList('skill');
-  }, [skills]);
+  }, [skills, openExtraList]);
 
   const { data: experiences } = useExperienceQuery();
   useEffect(() => {
     if (experiences && experiences?.length > 0) openExtraList('experience');
-  }, [experiences]);
+  }, [experiences, openExtraList]);
 
   const { data: awards } = useAwardQuery();
   useEffect(() => {
     if (awards && awards.length > 0) openExtraList('award');
-  }, [awards]);
+  }, [awards, openExtraList]);
 
   const { data: careerContent } = useCareerContentQuery();
   useEffect(() => {
     if (careerContent) openExtraList('careerContent');
-  }, [careerContent]);
+  }, [careerContent, openExtraList]);
 
   const { data: selfIntroduction } = useSelfIntroductionQuery();
   useEffect(() => {
     if (selfIntroduction) openExtraList('selfIntroduction');
-  }, [selfIntroduction]);
+  }, [selfIntroduction, openExtraList]);
 };

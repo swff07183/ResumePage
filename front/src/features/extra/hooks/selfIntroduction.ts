@@ -7,9 +7,11 @@ import {
   getSelfIntroduction,
   postSelfIntroduction,
 } from '@/api/extra';
+import { useToast } from '@/hooks';
 
 export const useSelfIntroductionQuery = () => {
   const { closeExtraForm } = useExtraState();
+  const { saveToast } = useToast();
 
   const { data } = useQuery<ISelfIntroduction>({
     queryKey: ['selfIntroduction'],
@@ -20,6 +22,7 @@ export const useSelfIntroductionQuery = () => {
   const mutation = useMutation({
     mutationFn: (data: ISelfIntroduction) => postSelfIntroduction(data),
     onSuccess: () => {
+      saveToast();
       queryClient.invalidateQueries({ queryKey: ['selfIntroduction'] });
       closeExtraForm('selfIntroduction');
     },
@@ -28,6 +31,7 @@ export const useSelfIntroductionQuery = () => {
   const deleteMutation = useMutation({
     mutationFn: () => deleteSelfIntroduction(),
     onSuccess: () => {
+      saveToast();
       queryClient.resetQueries({ queryKey: ['selfIntroduction'] });
     },
   });

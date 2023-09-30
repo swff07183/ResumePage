@@ -3,9 +3,11 @@ import { queryClient } from '@/index';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { IAward } from '../types';
 import { useExtraState } from '../stores/hooks';
+import { useToast } from '@/hooks';
 
 export const useAwardQuery = () => {
   const { closeExtraForm } = useExtraState();
+  const { saveToast } = useToast();
 
   const { data } = useQuery<IAward[]>({
     queryKey: ['award'],
@@ -15,6 +17,7 @@ export const useAwardQuery = () => {
   const mutation = useMutation({
     mutationFn: (data: IAward) => postAward(data),
     onSuccess: () => {
+      saveToast();
       queryClient.invalidateQueries({ queryKey: ['award'] });
       closeExtraForm('award');
     },
@@ -23,6 +26,7 @@ export const useAwardQuery = () => {
   const updateMutation = useMutation({
     mutationFn: (data: IAward) => putAward(data.id!, data),
     onSuccess: () => {
+      saveToast();
       queryClient.invalidateQueries({ queryKey: ['award'] });
       closeExtraForm('award');
     },
@@ -31,6 +35,7 @@ export const useAwardQuery = () => {
   const deleteMutation = useMutation({
     mutationFn: (id: number) => deleteAward(id),
     onSuccess: () => {
+      saveToast();
       queryClient.invalidateQueries({ queryKey: ['award'] });
     },
   });

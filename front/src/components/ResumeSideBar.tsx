@@ -5,7 +5,6 @@ import { ReactComponent as Plus } from '@assets/svg/plus.svg';
 import { ReactComponent as Minus } from '@assets/svg/minus.svg';
 import { ExtraMenuType } from '../features/extra/types';
 import { useUserInfoData } from '@/features/user/stores/hooks';
-import { useCareerQuery } from '@/features/career/hooks';
 import { useEducationInfoQuery } from '@/features/education/hooks';
 
 interface IMenu {
@@ -151,9 +150,9 @@ const ResumeProgress = () => {
   // const { data: career } = useCareerQuery();
   const { educationInfo } = useEducationInfoQuery();
   const completeRate =
-    userInfoData && educationInfo
+    userInfoData?.name && educationInfo
       ? 100
-      : userInfoData || educationInfo
+      : userInfoData?.name || educationInfo
       ? 50
       : 0;
   console.log(userInfoData);
@@ -166,16 +165,18 @@ const ResumeProgress = () => {
       </div>
       <div className="progress-bar" />
       <div className="content">
-        {userInfoData && educationInfo?.name ? (
+        {userInfoData?.name && educationInfo?.name ? (
           <span>
             <span>{userInfoData.name}님의</span> 이력서가 완성됐어요!
           </span>
         ) : (
           <>
             <span>
-              {!userInfoData && educationInfo?.name && <span>유저 정보</span>}
-              {userInfoData && !educationInfo?.name && <span>학력</span>}
-              {!userInfoData && !educationInfo?.name && (
+              {!userInfoData?.name && educationInfo?.name && (
+                <span>유저 정보</span>
+              )}
+              {userInfoData?.name && !educationInfo?.name && <span>학력</span>}
+              {!userInfoData?.name && !educationInfo?.name && (
                 <span>유저 정보, 학력</span>
               )}
               만 입력하면

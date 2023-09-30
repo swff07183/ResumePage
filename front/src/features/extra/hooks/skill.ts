@@ -3,9 +3,11 @@ import { queryClient } from '@/index';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ISkill } from '../types';
 import { useExtraState } from '../stores/hooks';
+import { useToast } from '@/hooks';
 
 export const useSkillQuery = () => {
   const { closeExtraForm } = useExtraState();
+  const { saveToast } = useToast();
 
   const { data } = useQuery({
     queryKey: ['skill'],
@@ -16,6 +18,7 @@ export const useSkillQuery = () => {
     mutationFn: (data: ISkill) => postSkill(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['skill'] });
+      saveToast();
       closeExtraForm('skill');
     },
   });
@@ -24,6 +27,7 @@ export const useSkillQuery = () => {
     mutationFn: (id: number) => deleteSkill(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['skill'] });
+      saveToast();
     },
   });
 

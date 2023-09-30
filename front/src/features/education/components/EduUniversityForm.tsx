@@ -26,7 +26,7 @@ import { useEducationInfoQuery } from '../hooks';
 import { initialEducation } from '../constant';
 
 const EduUniversityForm = () => {
-  const { educationInfo } = useEducationInfoQuery();
+  const { educationInfo, mutation } = useEducationInfoQuery();
   const {
     formData,
     setFormData,
@@ -62,13 +62,12 @@ const EduUniversityForm = () => {
   const { closeEduForm } = useEduForm();
   const { finalEdu, handleSelectFinalEdu } = useFinalEdu();
 
-  const mutation = useMutation({
-    mutationFn: (data: IEducation) => postEducation(data),
-    onSuccess: (data) => {
-      console.log(data);
-      closeEduForm();
-    },
-  });
+  // const mutation = useMutation({
+  //   mutationFn: (data: IEducation) => postEducation(data),
+  //   onSuccess: (data) => {
+  //     closeEduForm();
+  //   },
+  // });
 
   const handleSubmit = () => {
     const submitInfo = {

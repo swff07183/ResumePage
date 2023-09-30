@@ -8,9 +8,11 @@ import {
   putCareer,
 } from '@/api/career';
 import { queryClient } from '@/index';
+import { useToast } from '@/hooks';
 
 export const useCareerQuery = () => {
   const { closeCareerForm } = useCareerForm();
+  const { saveToast } = useToast();
   const { data } = useQuery<ICareer[]>({
     queryKey: ['career', 'list'],
     queryFn: getCareerList,
@@ -20,6 +22,7 @@ export const useCareerQuery = () => {
     mutationFn: (params: ICareer) => postCareer(params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['career', 'list'] });
+      saveToast();
       closeCareerForm();
     },
   });
@@ -28,6 +31,7 @@ export const useCareerQuery = () => {
     mutationFn: (params: ICareer) => putCareer(params.id!, params),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['career', 'list'] });
+      saveToast();
       closeCareerForm();
     },
   });
@@ -36,6 +40,7 @@ export const useCareerQuery = () => {
     mutationFn: (id: number) => deleteCareer(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['career', 'list'] });
+      saveToast();
     },
   });
 

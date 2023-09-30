@@ -8,26 +8,15 @@ import { ReactComponent as IconMail } from '@assets/svg/mail.svg';
 import { ReactComponent as IconHome } from '@assets/svg/home.svg';
 import { ReactComponent as IconMobile } from '@assets/svg/mobile.svg';
 import { ReactComponent as IconPhone } from '@assets/svg/phone.svg';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { getUserInfo, postUserInfoType } from '@/api/user';
-import { IUserInfo } from '../types';
-import { queryClient } from '@/index';
+import { useToast } from '@/hooks';
+import { useUserInfoQuery } from '../hooks';
 
 const UserInfo = () => {
   const { openUserForm } = useUserForm();
   const { userInfoData, setUserInfoData } = useUserInfoData();
+  const { saveToast } = useToast();
 
-  const { data } = useQuery<IUserInfo>({
-    queryKey: ['user', 'userInfo'],
-    queryFn: () => getUserInfo(),
-  });
-
-  const mutation = useMutation({
-    mutationFn: (data: { userType: string }) => postUserInfoType(data),
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ['user', 'userInfo'] });
-    },
-  });
+  const { data, mutation } = useUserInfoQuery();
 
   useEffect(() => {
     setUserInfoData(data);

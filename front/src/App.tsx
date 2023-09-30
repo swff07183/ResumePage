@@ -1,16 +1,16 @@
 import React from 'react';
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { ResumePage } from '@pages/ResumePage';
-import { RecoilRoot } from 'recoil';
 import Layout from './layout/Layout';
 import LoginPage from '@pages/LoginPage';
 import SignupPage from '@/pages/SignUpPage';
 import LoginRequired from './components/LoginRequired';
 import IsLoggedIn from './components/IsLoggedIn';
+import Toast from './components/Toast';
 
 function App() {
   return (
-    <RecoilRoot>
+    <>
       <Routes>
         <Route path="" element={<Layout />}>
           <Route element={<LoginRequired />}>
@@ -22,7 +22,8 @@ function App() {
           </Route>
         </Route>
       </Routes>
-    </RecoilRoot>
+      <Toast />
+    </>
   );
 }
 

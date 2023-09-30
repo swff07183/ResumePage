@@ -6,6 +6,7 @@ import {
   selectedExperienceState,
 } from './atom';
 import { ExtraMenuType } from '../types';
+import { useCallback } from 'react';
 
 export const useSelectedAward = () => {
   const [selectedAward, setSelectedAward] = useRecoilState(selectedAwardState);
@@ -29,13 +30,16 @@ export const useExtraState = () => {
   const { setSelectedAward } = useSelectedAward();
   const { setSelectedExperience } = useSelectedExperience();
 
-  const openExtraList = (key: ExtraMenuType) =>
-    setExtraListState((prev) => ({
-      ...prev,
-      [key]: true,
-    }));
+  const openExtraList = useCallback(
+    (key: ExtraMenuType) =>
+      setExtraListState((prev) => ({
+        ...prev,
+        [key]: true,
+      })),
+    []
+  );
 
-  const closeExtraList = (key: ExtraMenuType) => {
+  const closeExtraList = useCallback((key: ExtraMenuType) => {
     setExtraListState((prev) => ({
       ...prev,
       [key]: false,
@@ -44,9 +48,9 @@ export const useExtraState = () => {
       ...prev,
       [key]: false,
     }));
-  };
+  }, []);
 
-  const toggleExtraList = (key: ExtraMenuType) => {
+  const toggleExtraList = useCallback((key: ExtraMenuType) => {
     if (extraListState[key])
       setExtraFormState((prev) => ({
         ...prev,
@@ -56,22 +60,25 @@ export const useExtraState = () => {
       ...prev,
       [key]: !prev[key],
     }));
-  };
+  }, []);
 
-  const openExtraForm = (key: ExtraMenuType) =>
-    setExtraFormState((prev) => ({
-      ...prev,
-      [key]: true,
-    }));
+  const openExtraForm = useCallback(
+    (key: ExtraMenuType) =>
+      setExtraFormState((prev) => ({
+        ...prev,
+        [key]: true,
+      })),
+    []
+  );
 
-  const closeExtraForm = (key: ExtraMenuType) => {
+  const closeExtraForm = useCallback((key: ExtraMenuType) => {
     if (key === 'award') setSelectedAward(null);
     if (key === 'experience') setSelectedExperience(null);
     setExtraFormState((prev) => ({
       ...prev,
       [key]: false,
     }));
-  };
+  }, []);
 
   return {
     extraListState,
