@@ -336,7 +336,26 @@ const AwardList = () => {
                     {formatDate(award.languageDate)}
                   </ResumeList.Date>
                 </ResumeList.Row>
-                <ResumeList.Row>{award.languageScore}점</ResumeList.Row>
+                {(award.languageScore || award.languageRating) && (
+                  <ResumeList.DetailDiv>
+                    {award.languageScore && (
+                      <ResumeList.Row>
+                        <ResumeList.Detail>점수</ResumeList.Detail>
+                        <ResumeList.DetailContent>
+                          {award.languageScore}점
+                        </ResumeList.DetailContent>
+                      </ResumeList.Row>
+                    )}
+                    {award.languageRating && (
+                      <ResumeList.Row>
+                        <ResumeList.Detail>급수</ResumeList.Detail>
+                        <ResumeList.DetailContent>
+                          {award.languageRating}
+                        </ResumeList.DetailContent>
+                      </ResumeList.Row>
+                    )}
+                  </ResumeList.DetailDiv>
+                )}
               </ResumeList.Col>
             )}
             {award.type === 'award' && (

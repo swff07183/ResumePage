@@ -6,6 +6,7 @@ import { ReactComponent as Minus } from '@assets/svg/minus.svg';
 import { ExtraMenuType } from '../features/extra/types';
 import { useUserInfoData } from '@/features/user/stores/hooks';
 import { useEducationInfoQuery } from '@/features/education/hooks';
+import { Button } from './Button/Button';
 
 interface IMenu {
   name: string;
@@ -13,45 +14,46 @@ interface IMenu {
   required?: boolean;
 }
 
+const menuList: IMenu[] = [
+  {
+    name: '학력',
+    required: true,
+  },
+  {
+    name: '경력',
+  },
+  {
+    name: '스킬',
+    key: 'skill',
+  },
+  {
+    name: '경험/활동/교육',
+    key: 'experience',
+  },
+  {
+    name: '자격/어학/수상',
+    key: 'award',
+  },
+  // {
+  //   name: '포트폴리오',
+  //   key: 'portfolio',
+  // },
+  {
+    name: '경력기술서',
+    key: 'careerContent',
+  },
+  {
+    name: '자기소개서',
+    key: 'selfIntroduction',
+  },
+  // {
+  //   name: '우대사항',
+  //   key: 'preferential',
+  // },
+];
+
 export const ResumeSideBar = () => {
   const { extraListState, openExtraList, toggleExtraList } = useExtraState();
-  const menuList: IMenu[] = [
-    {
-      name: '학력',
-      required: true,
-    },
-    {
-      name: '경력',
-    },
-    {
-      name: '스킬',
-      key: 'skill',
-    },
-    {
-      name: '경험/활동/교육',
-      key: 'experience',
-    },
-    {
-      name: '자격/어학/수상',
-      key: 'award',
-    },
-    // {
-    //   name: '포트폴리오',
-    //   key: 'portfolio',
-    // },
-    {
-      name: '경력기술서',
-      key: 'careerContent',
-    },
-    {
-      name: '자기소개서',
-      key: 'selfIntroduction',
-    },
-    // {
-    //   name: '우대사항',
-    //   key: 'preferential',
-    // },
-  ];
 
   return (
     <Wrapper>
@@ -83,6 +85,11 @@ export const ResumeSideBar = () => {
           )}
         </SideMenuItem>
       ))}
+      {/* <Button
+        type="border"
+        content="이력서 미리보기"
+        style={{ width: '100%', marginTop: 'auto' }}
+      /> */}
     </Wrapper>
   );
 };

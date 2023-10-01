@@ -37,12 +37,18 @@ const StyledButton = styled.button<StyledButtonProps>`
         color: #ffffff;
         background-color: #17755b;
         border: none;
+        &:hover {
+          background-color: #13614b;
+        }
       `
       : type === 'border'
       ? `
         color: #17755b;
         background-color: transparent;
         border: 1px solid #17755b;
+        &:hover {
+          background-color: #17755b1a;
+        }
       `
       : ``}
 `;
