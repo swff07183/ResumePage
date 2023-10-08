@@ -8,6 +8,8 @@ import { ReactComponent as IconMail } from '@assets/svg/mail.svg';
 import { ReactComponent as IconHome } from '@assets/svg/home.svg';
 import { ReactComponent as IconMobile } from '@assets/svg/mobile.svg';
 import { ReactComponent as IconPhone } from '@assets/svg/phone.svg';
+import { ReactComponent as IconFlag } from '@assets/svg/flag.svg';
+import { ReactComponent as IconEarth } from '@assets/svg/earth.svg';
 import { useToast } from '@/hooks';
 import { useUserInfoQuery } from '../hooks';
 
@@ -68,6 +70,16 @@ const UserInfo = () => {
               )}
             </div>
           </div>
+          <div className="info-content-row">
+            <div className="info-content-item">
+              <IconEarth className="icon-earth" />
+              {userInfoData?.country ? (
+                <span>{userInfoData.country}</span>
+              ) : (
+                <span className="no-data">국적을 입력해주세요.</span>
+              )}
+            </div>
+          </div>
           <div className="info-content-item">
             <IconHome />
             {userInfoData?.address ? (
@@ -103,6 +115,13 @@ const Wrapper = styled.div`
     & svg {
       width: 24px;
       height: 24px;
+
+      &.icon-earth {
+        path {
+          stroke: #f0f0f0;
+          fill: #c0c0c0;
+        }
+      }
       & path {
         fill: #f0f0f0;
         stroke: #c0c0c0;
@@ -136,6 +155,7 @@ const Wrapper = styled.div`
   & .info-name-div {
     display: flex;
     align-items: end;
+    gap: 8px;
     height: fit-content;
     & .info-no-name {
       font-size: 20px;
