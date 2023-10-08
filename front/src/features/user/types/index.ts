@@ -12,6 +12,7 @@ export interface IUserLogin {
 export interface IUserInfo {
   name: string;
   userType?: string;
+  country: string;
   gender: string;
   birth: string;
   email: string;

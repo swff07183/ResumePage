@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Pencil } from '@assets/svg/pencil.svg';
 import { ReactComponent as Trash } from '@assets/svg/trash.svg';
 
-interface ResumeListProps {
+interface ResumeListProps extends HTMLAttributes<HTMLDivElement> {
   children?: React.ReactNode;
 }
 

@@ -14,12 +14,12 @@ import { useUserInfoQuery } from '../hooks';
 const UserInfo = () => {
   const { openUserForm } = useUserForm();
   const { userInfoData, setUserInfoData } = useUserInfoData();
-  const { saveToast } = useToast();
 
   const { data, mutation } = useUserInfoQuery();
 
   useEffect(() => {
     setUserInfoData(data);
+    console.log(data);
   }, [data]);
 
   return (

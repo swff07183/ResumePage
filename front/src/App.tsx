@@ -7,6 +7,7 @@ import SignupPage from '@/pages/SignUpPage';
 import LoginRequired from './components/LoginRequired';
 import IsLoggedIn from './components/IsLoggedIn';
 import Toast from './components/Toast';
+import PreviewPage from './pages/PreviewPage';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
           </Route>
         </Route>
+        <Route path="/preview" element={<PreviewPage />} />
       </Routes>
       <Toast />
     </>

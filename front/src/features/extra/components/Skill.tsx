@@ -90,7 +90,7 @@ interface SkillItemProps {
   deleteActive?: boolean;
 }
 
-const SkillItem = ({ item, deleteActive }: SkillItemProps) => {
+export const SkillItem = ({ item, deleteActive }: SkillItemProps) => {
   const { deleteMutation } = useSkillQuery();
   const handleDeleteClick = () => {
     if (window.confirm('정말 삭제하시겠습니까?'))

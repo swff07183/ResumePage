@@ -8,6 +8,7 @@ class UserInfo(models.Model):
     )
     name = models.TextField(null=True, blank=True)
     userType = models.TextField(null=True, blank=True, default="신입")
+    country = models.TextField(null=True, blank=True)
     gender = models.TextField(null=True, blank=True)
     birth = models.TextField(null=True, blank=True)
     email = models.TextField(null=True, blank=True)

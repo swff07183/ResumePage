@@ -4,13 +4,14 @@ import { useUserForm, useUserInfoData } from '../stores/hooks';
 import { FormButtons, Input, SelectInput, Resume } from '@components';
 import { GENDER_TYPE } from '../options';
 import { useMutation } from '@tanstack/react-query';
-import { useForm } from '@/hooks';
+import { useForm, useToast } from '@/hooks';
 import { IUserInfo } from '../types';
 import { postUserInfo } from '@/api/user';
 
 const UserForm = () => {
   const { closeUserForm } = useUserForm();
   const { userInfoData } = useUserInfoData();
+  const { saveToast } = useToast();
 
   const {
     formData,
@@ -22,6 +23,7 @@ const UserForm = () => {
     userInfoData || {
       name: '',
       // userType: '',
+      country: '',
       gender: '',
       birth: '',
       email: '',
@@ -35,19 +37,16 @@ const UserForm = () => {
   const mutation = useMutation({
     mutationFn: (data: IUserInfo) => postUserInfo(data),
     onSuccess: (data) => {
-      console.log(data);
       closeUserForm();
-    },
-    onError: (e) => {
-      console.log(e);
+      saveToast();
     },
   });
 
   const handleSubmit = () => {
-    console.log(formData);
     setIsError({
       ...isError,
       name: !formData.name,
+      country: !formData.country,
       birth: !formData.birth,
       email: !formData.email,
       mobile: !formData.mobile,
@@ -55,6 +54,7 @@ const UserForm = () => {
     });
     if (
       formData.name &&
+      formData.country &&
       formData.birth &&
       formData.email &&
       formData.mobile &&
@@ -82,6 +82,14 @@ const UserForm = () => {
               onChange={handleSelectChange('gender')}
               value={formData.gender}
               invalid={isError.gender}
+            />
+            <Input
+              name="country"
+              className="input_s"
+              placeholder="국적 *"
+              onChange={handleInputChange}
+              value={formData.country}
+              invalid={isError.country}
             />
             <Input
               name="birth"

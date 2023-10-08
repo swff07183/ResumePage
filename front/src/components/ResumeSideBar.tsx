@@ -89,6 +89,9 @@ export const ResumeSideBar = () => {
         type="border"
         content="이력서 미리보기"
         style={{ width: '100%', marginTop: 'auto' }}
+        onClick={() =>
+          window.open('/preview', '_blank', 'width=1000, height=1000')
+        }
       /> */}
     </Wrapper>
   );
