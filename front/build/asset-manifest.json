@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.26344254.css",
-    "main.js": "/static/js/main.6b3130f7.js",
+    "main.css": "/static/css/main.c4b84eba.css",
+    "main.js": "/static/js/main.8a566eb9.js",
     "static/js/787.71df535f.chunk.js": "/static/js/787.71df535f.chunk.js",
     "static/media/NanumGothic-Regular.ttf": "/static/media/NanumGothic-Regular.6c84540de7730f833d6c.ttf",
     "static/media/NanumGothic-Bold.ttf": "/static/media/NanumGothic-Bold.6499af72b1d61fe8269d.ttf",
@@ -19,12 +19,12 @@
     "static/media/minus.svg": "/static/media/minus.3afcb7ec2c9dbb320d4b3685fd6ff182.svg",
     "static/media/arrow-left.svg": "/static/media/arrow-left.8ef025690cd81f4b5dbad746aef5cd36.svg",
     "static/media/arrow-right.svg": "/static/media/arrow-right.5724f6e68c812339615ec818f85bb3ed.svg",
-    "main.26344254.css.map": "/static/css/main.26344254.css.map",
-    "main.6b3130f7.js.map": "/static/js/main.6b3130f7.js.map",
+    "main.c4b84eba.css.map": "/static/css/main.c4b84eba.css.map",
+    "main.8a566eb9.js.map": "/static/js/main.8a566eb9.js.map",
     "787.71df535f.chunk.js.map": "/static/js/787.71df535f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.26344254.css",
-    "static/js/main.6b3130f7.js"
+    "static/css/main.c4b84eba.css",
+    "static/js/main.8a566eb9.js"
   ]
 }
