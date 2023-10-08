@@ -8,12 +8,12 @@ import { ReactComponent as IconMail } from '@assets/svg/mail.svg';
 import { ReactComponent as IconHome } from '@assets/svg/home.svg';
 import { ReactComponent as IconMobile } from '@assets/svg/mobile.svg';
 import { ReactComponent as IconPhone } from '@assets/svg/phone.svg';
-import { ReactComponent as IconFlag } from '@assets/svg/flag.svg';
 import { ReactComponent as IconEarth } from '@assets/svg/earth.svg';
 import { useToast } from '@/hooks';
 import { useUserInfoQuery } from '../hooks';
+import { IReadonly } from '@/types';
 
-const UserInfo = () => {
+const UserInfo = ({ readonly }: IReadonly) => {
   const { openUserForm } = useUserForm();
   const { userInfoData, setUserInfoData } = useUserInfoData();
 
@@ -34,13 +34,19 @@ const UserInfo = () => {
             ) : (
               <span className="info-no-name">이름을 입력해주세요</span>
             )}
-            <SelectInput
-              className="input_s"
-              style={{ width: '128px', height: '30px', marginLeft: '4px' }}
-              options={USER_TYPE}
-              value={userInfoData?.userType}
-              onChange={(e) => mutation.mutate({ userType: e.target.value })}
-            />
+            {!readonly ? (
+              <SelectInput
+                className="input_s"
+                style={{ width: '128px', height: '30px', marginLeft: '4px' }}
+                options={USER_TYPE}
+                value={userInfoData?.userType}
+                onChange={(e) => mutation.mutate({ userType: e.target.value })}
+              />
+            ) : (
+              <span className="info-usertype">
+                {userInfoData?.userType ?? ''}
+              </span>
+            )}
           </div>
         </div>
         <div>
@@ -93,12 +99,14 @@ const UserInfo = () => {
           </div>
         </div>
       </div>
-      <div className="info-right">
-        {/* <img src={default_user_img} alt="default_user_img" /> */}
-        <button className="btn-user-edit" onClick={openUserForm}>
-          <IconPencil />
-        </button>
-      </div>
+      {!readonly && (
+        <div className="info-right">
+          {/* <img src={default_user_img} alt="default_user_img" /> */}
+          <button className="btn-user-edit" onClick={openUserForm}>
+            <IconPencil />
+          </button>
+        </div>
+      )}
     </Wrapper>
   );
 };
@@ -137,6 +145,11 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
     margin-bottom: 8px;
+  }
+
+  & .info-usertype {
+    font-size: 16px;
+    color: #677382;
   }
 
   & .info-div {

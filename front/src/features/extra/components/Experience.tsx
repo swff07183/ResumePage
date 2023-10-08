@@ -15,6 +15,7 @@ import {
 import { useExperienceQuery } from '../hooks/experience';
 import { IExperience } from '../types';
 import { formatDate } from '@/utils';
+import { IReadonly } from '@/types';
 
 const Experience = () => {
   const { extraFormState, openExtraForm } = useExtraState();
@@ -118,13 +119,14 @@ const ExperienceForm = () => {
   );
 };
 
-const ExperienceList = () => {
+export const ExperienceList = ({ readonly }: IReadonly) => {
   const { data, deleteMutation } = useExperienceQuery();
   const { openExtraForm } = useExtraState();
   const { setSelectedExperience } = useSelectedExperience();
 
   return data && data.length > 0 ? (
     <ResumeList>
+      {readonly && <div className="preview-title">경험/활동/교육</div>}
       <ResumeList.Col>
         {data.map((experience, idx) => (
           <ResumeList.Item style={{ minHeight: '80px' }} key={experience.id}>
@@ -140,28 +142,32 @@ const ExperienceList = () => {
                 <ResumeList.TextArea content={experience.detail} />
               </ResumeList.Row>
             </ResumeList.Col>
-            <div>
-              <ResumeList.Button
-                type="edit"
-                onClick={() => {
-                  setSelectedExperience(experience);
-                  openExtraForm('experience');
-                }}
-              />
-              <ResumeList.Button
-                type="delete"
-                onClick={() => {
-                  if (window.confirm('해당 항목을 삭제하시겠습니까?'))
-                    deleteMutation.mutate(experience.id!);
-                }}
-              />
-            </div>
+            {!readonly && (
+              <div>
+                <ResumeList.Button
+                  type="edit"
+                  onClick={() => {
+                    setSelectedExperience(experience);
+                    openExtraForm('experience');
+                  }}
+                />
+                <ResumeList.Button
+                  type="delete"
+                  onClick={() => {
+                    if (window.confirm('해당 항목을 삭제하시겠습니까?'))
+                      deleteMutation.mutate(experience.id!);
+                  }}
+                />
+              </div>
+            )}
           </ResumeList.Item>
         ))}
       </ResumeList.Col>
     </ResumeList>
-  ) : (
+  ) : !readonly ? (
     <NoListMessage message="교육이수내역, 해외연수, 대내외활동 등의 경험을 작성해보세요!" />
+  ) : (
+    <></>
   );
 };
 

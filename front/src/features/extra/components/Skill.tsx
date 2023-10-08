@@ -6,6 +6,7 @@ import { useSkillQuery } from '../hooks/skill';
 import { styled } from 'styled-components';
 import { Input, NoListMessage, ResumeList, ResumeForm } from '@components';
 import { ISkill } from '../types';
+import { IReadonly } from '@/types';
 
 const Skill = () => {
   const { extraFormState, openExtraForm } = useExtraState();
@@ -62,7 +63,7 @@ const SkillForm = () => {
   );
 };
 
-const SkillList = () => {
+export const SkillList = ({ readonly }: IReadonly) => {
   const { data } = useSkillQuery();
   const { openExtraForm } = useExtraState();
 
@@ -76,12 +77,19 @@ const SkillList = () => {
           ))}
         </ResumeList.Row>
       </ResumeList.Col>
-      <div>
-        <ResumeList.Button type="edit" onClick={() => openExtraForm('skill')} />
-      </div>
+      {!readonly && (
+        <div>
+          <ResumeList.Button
+            type="edit"
+            onClick={() => openExtraForm('skill')}
+          />
+        </div>
+      )}
     </ResumeList>
-  ) : (
+  ) : !readonly ? (
     <NoListMessage message="스킬을 추가해주세요." />
+  ) : (
+    <></>
   );
 };
 

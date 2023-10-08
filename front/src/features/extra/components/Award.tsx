@@ -14,6 +14,7 @@ import {
 import { IAward } from '../types';
 import { useAwardQuery } from '../hooks/award';
 import { formatDate } from '@/utils';
+import { IReadonly } from '@/types';
 
 const Award = () => {
   const { extraFormState, openExtraForm } = useExtraState();
@@ -306,12 +307,13 @@ const AwardForm = () => {
   );
 };
 
-const AwardList = () => {
+export const AwardList = ({ readonly }: IReadonly) => {
   const { data, deleteMutation } = useAwardQuery();
   const { setSelectedAward } = useSelectedAward();
   const { openExtraForm } = useExtraState();
   return data && data.length > 0 ? (
     <ResumeList>
+      {readonly && <div className="preview-title">자격/어학/수상</div>}
       <ResumeList.Col>
         {data.map((award, idx) => (
           <ResumeList.Item style={{ minHeight: '80px' }} key={award.id}>
@@ -370,29 +372,32 @@ const AwardList = () => {
                 <ResumeList.Row>{award.awardPlace}</ResumeList.Row>
               </ResumeList.Col>
             )}
-
-            <div>
-              <ResumeList.Button
-                type="edit"
-                onClick={() => {
-                  setSelectedAward(award);
-                  openExtraForm('award');
-                }}
-              />
-              <ResumeList.Button
-                type="delete"
-                onClick={() => {
-                  if (window.confirm('해당 항목을 삭제하시겠습니까?'))
-                    deleteMutation.mutate(award.id!);
-                }}
-              />
-            </div>
+            {!readonly && (
+              <div>
+                <ResumeList.Button
+                  type="edit"
+                  onClick={() => {
+                    setSelectedAward(award);
+                    openExtraForm('award');
+                  }}
+                />
+                <ResumeList.Button
+                  type="delete"
+                  onClick={() => {
+                    if (window.confirm('해당 항목을 삭제하시겠습니까?'))
+                      deleteMutation.mutate(award.id!);
+                  }}
+                />
+              </div>
+            )}
           </ResumeList.Item>
         ))}
       </ResumeList.Col>
     </ResumeList>
-  ) : (
+  ) : !readonly ? (
     <NoListMessage message="자격/어학/수상 내역을 입력해주세요" />
+  ) : (
+    <></>
   );
 };
 

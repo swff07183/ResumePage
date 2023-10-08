@@ -6,6 +6,7 @@ import { useForm } from '@/hooks';
 import { TextArea, NoListMessage, Input, ResumeList } from '@components';
 import { useSelfIntroductionQuery } from '../hooks/selfIntroduction';
 import { ISelfIntroduction } from '../types';
+import { IReadonly } from '@/types';
 
 const SelfIntroduction = () => {
   const { extraFormState, openExtraForm } = useExtraState();
@@ -75,35 +76,40 @@ const SelfIntroductionForm = () => {
   );
 };
 
-const SelfIntroductionList = () => {
+export const SelfIntroductionList = ({ readonly }: IReadonly) => {
   const { data, deleteMutation } = useSelfIntroductionQuery();
   const { openExtraForm } = useExtraState();
 
   return data ? (
     <ResumeList>
+      {readonly && <div className="preview-title">자기소개서</div>}
       <ResumeList.Col>
         <ResumeList.Title>{data.title}</ResumeList.Title>
         <ResumeList.TextArea content={data.content} />
       </ResumeList.Col>
-      <div>
-        <ResumeList.Button
-          type="edit"
-          onClick={() => {
-            openExtraForm('selfIntroduction');
-          }}
-        />
-        <ResumeList.Button
-          type="delete"
-          onClick={() => {
-            if (window.confirm('해당 항목을 삭제하시겠습니까?')) {
-              deleteMutation.mutate();
-            }
-          }}
-        />
-      </div>
+      {!readonly && (
+        <div>
+          <ResumeList.Button
+            type="edit"
+            onClick={() => {
+              openExtraForm('selfIntroduction');
+            }}
+          />
+          <ResumeList.Button
+            type="delete"
+            onClick={() => {
+              if (window.confirm('해당 항목을 삭제하시겠습니까?')) {
+                deleteMutation.mutate();
+              }
+            }}
+          />
+        </div>
+      )}
     </ResumeList>
-  ) : (
+  ) : !readonly ? (
     <NoListMessage message="자기소개서를 작성해주세요." />
+  ) : (
+    <></>
   );
 };
 export default SelfIntroduction;

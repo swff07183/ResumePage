@@ -84,3 +84,10 @@ code {
 .invalid {
   border: 1px solid #cd0d0d !important;
 }
+
+.preview-title {
+  width: 140px;
+  color: #292a41;
+  font-size: 18px;
+  font-weight: bold;
+}

@@ -13,6 +13,7 @@ import {
 } from '../constants/careerContentTemplate';
 import { ICareerContent } from '../types';
 import { useCareerContentQuery } from '../hooks/careerContent';
+import { IReadonly } from '@/types';
 
 const CareerContent = () => {
   const { extraFormState, openExtraForm } = useExtraState();
@@ -98,32 +99,39 @@ const CareerContentForm = () => {
   );
 };
 
-const CareerContentList = () => {
+export const CareerContentList = ({ readonly }: IReadonly) => {
   const { data, deleteMutation } = useCareerContentQuery();
   const { openExtraForm } = useExtraState();
 
   return data?.content ? (
     <ResumeList>
-      <ResumeList.TextArea content={data.content} />
-      <div>
-        <ResumeList.Button
-          type="edit"
-          onClick={() => {
-            openExtraForm('careerContent');
-          }}
-        />
-        <ResumeList.Button
-          type="delete"
-          onClick={() => {
-            if (window.confirm('해당 항목을 삭제하시겠습니까?')) {
-              deleteMutation.mutate();
-            }
-          }}
-        />
-      </div>
+      {readonly && <div className="preview-title">경력기술서</div>}
+      <ResumeList.Col>
+        <ResumeList.TextArea content={data.content} />
+      </ResumeList.Col>
+      {!readonly && (
+        <div>
+          <ResumeList.Button
+            type="edit"
+            onClick={() => {
+              openExtraForm('careerContent');
+            }}
+          />
+          <ResumeList.Button
+            type="delete"
+            onClick={() => {
+              if (window.confirm('해당 항목을 삭제하시겠습니까?')) {
+                deleteMutation.mutate();
+              }
+            }}
+          />
+        </div>
+      )}
     </ResumeList>
-  ) : (
+  ) : !readonly ? (
     <NoListMessage message="경력기술서를 입력해주세요." />
+  ) : (
+    <></>
   );
 };
 

@@ -3,8 +3,9 @@ import { NoListMessage, ResumeList } from '@components';
 import { formatDate } from '@/utils';
 import { useEduForm } from '../stores/hooks';
 import { useEducationInfoQuery } from '../hooks';
+import { IReadonly } from '@/types';
 
-const EducationList = () => {
+const EducationList = ({ readonly }: IReadonly) => {
   const { openEduForm } = useEduForm();
 
   const { educationInfo } = useEducationInfoQuery();
@@ -12,6 +13,7 @@ const EducationList = () => {
   return educationInfo ? (
     <>
       <ResumeList>
+        {readonly && <div className="preview-title">학력</div>}
         <ResumeList.Col>
           {/*  */}
           <ResumeList.Row>
@@ -103,11 +105,13 @@ const EducationList = () => {
             </ResumeList.DetailDiv>
           )}
         </ResumeList.Col>
-        <ResumeList.Button type="edit" onClick={openEduForm} />
+        {!readonly && <ResumeList.Button type="edit" onClick={openEduForm} />}
       </ResumeList>
     </>
-  ) : (
+  ) : !readonly ? (
     <NoListMessage message="학력을 입력해주세요." />
+  ) : (
+    <></>
   );
 };
 

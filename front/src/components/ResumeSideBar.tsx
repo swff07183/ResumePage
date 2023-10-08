@@ -7,6 +7,7 @@ import { ExtraMenuType } from '../features/extra/types';
 import { useUserInfoData } from '@/features/user/stores/hooks';
 import { useEducationInfoQuery } from '@/features/education/hooks';
 import { Button } from './Button/Button';
+import { useUserInfoQuery } from '@/features/user/hooks';
 
 interface IMenu {
   name: string;
@@ -54,6 +55,16 @@ const menuList: IMenu[] = [
 
 export const ResumeSideBar = () => {
   const { extraListState, openExtraList, toggleExtraList } = useExtraState();
+  const { userInfoData } = useUserInfoData();
+  const { educationInfo } = useEducationInfoQuery();
+  const alertMessage =
+    !userInfoData?.name && !educationInfo
+      ? '유저정보, 학력을'
+      : !userInfoData?.name && educationInfo
+      ? '유저정보를'
+      : userInfoData?.name && !educationInfo
+      ? '학력을'
+      : '';
 
   return (
     <Wrapper>
@@ -85,14 +96,18 @@ export const ResumeSideBar = () => {
           )}
         </SideMenuItem>
       ))}
-      {/* <Button
+      <Button
         type="border"
         content="이력서 미리보기"
         style={{ width: '100%', marginTop: 'auto' }}
-        onClick={() =>
-          window.open('/preview', '_blank', 'width=1000, height=1000')
-        }
-      /> */}
+        onClick={() => {
+          if (alertMessage) {
+            window.alert(`${alertMessage} 입력해야 합니다.`);
+            return;
+          }
+          window.open('/preview', '_blank', 'width=840, height=1000');
+        }}
+      />
     </Wrapper>
   );
 };

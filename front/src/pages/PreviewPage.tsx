@@ -11,9 +11,12 @@ const PreviewPage = () => {
 };
 
 const Wrapper = styled.div`
-  width: 970px;
-  padding: 0 20px;
-  padding-top: 40px;
+  /* width: 970px; */
+  min-width: 840px;
+  display: flex;
+  justify-content: center;
+  /* padding: 0 20px; */
+  /* padding-top: 40px; */
 `;
 
 export default PreviewPage;
