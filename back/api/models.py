@@ -108,3 +108,17 @@ class Experience(models.Model):
     startDate = models.TextField(null=True, blank=True)
     endDate = models.TextField(null=True, blank=True)
     detail = models.TextField(null=True, blank=True)
+
+class Submit(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    userInfo = models.ForeignKey(
+        UserInfo,
+        on_delete=models.CASCADE
+    )
+    education = models.ForeignKey(
+        Education,
+        on_delete=models.CASCADE
+    )
