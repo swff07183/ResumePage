@@ -2,8 +2,8 @@ from django.shortcuts import get_object_or_404
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
-from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction, Award
-from .serializers import EducationSerializer, CareerSerializer, SkillSerializer, UserInfoSerializer, ExperienceSerializer, CareerContentSerializer, SelfIntroductionSerializer, AwardSerializer
+from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction, Award, Submit
+from .serializers import EducationSerializer, CareerSerializer, SkillSerializer, UserInfoSerializer, ExperienceSerializer, CareerContentSerializer, SelfIntroductionSerializer, AwardSerializer, SubmitSerializer
 from drf_yasg.utils import swagger_auto_schema
 
 
@@ -421,4 +421,32 @@ class ExperienceViewSet(viewsets.ModelViewSet):
                 serializer.save()
 
                 return Response(serializer.data, status=status.HTTP_200_OK)
-            
+
+
+class ResumeViewSet(viewsets.ModelViewSet):
+
+    @swagger_auto_schema()
+    def list(self, request):
+
+        return Response({}, status=status.HTTP_200_OK)
+    
+class SubmitViewSet(viewsets. ModelViewSet):
+
+    @swagger_auto_schema()
+    def list(self, request):
+
+        submits = Submit.objects.all()
+        serializer = SubmitSerializer(instance=submits, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+    @swagger_auto_schema()
+    def create(self, request):
+        serializer = SubmitSerializer()
+        user = request.user
+        userInfo = UserInfo.objects.get(user=request.user.id)
+        education = Education.objects.get(user=request.user.id)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(user=user, userInfo=userInfo, education=education)
+        
+        return Response(serializer.data, status=status.HTTP_200_OK)

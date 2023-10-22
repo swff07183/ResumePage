@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction, Award, Experience
+from .models import Education, Career, Skill, UserInfo, Experience, CareerContent, SelfIntroduction, Award, Experience, Submit
 from django.contrib.auth import get_user_model
 
 class UserInfoSerializer(serializers.ModelSerializer):
@@ -59,3 +59,13 @@ class AwardSerializer(serializers.ModelSerializer):
         model = Award
         fields = '__all__'
         read_only_fields = ('user',)
+
+class SubmitSerializer(serializers.ModelSerializer):
+
+    userInfo = UserInfoSerializer(read_only=True)
+    education = EducationSerializer(read_only=True)
+
+    class Meta:
+        model = Submit
+        fields = '__all__'
+        read_only_fields = ('user', )
