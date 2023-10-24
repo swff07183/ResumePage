@@ -69,3 +69,15 @@ class SubmitSerializer(serializers.ModelSerializer):
         model = Submit
         fields = '__all__'
         read_only_fields = ('user', )
+
+class PreviewSerializer(serializers.ModelSerializer):
+
+    education = EducationSerializer(read_only=True)
+    userInfo = UserInfoSerializer(read_only=True)
+    career = CareerSerializer(read_only=True)
+    skills = SkillSerializer(read_only=True, many=True)
+    careerContents = CareerContentSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ('username', )
