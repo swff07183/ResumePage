@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const BASE_URL = 'http://localhost:8000/api';
-// export const BASE_URL = 'https://ivyleaguer-resume.site/api';
+// export const BASE_URL = 'http://localhost:8000/api';
+export const BASE_URL = 'https://ivyleaguer-resume.site/api';
 
 export const client = axios.create({
   url: BASE_URL,
