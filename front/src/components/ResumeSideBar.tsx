@@ -8,6 +8,8 @@ import { useUserInfoData } from '@/features/user/stores/hooks';
 import { useEducationInfoQuery } from '@/features/education/hooks';
 import { Button } from './Button/Button';
 import { useUserInfoQuery } from '@/features/user/hooks';
+import { useMutation } from '@tanstack/react-query';
+import { postSubmit } from '@/api/user';
 
 interface IMenu {
   name: string;
@@ -66,6 +68,11 @@ export const ResumeSideBar = () => {
       ? '학력을'
       : '';
 
+  const submitMutation = useMutation({
+    mutationFn: () => postSubmit(),
+    onSuccess: () => window.alert('성공적으로 제출되었습니다.'),
+  });
+
   return (
     <Wrapper>
       <ResumeProgress />
@@ -96,18 +103,35 @@ export const ResumeSideBar = () => {
           )}
         </SideMenuItem>
       ))}
-      <Button
-        type="border"
-        content="이력서 미리보기"
-        style={{ width: '100%', marginTop: 'auto' }}
-        onClick={() => {
-          if (alertMessage) {
-            window.alert(`${alertMessage} 입력해야 합니다.`);
-            return;
-          }
-          window.open('/preview', '_blank', 'width=840, height=1000');
-        }}
-      />
+      <div style={{ marginTop: 'auto' }}>
+        <Button
+          type="border"
+          content="이력서 미리보기"
+          style={{ width: '100%' }}
+          onClick={() => {
+            if (alertMessage) {
+              window.alert(`${alertMessage} 입력해야 합니다.`);
+              return;
+            }
+            window.open('/preview', '_blank', 'width=840, height=1000');
+          }}
+        />
+        <Button
+          type="fill"
+          content="제출하기"
+          style={{ width: '100%', marginTop: '8px' }}
+          onClick={() => {
+            if (alertMessage) {
+              window.alert(`${alertMessage} 입력해야 합니다.`);
+              return;
+            }
+            // window.alert('제출되었습니다.');
+            if (window.confirm('이력서를 제출하시겠습니까?')) {
+              submitMutation.mutate();
+            }
+          }}
+        />
+      </div>
     </Wrapper>
   );
 };

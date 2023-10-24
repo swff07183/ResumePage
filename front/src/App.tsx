@@ -8,6 +8,8 @@ import LoginRequired from './components/LoginRequired';
 import IsLoggedIn from './components/IsLoggedIn';
 import Toast from './components/Toast';
 import PreviewPage from './pages/PreviewPage';
+import AdminPage from './pages/AdminPage';
+import AdminPreviewPage from './pages/AdminPreviewPage';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
           </Route>
         </Route>
         <Route path="/preview" element={<PreviewPage />} />
+        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/preview/:userId" element={<AdminPreviewPage />} />
       </Routes>
       <Toast />
     </>

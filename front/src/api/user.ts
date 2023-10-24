@@ -36,3 +36,9 @@ export const postUserInfoType = async (params: { userType: string }) => {
 
   return data;
 };
+
+export const postSubmit = async () => {
+  const { data } = await client.post(`${BASE_URL}/submit/`);
+
+  return data;
+};

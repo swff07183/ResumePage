@@ -12,6 +12,4 @@ const LoginRequired = () => {
   return <Outlet />;
 };
 
-const Wrapper = styled.div``;
-
 export default LoginRequired;
